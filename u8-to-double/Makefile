@@ -7,3 +7,6 @@ clean:
 
 install: all
 	cp main /usr/local/bin/u8-to-double
+
+uninstall: all
+	rm -f main /usr/local/bin/u8-to-double

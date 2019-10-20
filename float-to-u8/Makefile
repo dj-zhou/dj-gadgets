@@ -7,3 +7,6 @@ clean:
 
 install: all
 	cp main /usr/local/bin/float-to-u8
+
+uninstall: all
+	rm -f main /usr/local/bin/float-to-u8
