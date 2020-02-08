@@ -1,5 +1,5 @@
 # dj-tools
-# Introduction
+## Introduction
 
 This repo contains some small tools from terminal command line to help for daily development. For example, one may want to know each byte of a **float** variable, then he/she can simply run the following command to find it:
 
@@ -7,7 +7,7 @@ This repo contains some small tools from terminal command line to help for daily
 float-to-u8 1.234
 ```
 
-## Installation
+### Installation
 
 ```bash
 cd /path/to/dj-tool
@@ -32,9 +32,9 @@ usage:
     u8-to-float <u8> <u8> <u8> <u8> little/big
 ```
 
-## Examples
+### Examples
 
-### Check Float Number
+#### Check Float Number
 
 Run the command:
 
@@ -49,12 +49,13 @@ It will output:
  float: 1.234000 <=> u8: [0xB6, 0xF3, 0x9D, 0x3F] (little endian)
 ```
 
-###  Convert u8 (uint8_t) numbers to Float Number
+#### Convert u8 (uint8_t) numbers to Float Number
 
-Run the command:
+Run either of the following commands:
 
 ```bash
-u8-to-float 0 0 32 65 [l]
+u8-to-float 0 0 32 65
+u8-to-float 0x00 0x00 0x20 0x41
 ```
 
 It will output:
@@ -62,4 +63,3 @@ It will output:
 ```bash
  u8: [0, 0, 32, 65] <=> float: 10.000000 (little endian)
 ```
-
