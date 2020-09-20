@@ -6,4 +6,4 @@ clean:
 	rm -f *.o *~ main
 
 install: all
-	sudo cp main /usr/local/bin/u8-to-double
+	cp main /usr/local/bin/ascii-code
