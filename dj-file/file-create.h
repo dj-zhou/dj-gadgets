@@ -1,9 +1,9 @@
 /***********************************************************
     >   File Name     : time-fetch.h
-    >   Author        : Dingjiang Zhou 
+    >   Author        : Dingjiang Zhou
                         Tieling 110, Shanghai, China.
     >   Create Time   : Tue 12 Feb 2013 10:37:31 PM CST
-    >   Last Modified : 
+    >   Last Modified :
     >   Purpose       :
 ***********************************************************/
 
@@ -13,14 +13,13 @@
 #include "config.h"
 
 /* macro definitions */
-#define lINEmAXnUM 1000
+#define LINE_MAX_LEN 1000
 
 /* functions declaration */
-void createMainC(void);
-void createCfile(char*);
-void createHfile(char*);
-void fileCreateMake(void);
+void create_main_cpp( void );
+void create_cpp_file( char* );
+void create_header_file( char* );
+void create_Makefile( void );
+void create_clang_format( void );
 
 #endif
-
-/* -------------------- end of file --------------------- */

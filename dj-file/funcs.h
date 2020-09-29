@@ -1,9 +1,9 @@
 /***********************************************************
     >   File Name     : funcs.h
-    >   Author        : Dingjiang Zhou 
+    >   Author        : Dingjiang Zhou
                         Boston University, Boston, 02215.
     >   Create Time   : Thu 22 Feb 2013 08:28:31 PM
-    >   Last Modified : 
+    >   Last Modified :
     >   Purpose       :
 ***********************************************************/
 
@@ -12,16 +12,6 @@
 
 #include "config.h"
 
-/* macro definitions */
-//#define lINEmAXnUM 1000
-
-/* functions declaration */
-void configValueInit(int, int);
-
-
-
-
+void config_value_init( int, int );
 
 #endif
-
-/* -------------------- end of file --------------------- */
