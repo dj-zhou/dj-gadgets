@@ -170,7 +170,9 @@ void create_Makefile( void ) {
                "===============\n" );
         fprintf( F, "CFLAGS    = $(C_DEFS) $(INC:%%=-I%%) $(OPT)\n" );
         fprintf( F, "# treat all warnings as errors\n" );
-        fprintf( F, "CFLAGS   += -Werror\n" );
+        fprintf(
+            F,
+            "CFLAGS  += -Werror=unused-parameter -Werror=unused-variable\n" );
         fprintf( F, "HOSTFLAGS = $(CPPSTD) $(LIBS)\n" );
         fprintf(
             F, "\n# "
@@ -450,8 +452,8 @@ void create_cpp_file( char* fileName ) {
 
         int   i;
         FILE* F2;
-        char  lineBuf[LINE_MAX_LEN];
-        char  LastModified[14];
+        char  line_buf[LINE_MAX_LEN];
+        char  last_modified[17];
 
         char tempFileName[lenName + 5];
         strcpy( tempFileName, fileName );
@@ -463,17 +465,19 @@ void create_cpp_file( char* fileName ) {
         printf( "<%s> exists, modify the \"Last Modified\" item:\n", fileName );
         F2 = fopen( tempFileName, "w" ); /* read from F then write to F2 */
         /* read out "Last Modified", then modify the time behind */
-        while ( fgets( lineBuf, LINE_MAX_LEN, F ) != NULL ) {
+        while ( fgets( line_buf, LINE_MAX_LEN, F ) != NULL ) {
             /* modify */
             /* locate "Last Modified " */
-            for ( i = 0; i < 13; i++ )
-                LastModified[i] = lineBuf[i + 3];
-            LastModified[13] = '\0';
-            if ( strcmp( LastModified, "Last Modified" ) == 0 ) {
-                fprintf( F2, "   Last Modified  : %s\n", time_to_print );
+            for ( i = 0; i < 16; i++ ) {
+                last_modified[i] = line_buf[i];
             }
-            else
-                fprintf( F2, "%s", lineBuf );
+            last_modified[16] = '\0';
+            if ( strcmp( last_modified, "Last Modified :" ) == 0 ) {
+                fprintf( F2, "Last Modified : %s\n", time_to_print );
+            }
+            else {
+                fprintf( F2, "%s", line_buf );
+            }
         }
         fclose( F );
         fclose( F2 );
@@ -560,8 +564,8 @@ void create_header_file( char* fileName ) {
 
         int   i;
         FILE* F2;
-        char  lineBuf[LINE_MAX_LEN];
-        char  LastModified[14];
+        char  line_buf[LINE_MAX_LEN];
+        char  last_modified[14];
 
         char tempFileName[lenName + 5];
         strcpy( tempFileName, fileName );
@@ -573,17 +577,17 @@ void create_header_file( char* fileName ) {
         printf( "<%s> exists, modify the \"Last Modified\" item:\n", fileName );
         F2 = fopen( tempFileName, "w" ); /* read from F then write to F2 */
         /* read out "Last Modified", then modify the time behind */
-        while ( fgets( lineBuf, LINE_MAX_LEN, F ) != NULL ) {
+        while ( fgets( line_buf, LINE_MAX_LEN, F ) != NULL ) {
             /* modify */
             /* locate "Last Modified " */
             for ( i = 0; i < 13; i++ )
-                LastModified[i] = lineBuf[i + 3];
-            LastModified[13] = '\0';
-            if ( strcmp( LastModified, "Last Modified" ) == 0 ) {
+                last_modified[i] = line_buf[i + 3];
+            last_modified[13] = '\0';
+            if ( strcmp( last_modified, "Last Modified" ) == 0 ) {
                 fprintf( F2, "   Last Modified  : %s\n", time_to_print );
             }
             else
-                fprintf( F2, "%s", lineBuf );
+                fprintf( F2, "%s", line_buf );
         }
         fclose( F );
         fclose( F2 );
