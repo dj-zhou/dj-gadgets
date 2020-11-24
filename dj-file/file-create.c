@@ -31,14 +31,17 @@ void create_main_cpp( void ) {
         fprintf( F, "----------------------------------------------------------"
                     "---------------------\n" );
         fprintf( F, "INPUTS\n\nOUTPUTS\n\n" );
-        fprintf( F, "/*********************************************************"
-                    "********************/\n" );
+        fprintf( F, "*********************************************************"
+                    "*********************/\n" );
+        fprintf( F, "#include <math.h>\n" );
+        fprintf( F, "#include <stdint.h>\n" );
         fprintf( F, "#include <stdio.h>\n" );
         fprintf( F, "#include <stdlib.h>\n" );
-        fprintf( F, "#include <unistd.h>\n" );
-        fprintf( F, "#include <stdint.h>\n\n" );
-        fprintf( F, "int main(int argc, char *argv[])\n" );
-        fprintf( F, "{\n" );
+        fprintf( F, "#include <unistd.h>\n\n" );
+        fprintf( F, "using namespace std;\n\n" );
+        fprintf( F, "int main(int argc, char* argv[]) {\n" );
+        fprintf( F, "    ( void )argc;\n" );
+        fprintf( F, "    ( void )argv;\n" );
         fprintf( F, "    return 0;\n" );
         fprintf( F, "}\n" );
         fclose( F );
@@ -120,17 +123,17 @@ void create_Makefile( void ) {
             F, "\n# "
                "=============================================================="
                "===============\n" );
-        fprintf( F, "C_DEFS += -D BIN_NAME=\\\"$(EXEC)\\\"\n" );
+        fprintf( F, "# C_DEFS += -D BIN_NAME=\\\"$(EXEC)\\\"\n" );
         fprintf( F,
-                 "C_DEFS += -D PRJ_GIT_CMT=\\\"$(shell git rev-parse --short "
+                 "# C_DEFS += -D PRJ_GIT_CMT=\\\"$(shell git rev-parse --short "
                  "HEAD)\\\"\n" );
         fprintf(
             F,
-            "C_DEFS += -D PRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref "
+            "# C_DEFS += -D PRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref "
             "HEAD)\\\"\n" );
-        fprintf( F,
-                 "C_DEFS += -D PRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 "
-                 "--dirty --always --tags)\\\"\n" );
+        fprintf(
+            F, "# C_DEFS += -D PRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 "
+               "--dirty --always --tags)\\\"\n" );
         fprintf(
             F, "\n# "
                "=============================================================="
@@ -206,16 +209,16 @@ void create_clang_format( void ) {
                     "TableGen, TextProto\n" );
         fprintf( F, "Language:	Cpp\n" );
         fprintf( F, "# BasedOnStyle:	LLVM\n" );
-        fprintf( F, "# 访问说明符(public、private等)的偏移\n" );
+        fprintf( F, "# 访问说明符（public、private等）的偏移\n" );
         fprintf( F, "AccessModifierOffset:	-4\n" );
-        fprintf( F, "# 开括号(开圆括号、开尖括号、开方括号)后的对齐: Align, "
-                    "DontAlign, AlwaysBreak(总是在开括号后换行)\n" );
+        fprintf( F, "# 开括号（开圆括号、开尖括号、开方括号）后的对齐: Align, "
+                    "DontAlign, AlwaysBreak（总是在开括号后换行）\n" );
         fprintf( F, "AlignAfterOpenBracket:	Align\n" );
         fprintf( F, "# 连续赋值时，对齐所有等号\n" );
         fprintf( F, "AlignConsecutiveAssignments:	true\n" );
         fprintf( F, "# 连续声明时，对齐所有声明的变量名\n" );
         fprintf( F, "AlignConsecutiveDeclarations:	true\n" );
-        fprintf( F, "# 左对齐逃脱换行(使用反斜杠换行)的反斜杠\n" );
+        fprintf( F, "# 左对齐逃脱换行（使用反斜杠换行）的反斜杠\n" );
         fprintf( F, "AlignEscapedNewlinesLeft:	true\n" );
         fprintf( F, "# 水平对齐二元和三元表达式的操作数\n" );
         fprintf( F, "AlignOperands:	true\n" );
@@ -227,20 +230,20 @@ void create_clang_format( void ) {
         fprintf( F, "AllowShortBlocksOnASingleLine:	false\n" );
         fprintf( F, "# 允许短的case标签放在同一行\n" );
         fprintf( F, "AllowShortCaseLabelsOnASingleLine:	false\n" );
-        fprintf( F, "# 允许短的函数放在同一行: None, InlineOnly(定义在类中), "
-                    "Empty(空函数), Inline(定义在类中，空函数), All\n" );
+        fprintf( F, "# 允许短的函数放在同一行: None, InlineOnly（定义在类中）, "
+                    "Empty（空函数）, Inline（定义在类中，空函数）, All\n" );
         fprintf( F, "AllowShortFunctionsOnASingleLine:	Empty\n" );
         fprintf( F, "# 允许短的if语句保持在同一行\n" );
         fprintf( F, "AllowShortIfStatementsOnASingleLine:	false\n" );
 
         fprintf( F, "# 允许短的循环保持在同一行\n" );
         fprintf( F, "AllowShortLoopsOnASingleLine:	false\n" );
-        fprintf( F, "# 总是在定义返回类型后换行(deprecated)\n" );
+        fprintf( F, "# 总是在定义返回类型后换行（deprecated）\n" );
         fprintf( F, "AlwaysBreakAfterDefinitionReturnType:	None\n" );
         fprintf( F, "# 总是在返回类型后换行: None, All, "
-                    "TopLevel(顶级函数，不包括在类中的函数), \n" );
-        fprintf( F, "#   AllDefinitions(所有的定义，不包括声明), "
-                    "TopLevelDefinitions(所有的顶级函数的定义)\n" );
+                    "TopLevel（顶级函数，不包括在类中的函数）, \n" );
+        fprintf( F, "#   AllDefinitions（所有的定义，不包括声明）, "
+                    "TopLevelDefinitions（所有的顶级函数的定义）\n" );
         fprintf( F, "AlwaysBreakAfterReturnType:	None\n" );
         fprintf( F, "# 总是在多行string字面量前换行\n" );
         fprintf( F, "AlwaysBreakBeforeMultilineStrings:	false\n" );
@@ -275,18 +278,19 @@ void create_clang_format( void ) {
         fprintf( F, "  BeforeElse:	true\n" );
         fprintf( F, "  # 缩进大括号\n" );
         fprintf( F, "  IndentBraces:	false\n" );
-        fprintf(
-            F, "# 在二元运算符前换行: None(在操作符后换行), "
-               "NonAssignment(在非赋值的操作符前换行), All(在操作符前换行)\n" );
+        fprintf( F, "# 在二元运算符前换行: None（在操作符后换行）, "
+                    "NonAssignment（在非赋值的操作符前换行）, "
+                    "All（在操作符前换行）\n" );
         fprintf( F, "BreakBeforeBinaryOperators:	NonAssignment\n" );
-        fprintf( F, "# 在大括号前换行: Attach(始终将大括号附加到周围的上下文), "
-                    "Linux(除函数、命名空间和类定义，与Attach类似), \n" );
-        fprintf( F, "#   Mozilla(除枚举、函数、记录定义，与Attach类似), "
-                    "Stroustrup(除函数定义、catch、else，与Attach类似), \n" );
         fprintf( F,
-                 "#   Allman(总是在大括号前换行), "
-                 "GNU(总是在大括号前换行，并对于控制语句的大括号增加额外的缩进)"
-                 ", WebKit(在函数前换行), Custom\n" );
+                 "# 在大括号前换行: Attach（始终将大括号附加到周围的上下文）, "
+                 "Linux（除函数、命名空间和类定义，与Attach类似）, \n" );
+        fprintf( F, "#   Mozilla（除枚举、函数、记录定义，与Attach类似）, "
+                    "Stroustrup（除函数定义、catch、else，与Attach类似）, \n" );
+        fprintf(
+            F, "#   Allman（总是在大括号前换行）, "
+               "GNU（总是在大括号前换行，并对于控制语句的大括号增加额外的缩进）"
+               ", WebKit（在函数前换行）, Custom\n" );
         fprintf( F, "#   注：这里认为语句块也属于函数\n" );
         fprintf( F, "BreakBeforeBraces:	Custom\n" );
         fprintf( F, "# 在三元运算符前换行\n" );
@@ -313,15 +317,15 @@ void create_clang_format( void ) {
         fprintf( F, "# 关闭格式化\n" );
         fprintf( F, "DisableFormat:	false\n" );
         fprintf( F, "# "
-                    "自动检测函数的调用和定义是否被格式为每行一个参数("
-                    "Experimental)\n" );
+                    "自动检测函数的调用和定义是否被格式为每行一个参数（"
+                    "Experimental）\n" );
         fprintf( F, "ExperimentalAutoDetectBinPacking:	false\n" );
         fprintf( F, "# 需要被解读为foreach循环而不是函数调用的宏\n" );
         fprintf( F, "ForEachMacros:	[ foreach, Q_FOREACH, BOOST_FOREACH ]\n" );
         fprintf( F, "# "
                     "对#include进行排序，匹配了某正则表达式的#"
-                    "include拥有对应的优先级，匹配不到的则默认优先级为INT_MAX("
-                    "优先级越小排序越靠前)，\n" );
+                    "include拥有对应的优先级，匹配不到的则默认优先级为INT_MAX（"
+                    "优先级越小排序越靠前），\n" );
         fprintf( F,
                  "#   可以定义负数优先级从而保证某些#include永远在最前面\n" );
         fprintf( F, "IncludeCategories: \n" );
@@ -346,7 +350,7 @@ void create_clang_format( void ) {
         fprintf( F, "# 连续空行的最大数量\n" );
         fprintf( F, "MaxEmptyLinesToKeep:	1\n" );
         fprintf( F, "# 命名空间的缩进: None, "
-                    "Inner(缩进嵌套的命名空间中的内容), All\n" );
+                    "Inner（缩进嵌套的命名空间中的内容）, All\n" );
         fprintf( F, "NamespaceIndentation:	Inner\n" );
         fprintf( F, "# 使用ObjC块时缩进宽度\n" );
         fprintf( F, "ObjCBlockIndentWidth:	4\n" );
@@ -382,17 +386,17 @@ void create_clang_format( void ) {
         fprintf( F, "SpaceBeforeParens:	ControlStatements\n" );
         fprintf( F, "# 在空的圆括号中添加空格\n" );
         fprintf( F, "SpaceInEmptyParentheses:	false\n" );
-        fprintf( F, "# 在尾随的评论前添加的空格数(只适用于//)\n" );
+        fprintf( F, "# 在尾随的评论前添加的空格数（只适用于//）\n" );
         fprintf( F, "SpacesBeforeTrailingComments:	2\n" );
         fprintf( F, "# 在尖括号的<后和>前添加空格\n" );
-        fprintf( F, "SpacesInAngles:	true\n" );
+        fprintf( F, "SpacesInAngles:	false\n" );
         fprintf( F,
                  "# 在容器(ObjC和JavaScript的数组和字典等)字面量中添加空格\n" );
         fprintf( F, "SpacesInContainerLiterals:	true\n" );
         fprintf( F, "# 在C风格类型转换的括号中添加空格\n" );
         fprintf( F, "SpacesInCStyleCastParentheses:	true\n" );
         fprintf( F, "# 在圆括号的(后和)前添加空格\n" );
-        fprintf( F, "SpacesInParentheses:	true\n" );
+        fprintf( F, "SpacesInParentheses:	false\n" );
         fprintf( F,
                  "# "
                  "在方括号的[后和]"
