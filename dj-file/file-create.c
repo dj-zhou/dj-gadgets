@@ -33,6 +33,7 @@ void create_main_cpp( void ) {
         fprintf( F, "INPUTS\n\nOUTPUTS\n\n" );
         fprintf( F, "*********************************************************"
                     "*********************/\n" );
+        fprintf( F, "#include <iostream>\n" );
         fprintf( F, "#include <math.h>\n" );
         fprintf( F, "#include <stdint.h>\n" );
         fprintf( F, "#include <stdio.h>\n" );
