@@ -13,10 +13,9 @@ void create_main_cpp(void) {
     char  time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
     FILE* F;
     int   run_shell;
-    /* need to judge if the file already exist */
+
     current_time_date(time_to_print);
-    if ((F = fopen("src/main.cpp", "r")) == NULL) /* does not exist */
-    {
+    if ((F = fopen("src/main.cpp", "r")) == NULL) {
         printf("No \"src/main.cpp\" exists, create one.\n");
         run_shell = system("mkdir src");
         F         = fopen("src/main.cpp", "a");
@@ -90,7 +89,6 @@ void create_main_cpp(void) {
 
 void create_Makefile(void) {
 
-    /* create the Makefile */
     FILE* F;
     if ((F = fopen("Makefile", "r")) == NULL) {
         printf("No \"Makefile\" exists, create one.\n");
@@ -195,10 +193,28 @@ void create_Makefile(void) {
     }
 }
 
+void create_CMakeLists_txt(void) {
+    FILE* F;
+    if ((F = fopen("CMakeLists.txt", "r")) == NULL) {
+        printf("No \"CMakeLists.txt\" exists, create one.\n");
+        F = fopen("CMakeLists.txt", "w");
+        fprintf(F, "cmake_minimum_required(VERSION 3.5)\n");
+        fprintf(F, "project(cmake-project)\n\n");
+        fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n\n");
+        fprintf(F, "# ------------------------------\n");
+        fprintf(F, "add_executable(\n");
+        fprintf(F, "    main\n");
+        fprintf(F, "    src/main.cpp\n");
+        fprintf(F, ")\n");
+        fprintf(F, "# target_link_libraries(\n");
+        fprintf(F, "#     #\n");
+        fprintf(F, "# )\n");
+        fclose(F);
+    }
+}
 void create_clang_format(void) {
     FILE* F;
     if ((F = fopen(".clang-format", "r")) == NULL) {
-
         printf("No \".clang-format\" exists, create one.\n");
         F = fopen(".clang-format", "w");
         fprintf(F, "Language: Cpp\n");
