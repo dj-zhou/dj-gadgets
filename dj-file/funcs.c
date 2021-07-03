@@ -8,7 +8,7 @@
 ***********************************************************/
 #include "funcs.h"
 
-void config_value_init( int num1, int num2 ) {
+void config_value_init(int num1, int num2) {
     ver_no_1 = num1;
     ver_no_2 = num2;
 }

@@ -13,6 +13,6 @@
 #include "config.h"
 
 /* functions declaration */
-void current_time_date( char* );
+void current_time_date(char*);
 
 #endif  // __TIME_FETCH_H

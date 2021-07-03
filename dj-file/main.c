@@ -10,14 +10,9 @@ enum Methods {
 enum Methods method;
 
 int main(int argc, char* argv[]) {
-    int i;
-    int run_shell;
-    int file_name_len = 0;
-    int vim_cmd_len   = 0;
 
     config_value_init(1, 4);
 
-    /* arguments checking */
     if (argc < 2) {
         djfile_err_argv();
         return 1;
@@ -33,15 +28,15 @@ int main(int argc, char* argv[]) {
             break;
         case 'v':
             djfile_version();
-            break;
+            return 0;
         case 'h':
             djfile_usage();
-            break;
+            return 0;
         default:
             return 2;
         }
     }
-    /* -----------------------------------------*/
+
     create_main_cpp();
     if (method == Use_Makefile) {
         create_Makefile();
@@ -52,5 +47,3 @@ int main(int argc, char* argv[]) {
     create_clang_format();
     return 0;
 }
-
-/* -------------------- end of file --------------------- */

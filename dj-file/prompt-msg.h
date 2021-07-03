@@ -16,8 +16,8 @@
 //#define lINEmAXnUM 1000
 
 /* functions declaration */
-void djfile_err_argv( void );
-void djfile_usage( void );
-void djfile_version( void );
+void djfile_err_argv(void);
+void djfile_usage(void);
+void djfile_version(void);
 
 #endif  // __PROMPT_MSG_H

@@ -10,7 +10,7 @@
 ***********************************************************/
 #include "time-fetch.h"
 
-void current_time_date( char* time2Print ) {
+void current_time_date(char* time2Print) {
     char wday[][3] = {
         { 'S', 'u', 'n' }, { 'M', 'o', 'n' }, { 'T', 'u', 'e' },
         { 'W', 'e', 'd' }, { 'T', 'h', 'u' }, { 'F', 'r', 'i' },
@@ -28,8 +28,8 @@ void current_time_date( char* time2Print ) {
     int year, mon, day, wkday, hour, min, sec;
 
     /* obtain the time */
-    time( &timep );
-    p = localtime( &timep );
+    time(&timep);
+    p = localtime(&timep);
 
     /* store the time */
     year  = 1900 + p->tm_year;
@@ -51,11 +51,11 @@ void current_time_date( char* time2Print ) {
     time2Print[7] = wmon[mon][2];
 
     /* day */
-    time2Print[10] = ( int )( day / 10.0 ) + 48;
+    time2Print[10] = ( int )(day / 10.0) + 48;
     time2Print[11] = day % 10 + 48;
-    if ( ( ( int )( day / 10.0 ) ) == 0 || ( ( int )( day / 10.0 ) ) == 2
-         || ( ( int )( day / 10.0 ) ) == 3 ) {
-        switch ( day % 10 ) {
+    if ((( int )(day / 10.0)) == 0 || (( int )(day / 10.0)) == 2
+        || (( int )(day / 10.0)) == 3) {
+        switch (day % 10) {
         case 1:
             time2Print[12] = 's';
             time2Print[13] = 't';
@@ -76,24 +76,24 @@ void current_time_date( char* time2Print ) {
     }
 
     /* year */
-    time2Print[16] = ( int )( year / 1000.0 ) + 48;
-    time2Print[17] = ( int )( year % 1000 / 100.0 ) + 48;
-    time2Print[18] = ( int )( year % 100 / 10.0 ) + 48;
+    time2Print[16] = ( int )(year / 1000.0) + 48;
+    time2Print[17] = ( int )(year % 1000 / 100.0) + 48;
+    time2Print[18] = ( int )(year % 100 / 10.0) + 48;
     time2Print[19] = year % 10 + 48;
 
     /* hour */
-    time2Print[22] = ( int )( hour % 12 / 10.0 ) + 48;
+    time2Print[22] = ( int )(hour % 12 / 10.0) + 48;
     time2Print[23] = hour % 12 % 10 + 48;
 
     /* minute */
-    time2Print[25] = ( int )( min / 10.0 ) + 48;
+    time2Print[25] = ( int )(min / 10.0) + 48;
     time2Print[26] = min % 10 + 48;
 
     /* second */
-    time2Print[28] = ( int )( sec / 10.0 ) + 48;
+    time2Print[28] = ( int )(sec / 10.0) + 48;
     time2Print[29] = sec % 10 + 48;
 
     /* AM or PM */
-    if ( hour >= 12 )
+    if (hour >= 12)
         time2Print[31] = 'P';
 }

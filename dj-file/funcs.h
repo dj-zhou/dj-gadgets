@@ -12,6 +12,6 @@
 
 #include "config.h"
 
-void config_value_init( int, int );
+void config_value_init(int, int);
 
 #endif
