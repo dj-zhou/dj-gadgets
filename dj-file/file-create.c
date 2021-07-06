@@ -199,8 +199,20 @@ void create_CMakeLists_txt(void) {
         printf("No \"CMakeLists.txt\" exists, create one.\n");
         F = fopen("CMakeLists.txt", "w");
         fprintf(F, "cmake_minimum_required(VERSION 3.5)\n");
-        fprintf(F, "project(cmake-project)\n\n");
-        fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n\n");
+        fprintf(F, "project(cmake-project)\n");
+        fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
+        fprintf(F, "add_compile_options(\n");
+        fprintf(F, "  -Wall\n");
+        fprintf(F, "  -Wextra\n");
+        fprintf(F, "  -pedantic\n");
+        fprintf(F, "  -Werror\n");
+        fprintf(F, "  -Wformat=2\n");
+        fprintf(F, "  -Wduplicated-cond\n");
+        fprintf(F, "  -Wfloat-equal\n");
+        fprintf(F, "  -Wshadow\n");
+        fprintf(F, "  -Wconversion\n");
+        fprintf(F, "  -Wlogical-not-parentheses\n\n");
+
         fprintf(F, "# ------------------------------\n");
         fprintf(F, "add_executable(\n");
         fprintf(F, "    main\n");
@@ -212,6 +224,7 @@ void create_CMakeLists_txt(void) {
         fclose(F);
     }
 }
+
 void create_clang_format(void) {
     FILE* F;
     if ((F = fopen(".clang-format", "r")) == NULL) {
