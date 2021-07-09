@@ -211,7 +211,8 @@ void create_CMakeLists_txt(void) {
         fprintf(F, "  -Wfloat-equal\n");
         fprintf(F, "  -Wshadow\n");
         fprintf(F, "  -Wconversion\n");
-        fprintf(F, "  -Wlogical-not-parentheses\n\n");
+        fprintf(F, "  -Wlogical-not-parentheses\n");
+        fprintf(F, ")\n\n");
 
         fprintf(F, "# ------------------------------\n");
         fprintf(F, "add_executable(\n");
