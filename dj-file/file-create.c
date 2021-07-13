@@ -194,132 +194,190 @@ void create_Makefile(void) {
 }
 
 void create_CMakeLists_txt(void) {
-    FILE* F;
-    if ((F = fopen("CMakeLists.txt", "r")) == NULL) {
-        printf("No \"CMakeLists.txt\" exists, create one.\n");
-        F = fopen("CMakeLists.txt", "w");
-        fprintf(F, "cmake_minimum_required(VERSION 3.5)\n");
-        fprintf(F, "project(cmake-project)\n");
-        fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
-        fprintf(F, "add_compile_options(\n");
-        fprintf(F, "  -Wall\n");
-        fprintf(F, "  -Wextra\n");
-        fprintf(F, "  -pedantic\n");
-        fprintf(F, "  -Werror\n");
-        fprintf(F, "  -Wformat=2\n");
-        fprintf(F, "  -Wduplicated-cond\n");
-        fprintf(F, "  -Wfloat-equal\n");
-        fprintf(F, "  -Wshadow\n");
-        fprintf(F, "  -Wconversion\n");
-        fprintf(F, "  -Wlogical-not-parentheses\n");
-        fprintf(F, ")\n\n");
-
-        fprintf(F, "# ------------------------------\n");
-        fprintf(F, "add_executable(\n");
-        fprintf(F, "    main\n");
-        fprintf(F, "    src/main.cpp\n");
-        fprintf(F, ")\n");
-        fprintf(F, "# target_link_libraries(\n");
-        fprintf(F, "#     #\n");
-        fprintf(F, "# )\n");
-        fclose(F);
+    FILE*      F;
+    const char filename[] = "CMakeLists.txt";
+    if ((F = fopen(filename, "r")) != NULL) {
+        printf("\"%s\" exists, exit.\n", filename);
+        return;
     }
+    F = fopen(filename, "w");
+    fprintf(F, "cmake_minimum_required(VERSION 3.5)\n");
+    fprintf(F, "project(cmake-project)\n");
+    fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
+    fprintf(F, "add_compile_options(\n");
+    fprintf(F, "  -Wall\n");
+    fprintf(F, "  -Wextra\n");
+    fprintf(F, "  -pedantic\n");
+    fprintf(F, "  -Werror\n");
+    fprintf(F, "  -Wformat=2\n");
+    fprintf(F, "  -Wduplicated-cond\n");
+    fprintf(F, "  -Wfloat-equal\n");
+    fprintf(F, "  -Wshadow\n");
+    fprintf(F, "  -Wconversion\n");
+    fprintf(F, "  -Wlogical-not-parentheses\n");
+    fprintf(F, ")\n\n");
+
+    fprintf(F, "# ------------------------------\n");
+    fprintf(F, "add_executable(\n");
+    fprintf(F, "    main\n");
+    fprintf(F, "    src/main.cpp\n");
+    fprintf(F, ")\n");
+    fprintf(F, "# target_link_libraries(\n");
+    fprintf(F, "#     #\n");
+    fprintf(F, "# )\n");
+    fclose(F);
+}
+
+void create_editor_config(void) {
+    FILE*      F;
+    const char filename[] = ".editorconfig";
+    if ((F = fopen(filename, "r")) != NULL) {
+        printf("\"%s\" exists, exit.\n", filename);
+        return;
+    }
+    F = fopen(filename, "w");
+    fprintf(F, "root = true\n\n");
+
+    fprintf(F, "[*]\n");
+    fprintf(F, "end_of_line = lf\n");
+    fprintf(F, "insert_final_newline = true\n");
+    fprintf(F, "trim_trailing_whitespace = true\n");
+    fprintf(F, "charset = utf-8\n\n");
+
+    fprintf(F, "[*.diff]\n");
+    fprintf(F, "insert_final_newline = false\n");
+    fprintf(F, "trim_trailing_whitespace = false\n\n");
+
+    fprintf(F, "[*.{c,h}]\n");
+    fprintf(F, "indent_style = tab\n");
+    fprintf(F, "indent_size = 8\n\n");
+
+    fprintf(F, "[*.{cc,hh,cpp,cxx,hpp}]\n");
+    fprintf(F, "indent_style = space\n");
+    fprintf(F, "indent_size = 4\n\n");
+
+    fprintf(F, "[*.x]\n");
+    fprintf(F, "indent_style = space\n");
+    fprintf(F, "indent_size = 2\n\n");
+
+    fprintf(F, "[.uncrustify.cfg]\n");
+    fprintf(F, "indent_style = space\n\n");
+
+    fprintf(F, "[Dockerfile*]\n");
+    fprintf(F, "indent_size = 4\n");
+    fprintf(F, "indent_style = space\n\n");
+
+    fprintf(F, "[{BUILD.bazel,*.bzl,WORKSPACE}]\n");
+    fprintf(F, "indent_size = 4\n");
+    fprintf(F, "indent_style = space\n\n");
+
+    fprintf(F, "[*.{yml,yaml}]\n");
+    fprintf(F, "indent_size = 2\n");
+    fprintf(F, "indent_style = space\n\n");
+
+    fprintf(F, "[*.proto]\n");
+    fprintf(F, "indent_size = 2\n");
+    fprintf(F, "indent_style = space\n\n");
+
+    fclose(F);
 }
 
 void create_clang_format(void) {
-    FILE* F;
-    if ((F = fopen(".clang-format", "r")) == NULL) {
-        printf("No \".clang-format\" exists, create one.\n");
-        F = fopen(".clang-format", "w");
-        fprintf(F, "Language: Cpp\n");
-        fprintf(F, "AccessModifierOffset: -4\n");
-        fprintf(F, "AlignAfterOpenBracket: Align\n");
-        fprintf(F, "AlignConsecutiveAssignments: true\n");
-        fprintf(F, "AlignConsecutiveDeclarations: true\n");
-        fprintf(F, "AlignEscapedNewlinesLeft: true\n");
-        fprintf(F, "AlignOperands: true\n");
-        fprintf(F, "AlignTrailingComments: true\n");
-        fprintf(F, "AllowAllParametersOfDeclarationOnNextLine: true\n");
-        fprintf(F, "AllowShortBlocksOnASingleLine: false\n");
-        fprintf(F, "AllowShortCaseLabelsOnASingleLine: false\n");
-        fprintf(F, "AllowShortFunctionsOnASingleLine: Empty\n");
-        fprintf(F, "AllowShortIfStatementsOnASingleLine: false\n");
-        fprintf(F, "AllowShortLoopsOnASingleLine: false\n");
-        fprintf(F, "AlwaysBreakAfterDefinitionReturnType: None\n");
-        fprintf(F, "AlwaysBreakAfterReturnType: None\n");
-        fprintf(F, "AlwaysBreakBeforeMultilineStrings: false\n");
-        fprintf(F, "AlwaysBreakTemplateDeclarations: true\n");
-        fprintf(F, "BinPackArguments: true\n");
-        fprintf(F, "BinPackParameters: true\n");
-        fprintf(F, "BraceWrapping:\n");
-        fprintf(F, "    AfterClass: false\n");
-        fprintf(F, "    AfterControlStatement: false\n");
-        fprintf(F, "    AfterEnum: false\n");
-        fprintf(F, "    AfterFunction: false\n");
-        fprintf(F, "    AfterNamespace: false\n");
-        fprintf(F, "    AfterObjCDeclaration: false\n");
-        fprintf(F, "    AfterStruct: false\n");
-        fprintf(F, "    AfterUnion: false\n");
-        fprintf(F, "    BeforeCatch: true\n");
-        fprintf(F, "    BeforeElse: true\n");
-        fprintf(F, "    IndentBraces: false\n");
-        fprintf(F, "BreakBeforeBinaryOperators: NonAssignment\n");
-        fprintf(F, "BreakBeforeBraces: Custom\n");
-        fprintf(F, "BreakBeforeTernaryOperators: true\n");
-        fprintf(F, "BreakConstructorInitializersBeforeComma: false\n");
-        fprintf(F, "ColumnLimit: 80\n");
-        fprintf(F, "CommentPragmas: '^ IWYU pragma:'\n");
-        fprintf(F, "ConstructorInitializerAllOnOneLineOrOnePerLine: false\n");
-        fprintf(F, "ConstructorInitializerIndentWidth: 4\n");
-        fprintf(F, "ContinuationIndentWidth: 4\n");
-        fprintf(F, "Cpp11BracedListStyle: false\n");
-        fprintf(F, "DerivePointerAlignment: false\n");
-        fprintf(F, "DisableFormat: false\n");
-        fprintf(F, "ExperimentalAutoDetectBinPacking: false\n");
-        fprintf(F, "ForEachMacros: [ foreach, Q_FOREACH, BOOST_FOREACH ]\n");
-        fprintf(F, "IncludeCategories:\n");
-        fprintf(F, "  - Regex: '^\"(llvm|llvm-c|clang|clang-c)/'\n");
-        fprintf(F, "    Priority: 2\n");
-        fprintf(F, "  - Regex: '^(<|\"(gtest|isl|json)/)'\n");
-        fprintf(F, "    Priority: 3\n");
-        fprintf(F, "  - Regex: '.*'\n");
-        fprintf(F, "    Priority: 1\n");
-        fprintf(F, "IndentCaseLabels: false\n");
-        fprintf(F, "IndentWidth: 4\n");
-        fprintf(F, "IndentWrappedFunctionNames: false\n");
-        fprintf(F, "KeepEmptyLinesAtTheStartOfBlocks: true\n");
-        fprintf(F, "MacroBlockBegin: ''\n");
-        fprintf(F, "MacroBlockEnd: ''\n");
-        fprintf(F, "MaxEmptyLinesToKeep: 1\n");
-        fprintf(F, "NamespaceIndentation: Inner\n");
-        fprintf(F, "ObjCBlockIndentWidth: 4\n");
-        fprintf(F, "ObjCSpaceAfterProperty: false\n");
-        fprintf(F, "ObjCSpaceBeforeProtocolList: true\n");
-        fprintf(F, "PenaltyBreakBeforeFirstCallParameter: 19\n");
-        fprintf(F, "PenaltyBreakComment: 300\n");
-        fprintf(F, "PenaltyBreakFirstLessLess: 120\n");
-        fprintf(F, "PenaltyBreakString: 1000\n");
-        fprintf(F, "PenaltyExcessCharacter: 1000000\n");
-        fprintf(F, "PenaltyReturnTypeOnItsOwnLine: 60\n");
-        fprintf(F, "PointerAlignment: Left\n");
-        fprintf(F, "ReflowComments: true\n");
-        fprintf(F, "SortIncludes: true\n");
-        fprintf(F, "SpaceAfterCStyleCast: false\n");
-        fprintf(F, "SpaceBeforeAssignmentOperators: true\n");
-        fprintf(F, "SpaceBeforeParens: ControlStatements\n");
-        fprintf(F, "SpaceInEmptyParentheses: false\n");
-        fprintf(F, "SpacesBeforeTrailingComments: 2\n");
-        fprintf(F, "SpacesInAngles: false\n");
-        fprintf(F, "SpacesInContainerLiterals: true\n");
-        fprintf(F, "SpacesInCStyleCastParentheses: true\n");
-        fprintf(F, "SpacesInParentheses: false\n");
-        fprintf(F, "SpacesInSquareBrackets: false\n");
-        fprintf(F, "Standard: Cpp11\n");
-        fprintf(F, "TabWidth: 4\n");
-        fprintf(F, "UseTab: Never\n");
-
-        fclose(F);
+    FILE*      F;
+    const char filename[] = ".clang-format";
+    if ((F = fopen(filename, "r")) != NULL) {
+        printf("\"%s\" exists, exit.\n", filename);
+        return;
     }
+    F = fopen(filename, "w");
+    fprintf(F, "Language: Cpp\n");
+    fprintf(F, "AccessModifierOffset: -4\n");
+    fprintf(F, "AlignAfterOpenBracket: Align\n");
+    fprintf(F, "AlignConsecutiveAssignments: true\n");
+    fprintf(F, "AlignConsecutiveDeclarations: true\n");
+    fprintf(F, "AlignEscapedNewlinesLeft: true\n");
+    fprintf(F, "AlignOperands: true\n");
+    fprintf(F, "AlignTrailingComments: true\n");
+    fprintf(F, "AllowAllParametersOfDeclarationOnNextLine: true\n");
+    fprintf(F, "AllowShortBlocksOnASingleLine: false\n");
+    fprintf(F, "AllowShortCaseLabelsOnASingleLine: false\n");
+    fprintf(F, "AllowShortFunctionsOnASingleLine: Empty\n");
+    fprintf(F, "AllowShortIfStatementsOnASingleLine: false\n");
+    fprintf(F, "AllowShortLoopsOnASingleLine: false\n");
+    fprintf(F, "AlwaysBreakAfterDefinitionReturnType: None\n");
+    fprintf(F, "AlwaysBreakAfterReturnType: None\n");
+    fprintf(F, "AlwaysBreakBeforeMultilineStrings: false\n");
+    fprintf(F, "AlwaysBreakTemplateDeclarations: true\n");
+    fprintf(F, "BinPackArguments: true\n");
+    fprintf(F, "BinPackParameters: true\n");
+    fprintf(F, "BraceWrapping:\n");
+    fprintf(F, "    AfterClass: false\n");
+    fprintf(F, "    AfterControlStatement: false\n");
+    fprintf(F, "    AfterEnum: false\n");
+    fprintf(F, "    AfterFunction: false\n");
+    fprintf(F, "    AfterNamespace: false\n");
+    fprintf(F, "    AfterObjCDeclaration: false\n");
+    fprintf(F, "    AfterStruct: false\n");
+    fprintf(F, "    AfterUnion: false\n");
+    fprintf(F, "    BeforeCatch: true\n");
+    fprintf(F, "    BeforeElse: true\n");
+    fprintf(F, "    IndentBraces: false\n");
+    fprintf(F, "BreakBeforeBinaryOperators: NonAssignment\n");
+    fprintf(F, "BreakBeforeBraces: Custom\n");
+    fprintf(F, "BreakBeforeTernaryOperators: true\n");
+    fprintf(F, "BreakConstructorInitializersBeforeComma: false\n");
+    fprintf(F, "ColumnLimit: 80\n");
+    fprintf(F, "CommentPragmas: '^ IWYU pragma:'\n");
+    fprintf(F, "ConstructorInitializerAllOnOneLineOrOnePerLine: false\n");
+    fprintf(F, "ConstructorInitializerIndentWidth: 4\n");
+    fprintf(F, "ContinuationIndentWidth: 4\n");
+    fprintf(F, "Cpp11BracedListStyle: false\n");
+    fprintf(F, "DerivePointerAlignment: false\n");
+    fprintf(F, "DisableFormat: false\n");
+    fprintf(F, "ExperimentalAutoDetectBinPacking: false\n");
+    fprintf(F, "ForEachMacros: [ foreach, Q_FOREACH, BOOST_FOREACH ]\n");
+    fprintf(F, "IncludeCategories:\n");
+    fprintf(F, "  - Regex: '^\"(llvm|llvm-c|clang|clang-c)/'\n");
+    fprintf(F, "    Priority: 2\n");
+    fprintf(F, "  - Regex: '^(<|\"(gtest|isl|json)/)'\n");
+    fprintf(F, "    Priority: 3\n");
+    fprintf(F, "  - Regex: '.*'\n");
+    fprintf(F, "    Priority: 1\n");
+    fprintf(F, "IndentCaseLabels: false\n");
+    fprintf(F, "IndentWidth: 4\n");
+    fprintf(F, "IndentWrappedFunctionNames: false\n");
+    fprintf(F, "KeepEmptyLinesAtTheStartOfBlocks: true\n");
+    fprintf(F, "MacroBlockBegin: ''\n");
+    fprintf(F, "MacroBlockEnd: ''\n");
+    fprintf(F, "MaxEmptyLinesToKeep: 1\n");
+    fprintf(F, "NamespaceIndentation: Inner\n");
+    fprintf(F, "ObjCBlockIndentWidth: 4\n");
+    fprintf(F, "ObjCSpaceAfterProperty: false\n");
+    fprintf(F, "ObjCSpaceBeforeProtocolList: true\n");
+    fprintf(F, "PenaltyBreakBeforeFirstCallParameter: 19\n");
+    fprintf(F, "PenaltyBreakComment: 300\n");
+    fprintf(F, "PenaltyBreakFirstLessLess: 120\n");
+    fprintf(F, "PenaltyBreakString: 1000\n");
+    fprintf(F, "PenaltyExcessCharacter: 1000000\n");
+    fprintf(F, "PenaltyReturnTypeOnItsOwnLine: 60\n");
+    fprintf(F, "PointerAlignment: Left\n");
+    fprintf(F, "ReflowComments: true\n");
+    fprintf(F, "SortIncludes: true\n");
+    fprintf(F, "SpaceAfterCStyleCast: false\n");
+    fprintf(F, "SpaceBeforeAssignmentOperators: true\n");
+    fprintf(F, "SpaceBeforeParens: ControlStatements\n");
+    fprintf(F, "SpaceInEmptyParentheses: false\n");
+    fprintf(F, "SpacesBeforeTrailingComments: 2\n");
+    fprintf(F, "SpacesInAngles: false\n");
+    fprintf(F, "SpacesInContainerLiterals: true\n");
+    fprintf(F, "SpacesInCStyleCastParentheses: true\n");
+    fprintf(F, "SpacesInParentheses: false\n");
+    fprintf(F, "SpacesInSquareBrackets: false\n");
+    fprintf(F, "Standard: Cpp11\n");
+    fprintf(F, "TabWidth: 4\n");
+    fprintf(F, "UseTab: Never\n");
+
+    fclose(F);
 }
 void create_cpp_file(char* fileName) {
     int  i;

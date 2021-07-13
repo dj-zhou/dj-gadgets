@@ -45,5 +45,6 @@ int main(int argc, char* argv[]) {
         create_CMakeLists_txt();
     }
     create_clang_format();
+    create_editor_config();
     return 0;
 }
