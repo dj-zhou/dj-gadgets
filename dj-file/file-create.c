@@ -87,123 +87,111 @@ void create_main_cpp(void) {
     }
 }
 
-void create_Makefile(void) {
-
+static FILE* create_file(const char filename[]) {
     FILE* F;
-    if ((F = fopen("Makefile", "r")) == NULL) {
-        printf("No \"Makefile\" exists, create one.\n");
-        F = fopen("Makefile", "w");
-        fprintf(F,
-                "\n# "
-                "=============================================================="
-                "===============\n");
-        fprintf(F, "EXEC      = main\n");
-        fprintf(F, "CODE_PATH = .\n");
-        fprintf(F, "LIBS      = -lm\n");
-        fprintf(F, "LIBS     += -I/usr/local/lib/\n");
-        fprintf(F, "OUTPATH   = bin\n");
-        fprintf(F, "OPT       = -Og -O0\n");
-        fprintf(F, "CC        = g++\n");
-        fprintf(F, "CPPSTD    = -std=c++11\n");
-        fprintf(F, "MTYPE_ALL = RELEASE\n");
-        fprintf(F, "$(info )\n");
-        fprintf(F, "$(info ------------------------------------)\n");
-        fprintf(F, "$(info LIBS:)\n");
-        fprintf(F, "$(info  $(LIBS))\n");
-        fprintf(F,
-                "\n# "
-                "=============================================================="
-                "===============\n");
-        fprintf(F, "AS = $(CC) -x assembler-with-cpp\n");
-        fprintf(F, "CP = objcopy\n");
-        fprintf(F, "SZ = size\n");
-        fprintf(F,
-                "\n# "
-                "=============================================================="
-                "===============\n");
-        fprintf(F, "# C_DEFS += -D BIN_NAME=\\\"$(EXEC)\\\"\n");
-        fprintf(F,
-                "# C_DEFS += -D PRJ_GIT_CMT=\\\"$(shell git rev-parse --short "
-                "HEAD)\\\"\n");
-        fprintf(
-            F,
-            "# C_DEFS += -D PRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref "
-            "HEAD)\\\"\n");
-        fprintf(
-            F, "# C_DEFS += -D PRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 "
-               "--dirty --always --tags)\\\"\n");
-        fprintf(F,
-                "\n# "
-                "=============================================================="
-                "===============\n");
-        fprintf(F, "# collect '.cpp' file to SRCS\n");
-        fprintf(F, "DIRS := $(shell find $(CODE_PATH) -maxdepth 10 -type d)\n");
-        fprintf(F, "SRCS  = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.cpp))\n");
-        fprintf(F, "$(info )\n");
-        fprintf(F, "$(info ------------------------------------)\n");
-        fprintf(F, "$(info source files:)\n");
-        fprintf(F, "$(info  $(SRCS))\n");
-        fprintf(F, "\nOBJS     = $(addprefix $(OUTPATH)/,$(notdir "
-                   "$(SRCS:.cpp=.o)))\n");
-        fprintf(F, "vpath %%.cpp $(sort $(dir $(SRCS)))\n");
-        fprintf(F, "$(info )\n");
-        fprintf(F, "$(info ------------------------------------)\n");
-        fprintf(F, "$(info object files:)\n");
-        fprintf(F, "$(info  $(OBJS))\n");
-        fprintf(F, "\n# collect '.h' files in INC\n");
-        fprintf(F, "INCH = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.h))\n");
-        fprintf(F,
-                "INC  = $(shell find -L $(INCH) -name '*.h' -exec dirname {} "
-                "\\; | uniq)\n");
-        fprintf(F, "$(info )\n");
-        fprintf(F, "$(info ------------------------------------)\n");
-        fprintf(F, "$(info headers to include:)\n");
-        fprintf(F, "$(info  $(INC:%%=-I%%))\n");
-        fprintf(F, "\n$(info )\n");
-        fprintf(F, "$(info ====================================)\n");
-        fprintf(F, "$(info )\n");
-
-        fprintf(F,
-                "\n# "
-                "=============================================================="
-                "===============\n");
-        fprintf(F, "CFLAGS    = $(C_DEFS) $(INC:%%=-I%%) $(OPT)\n");
-        fprintf(F, "# treat all warnings as errors\n");
-        fprintf(
-            F, "CFLAGS  += -Werror=unused-parameter -Werror=unused-variable\n");
-        fprintf(F, "HOSTFLAGS = $(CPPSTD) $(LIBS)\n");
-        fprintf(F,
-                "\n# "
-                "=============================================================="
-                "===============\n");
-        fprintf(F, ".PHONY: all\n");
-        fprintf(F, "all: CFLAGS+= -D MAKE_TYPE=\\\"$(MTYPE_ALL)\\\"\n");
-        fprintf(F, "all: CFLAGS+= $(HOSTFLAGS)\n");
-        fprintf(F, "all: $(OBJS)\n");
-        fprintf(F, "\t$(CC) -o $(OUTPATH)/$(EXEC) $(OBJS) $(CFLAGS)\n");
-        fprintf(F, "\t$(SZ) $(OUTPATH)/$(EXEC)\n");
-        fprintf(F, "\n$(OUTPATH)/%%.o: %%.cpp | $(OUTPATH)\n");
-        fprintf(F, "\t$(CC) -c $(CFLAGS) $< -o $@\n");
-        fprintf(F, "\n$(OUTPATH):\n");
-        fprintf(F, "\tmkdir -p $@\n");
-        fprintf(F, "\n# ------------------------------------------------\n");
-        fprintf(F, "clean:\n");
-        fprintf(F, "\trm -f $(OUTPATH)/*\n");
-        fclose(F);
-    }
-}
-
-void create_CMakeLists_txt(void) {
-    FILE*      F;
-    const char filename[] = "CMakeLists.txt";
     if ((F = fopen(filename, "r")) != NULL) {
-        printf("\"%s\" exists, exit.\n", filename);
-        return;
+        printf("\"%s\" exists, no need to create.\n", filename);
+        exit(-1);
     }
     else {
         printf("\"%s\" does not exist, create one.\n", filename);
         F = fopen(filename, "w");
     }
+    return F;
+}
+void create_Makefile(void) {
+
+    FILE* F = create_file("Makefile");
+    fprintf(F, "\n# "
+               "=============================================================="
+               "===============\n");
+    fprintf(F, "EXEC      = main\n");
+    fprintf(F, "CODE_PATH = .\n");
+    fprintf(F, "LIBS      = -lm\n");
+    fprintf(F, "LIBS     += -I/usr/local/lib/\n");
+    fprintf(F, "OUTPATH   = bin\n");
+    fprintf(F, "OPT       = -Og -O0\n");
+    fprintf(F, "CC        = g++\n");
+    fprintf(F, "CPPSTD    = -std=c++11\n");
+    fprintf(F, "MTYPE_ALL = RELEASE\n");
+    fprintf(F, "$(info )\n");
+    fprintf(F, "$(info ------------------------------------)\n");
+    fprintf(F, "$(info LIBS:)\n");
+    fprintf(F, "$(info  $(LIBS))\n");
+    fprintf(F, "\n# "
+               "=============================================================="
+               "===============\n");
+    fprintf(F, "AS = $(CC) -x assembler-with-cpp\n");
+    fprintf(F, "CP = objcopy\n");
+    fprintf(F, "SZ = size\n");
+    fprintf(F, "\n# "
+               "=============================================================="
+               "===============\n");
+    fprintf(F, "# C_DEFS += -D BIN_NAME=\\\"$(EXEC)\\\"\n");
+    fprintf(F, "# C_DEFS += -D PRJ_GIT_CMT=\\\"$(shell git rev-parse --short "
+               "HEAD)\\\"\n");
+    fprintf(F,
+            "# C_DEFS += -D PRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref "
+            "HEAD)\\\"\n");
+    fprintf(F, "# C_DEFS += -D PRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 "
+               "--dirty --always --tags)\\\"\n");
+    fprintf(F, "\n# "
+               "=============================================================="
+               "===============\n");
+    fprintf(F, "# collect '.cpp' file to SRCS\n");
+    fprintf(F, "DIRS := $(shell find $(CODE_PATH) -maxdepth 10 -type d)\n");
+    fprintf(F, "SRCS  = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.cpp))\n");
+    fprintf(F, "$(info )\n");
+    fprintf(F, "$(info ------------------------------------)\n");
+    fprintf(F, "$(info source files:)\n");
+    fprintf(F, "$(info  $(SRCS))\n");
+    fprintf(F, "\nOBJS     = $(addprefix $(OUTPATH)/,$(notdir "
+               "$(SRCS:.cpp=.o)))\n");
+    fprintf(F, "vpath %%.cpp $(sort $(dir $(SRCS)))\n");
+    fprintf(F, "$(info )\n");
+    fprintf(F, "$(info ------------------------------------)\n");
+    fprintf(F, "$(info object files:)\n");
+    fprintf(F, "$(info  $(OBJS))\n");
+    fprintf(F, "\n# collect '.h' files in INC\n");
+    fprintf(F, "INCH = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.h))\n");
+    fprintf(F, "INC  = $(shell find -L $(INCH) -name '*.h' -exec dirname {} "
+               "\\; | uniq)\n");
+    fprintf(F, "$(info )\n");
+    fprintf(F, "$(info ------------------------------------)\n");
+    fprintf(F, "$(info headers to include:)\n");
+    fprintf(F, "$(info  $(INC:%%=-I%%))\n");
+    fprintf(F, "\n$(info )\n");
+    fprintf(F, "$(info ====================================)\n");
+    fprintf(F, "$(info )\n");
+
+    fprintf(F, "\n# "
+               "=============================================================="
+               "===============\n");
+    fprintf(F, "CFLAGS    = $(C_DEFS) $(INC:%%=-I%%) $(OPT)\n");
+    fprintf(F, "# treat all warnings as errors\n");
+    fprintf(F, "CFLAGS  += -Werror=unused-parameter -Werror=unused-variable\n");
+    fprintf(F, "HOSTFLAGS = $(CPPSTD) $(LIBS)\n");
+    fprintf(F, "\n# "
+               "=============================================================="
+               "===============\n");
+    fprintf(F, ".PHONY: all\n");
+    fprintf(F, "all: CFLAGS+= -D MAKE_TYPE=\\\"$(MTYPE_ALL)\\\"\n");
+    fprintf(F, "all: CFLAGS+= $(HOSTFLAGS)\n");
+    fprintf(F, "all: $(OBJS)\n");
+    fprintf(F, "\t$(CC) -o $(OUTPATH)/$(EXEC) $(OBJS) $(CFLAGS)\n");
+    fprintf(F, "\t$(SZ) $(OUTPATH)/$(EXEC)\n");
+    fprintf(F, "\n$(OUTPATH)/%%.o: %%.cpp | $(OUTPATH)\n");
+    fprintf(F, "\t$(CC) -c $(CFLAGS) $< -o $@\n");
+    fprintf(F, "\n$(OUTPATH):\n");
+    fprintf(F, "\tmkdir -p $@\n");
+    fprintf(F, "\n# ------------------------------------------------\n");
+    fprintf(F, "clean:\n");
+    fprintf(F, "\trm -f $(OUTPATH)/*\n");
+    fclose(F);
+}
+
+void create_CMakeLists_txt(void) {
+    FILE* F = create_file("CMakeLists.txt");
     fprintf(F, "cmake_minimum_required(VERSION 3.5)\n");
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
@@ -222,26 +210,17 @@ void create_CMakeLists_txt(void) {
 
     fprintf(F, "# ------------------------------\n");
     fprintf(F, "add_executable(\n");
-    fprintf(F, "    main\n");
-    fprintf(F, "    src/main.cpp\n");
+    fprintf(F, "  main\n");
+    fprintf(F, "  src/main.cpp\n");
     fprintf(F, ")\n");
     fprintf(F, "# target_link_libraries(\n");
-    fprintf(F, "#     #\n");
+    fprintf(F, "#   main\n");
     fprintf(F, "# )\n");
     fclose(F);
 }
 
 void create_editor_config(void) {
-    FILE*      F;
-    const char filename[] = ".editorconfig";
-    if ((F = fopen(filename, "r")) != NULL) {
-        printf("\"%s\" exists, exit.\n", filename);
-        return;
-    }
-    else {
-        printf("\"%s\" does not exist, create one.\n", filename);
-        F = fopen(filename, "w");
-    }
+    FILE* F = create_file(".editorconfig");
     fprintf(F, "root = true\n\n");
 
     fprintf(F, "[*]\n");
@@ -289,16 +268,7 @@ void create_editor_config(void) {
 }
 
 void create_clang_format(void) {
-    FILE*      F;
-    const char filename[] = ".clang-format";
-    if ((F = fopen(filename, "r")) != NULL) {
-        printf("\"%s\" exists, exit.\n", filename);
-        return;
-    }
-    else {
-        printf("\"%s\" does not exist, create one.\n", filename);
-        F = fopen(filename, "w");
-    }
+    FILE* F = create_file(".clang-format");
     fprintf(F, "Language: Cpp\n");
     fprintf(F, "AccessModifierOffset: -4\n");
     fprintf(F, "AlignAfterOpenBracket: Align\n");
