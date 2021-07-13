@@ -200,7 +200,10 @@ void create_CMakeLists_txt(void) {
         printf("\"%s\" exists, exit.\n", filename);
         return;
     }
-    F = fopen(filename, "w");
+    else {
+        printf("\"%s\" does not exist, create one.\n", filename);
+        F = fopen(filename, "w");
+    }
     fprintf(F, "cmake_minimum_required(VERSION 3.5)\n");
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
@@ -235,7 +238,10 @@ void create_editor_config(void) {
         printf("\"%s\" exists, exit.\n", filename);
         return;
     }
-    F = fopen(filename, "w");
+    else {
+        printf("\"%s\" does not exist, create one.\n", filename);
+        F = fopen(filename, "w");
+    }
     fprintf(F, "root = true\n\n");
 
     fprintf(F, "[*]\n");
@@ -289,7 +295,10 @@ void create_clang_format(void) {
         printf("\"%s\" exists, exit.\n", filename);
         return;
     }
-    F = fopen(filename, "w");
+    else {
+        printf("\"%s\" does not exist, create one.\n", filename);
+        F = fopen(filename, "w");
+    }
     fprintf(F, "Language: Cpp\n");
     fprintf(F, "AccessModifierOffset: -4\n");
     fprintf(F, "AlignAfterOpenBracket: Align\n");
