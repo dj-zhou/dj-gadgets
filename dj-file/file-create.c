@@ -359,7 +359,7 @@ void create_clang_format(void) {
 }
 
 void create_gitignore(void) {
-    FILE* F = create_file(".clang-format");
+    FILE* F = create_file(".gitignore");
     fprintf(F, "*.csv\n");
     fprintf(F, "*.diff\n");
     fprintf(F, "*.log\n");
