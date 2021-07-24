@@ -23,5 +23,6 @@ void create_Makefile(void);
 void create_CMakeLists_txt(void);
 void create_editor_config(void);
 void create_clang_format(void);
+void create_gitignore(void);
 
 #endif

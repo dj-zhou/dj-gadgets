@@ -46,5 +46,6 @@ int main(int argc, char* argv[]) {
     }
     create_clang_format();
     create_editor_config();
+    create_gitignore();
     return 0;
 }

@@ -355,9 +355,35 @@ void create_clang_format(void) {
     fprintf(F, "Standard: Cpp11\n");
     fprintf(F, "TabWidth: 4\n");
     fprintf(F, "UseTab: Never\n");
-
     fclose(F);
 }
+
+void create_gitignore(void) {
+    FILE* F = create_file(".clang-format");
+    fprintf(F, "*.csv\n");
+    fprintf(F, "*.diff\n");
+    fprintf(F, "*.log\n");
+    fprintf(F, "*.stacks\n");
+    fprintf(F, "*.svg\n");
+    fprintf(F, ".cache\n");
+    fprintf(F, ".clangd\n");
+    fprintf(F, ".dorkspacerc.cache.yaml\n");
+    fprintf(F, ".gdb_history\n");
+    fprintf(F, ".ipynb_checkpoints\n");
+    fprintf(F, ".vscode\n");
+    fprintf(F, "target\n");
+    fprintf(F, "_*\n");
+    fprintf(F, "bazel-*\n");
+    fprintf(F, "build\n");
+    fprintf(F, "compile_commands.json\n");
+    fprintf(F, "node_modules\n");
+    fprintf(F, "perf.*\n");
+    fprintf(F, "tags\n");
+    fprintf(F, "user.bazelrc\n");
+    fprintf(F, "gmn*\n");
+    fclose(F);
+}
+
 void create_cpp_file(char* fileName) {
     int  i;
     char time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
