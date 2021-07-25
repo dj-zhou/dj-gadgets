@@ -216,6 +216,7 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "# target_link_libraries(\n");
     fprintf(F, "#   main\n");
     fprintf(F, "# )\n");
+    fprintf(F, "# install(TARGETS main RUNTIME DESTINATION bin)\n");
     fclose(F);
 }
 
