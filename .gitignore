@@ -19,3 +19,5 @@ RemoteSystemsTempFiles/
 .vscode/
 main
 dj-file/djfile
+_b*
+build/
