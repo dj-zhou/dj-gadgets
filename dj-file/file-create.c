@@ -272,7 +272,7 @@ void create_clang_format(void) {
     fprintf(F, "Language: Cpp\n");
     fprintf(F, "AccessModifierOffset: -4\n");
     fprintf(F, "AlignAfterOpenBracket: Align\n");
-    fprintf(F, "AlignConsecutiveAssignments: true\n");
+    fprintf(F, "AlignConsecutiveAssignments: false\n");
     fprintf(F, "AlignConsecutiveDeclarations: true\n");
     fprintf(F, "AlignEscapedNewlinesLeft: true\n");
     fprintf(F, "AlignOperands: true\n");
