@@ -274,7 +274,7 @@ void create_clang_format(void) {
     fprintf(F, "AccessModifierOffset: -4\n");
     fprintf(F, "AlignAfterOpenBracket: Align\n");
     fprintf(F, "AlignConsecutiveAssignments: false\n");
-    fprintf(F, "AlignConsecutiveDeclarations: true\n");
+    fprintf(F, "AlignConsecutiveDeclarations: false\n");
     fprintf(F, "AlignEscapedNewlinesLeft: true\n");
     fprintf(F, "AlignOperands: true\n");
     fprintf(F, "AlignTrailingComments: true\n");
@@ -287,7 +287,7 @@ void create_clang_format(void) {
     fprintf(F, "AlwaysBreakAfterDefinitionReturnType: None\n");
     fprintf(F, "AlwaysBreakAfterReturnType: None\n");
     fprintf(F, "AlwaysBreakBeforeMultilineStrings: false\n");
-    fprintf(F, "AlwaysBreakTemplateDeclarations: true\n");
+    fprintf(F, "AlwaysBreakTemplateDeclarations: false\n");
     fprintf(F, "BinPackArguments: true\n");
     fprintf(F, "BinPackParameters: true\n");
     fprintf(F, "BraceWrapping:\n");
