@@ -12,13 +12,13 @@ void create_main_cpp(void) {
     int   i;
     char  time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
     FILE* F;
-    int   run_shell;
 
     current_time_date(time_to_print);
     if ((F = fopen("src/main.cpp", "r")) == NULL) {
         printf("No \"src/main.cpp\" exists, create one.\n");
-        run_shell = system("mkdir src");
-        F         = fopen("src/main.cpp", "a");
+        int run_shell = system("mkdir src");
+        ( void )run_shell;
+        F = fopen("src/main.cpp", "a");
         fprintf(F, "/*********************************************************"
                    "*********************\n");
         fprintf(F, "File Name     : main.cpp\n");
@@ -46,18 +46,17 @@ void create_main_cpp(void) {
         fprintf(F, "}\n");
         fclose(F);
     }
-    else /* files exists, only modify src/main.cpp */
-    {
-        int   run_shell = 0;
+    // files exists, only modify src/main.cpp
+    else {
         FILE* F2;
         char  line_buf[LINE_MAX_LEN];
         char  last_modified[17];
         printf("\"src/main.cpp\" exists, modify the \"Last Modified\" item:\n");
-        F2 = fopen("src/main.ctemp", "w"); /* read from F then write to F2 */
-        /* read out "Last Modified", then modify the time behind */
+        F2 = fopen("src/main.ctemp", "w");  // read from F then write to F2
+        // read out "Last Modified", then modify the time behind
         while (fgets(line_buf, LINE_MAX_LEN, F) != NULL) {
-            /* modify */
-            /* locate "Last Modified " */
+            // modify
+            // locate "Last Modified "
             for (i = 0; i < 16; i++) {
                 last_modified[i] = line_buf[i];
             }
@@ -71,19 +70,8 @@ void create_main_cpp(void) {
         }
         fclose(F);
         fclose(F2);
-        run_shell = system("mv src/main.ctemp src/main.cpp");
-
-        /* create the Makefile */
-        /* if exist the Makefile, don't have to generate again */
-        if ((F2 = fopen("Makefile", "r")) != NULL) /* file exists */
-        {
-            printf("<Makefile> exists, exit.\n");
-            fclose(F2);
-            exit;
-        }
-        else {
-            create_Makefile();
-        }
+        int run_shell = system("mv src/main.ctemp src/main.cpp");
+        ( void )run_shell;
     }
 }
 
@@ -99,6 +87,7 @@ static FILE* create_file(const char filename[]) {
     }
     return F;
 }
+
 void create_Makefile(void) {
 
     FILE* F = create_file("Makefile");
@@ -234,20 +223,9 @@ void create_editor_config(void) {
     fprintf(F, "insert_final_newline = false\n");
     fprintf(F, "trim_trailing_whitespace = false\n\n");
 
-    fprintf(F, "[*.{c,h}]\n");
-    fprintf(F, "indent_style = tab\n");
-    fprintf(F, "indent_size = 8\n\n");
-
-    fprintf(F, "[*.{cc,hh,cpp,cxx,hpp}]\n");
+    fprintf(F, "[*.{c,h,cc,hh,cpp,cxx,hpp}]\n");
     fprintf(F, "indent_style = space\n");
     fprintf(F, "indent_size = 4\n\n");
-
-    fprintf(F, "[*.x]\n");
-    fprintf(F, "indent_style = space\n");
-    fprintf(F, "indent_size = 2\n\n");
-
-    fprintf(F, "[.uncrustify.cfg]\n");
-    fprintf(F, "indent_style = space\n\n");
 
     fprintf(F, "[Dockerfile*]\n");
     fprintf(F, "indent_size = 4\n");
@@ -383,214 +361,4 @@ void create_gitignore(void) {
     fprintf(F, "user.bazelrc\n");
     fprintf(F, "gmn*\n");
     fclose(F);
-}
-
-void create_cpp_file(char* fileName) {
-    int  i;
-    char time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
-    int  lenName;
-    lenName          = strlen(fileName);
-    char* headerName = ( char* )malloc((lenName + 1) * sizeof(char));
-    for (i = 0; i < lenName - 1; i++)
-        headerName[i] = fileName[i];
-    headerName[lenName - 1] = 'h';
-    headerName[lenName]     = '\0';
-    FILE* F;
-    current_time_date(time_to_print);
-    if ((F = fopen(fileName, "r")) == NULL) /* does not exist */
-    {
-        printf("No <%s> exists, create one.\n", fileName);
-        F = fopen(fileName, "a");
-        fprintf(F, "/*********************************************************"
-                   "*********************\n");
-        fprintf(F, "File Name     : %s\n", fileName);
-        fprintf(F, "Author        : Dingjiang Zhou\n");
-        fprintf(F, "Email         : zhoudingjiang@gmail.com\n");
-        fprintf(F, "Create Time   : %s\n", time_to_print);
-        fprintf(F, "Last Modified : \n");
-        fprintf(F, "Purpose       : \n");
-        fprintf(F, "----------------------------------------------------------"
-                   "---------------------\n");
-        fprintf(F, "INPUTS\n\nOUTPUTS\n\n");
-        fprintf(F, "**********************************************************"
-                   "********************/\n");
-        fprintf(F, "#include \"%s\"\n\n", headerName);
-        fprintf(F, "int fncs(void)\n");
-        fprintf(F, "{\n");
-        /* fprintf(F,"    printf(\"Hello, Dingjiang!\\n\");\n"); */
-        fprintf(F, "    return 0;\n");
-        fprintf(F, "}\n");
-        /* the above cannot be generated twice */
-        fclose(F);
-    }
-    else /* files exists */
-    {
-        int run_shell = 0;
-
-        int   i;
-        FILE* F2;
-        char  line_buf[LINE_MAX_LEN];
-        char  last_modified[17];
-
-        char tempFileName[lenName + 5];
-        strcpy(tempFileName, fileName);
-        tempFileName[lenName]     = 't';
-        tempFileName[lenName + 1] = 'e';
-        tempFileName[lenName + 2] = 'm';
-        tempFileName[lenName + 3] = 'p';
-        tempFileName[lenName + 4] = '\0';
-        printf("<%s> exists, modify the \"Last Modified\" item:\n", fileName);
-        F2 = fopen(tempFileName, "w"); /* read from F then write to F2 */
-        /* read out "Last Modified", then modify the time behind */
-        while (fgets(line_buf, LINE_MAX_LEN, F) != NULL) {
-            /* modify */
-            /* locate "Last Modified " */
-            for (i = 0; i < 16; i++) {
-                last_modified[i] = line_buf[i];
-            }
-            last_modified[16] = '\0';
-            if (strcmp(last_modified, "Last Modified :") == 0) {
-                fprintf(F2, "Last Modified : %s\n", time_to_print);
-            }
-            else {
-                fprintf(F2, "%s", line_buf);
-            }
-        }
-        fclose(F);
-        fclose(F2);
-
-        /* to form the mv command */
-        int sysCmdLen;
-        sysCmdLen = 9 + 2 * lenName;
-        char sysCmdVim[sysCmdLen];
-
-        strcpy(sysCmdVim, "mv ");
-
-        for (i = 3; i < 3 + lenName; i++) {
-            sysCmdVim[i] = fileName[i - 3];
-        }
-
-        sysCmdVim[lenName + 3] = 't';
-        sysCmdVim[lenName + 4] = 'e';
-        sysCmdVim[lenName + 5] = 'm';
-        sysCmdVim[lenName + 6] = 'p';
-        sysCmdVim[lenName + 7] = ' ';
-
-        for (i = lenName + 8; i < 2 * lenName + 8; i++)
-            sysCmdVim[i] = fileName[i - lenName - 8];
-        sysCmdVim[sysCmdLen] = '\0';
-
-        /* run the cmd: mv hello.ctemp hello.c */
-        run_shell = system(sysCmdVim);
-    }
-}
-
-/* --------------------------------- */
-void create_header_file(char* fileName) {
-    int  i;
-    char time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
-    int  lenName;
-    lenName = strlen(fileName);
-    /* convert the low case name to captical name */
-    char* headerNameCap = ( char* )malloc((lenName + 1) * sizeof(char));
-    for (i = 0; i < lenName; i++) {
-        if (fileName[i] >= 'a' && fileName[i] <= 'z')
-            headerNameCap[i] = fileName[i] - 32;
-        else if (fileName[i] >= 'A' && fileName[i] <= 'Z')
-            headerNameCap[i] = fileName[i];
-        else if (fileName[i] == '.')
-            headerNameCap[i] = '_';
-    }
-    headerNameCap[lenName + 1] = '\0'; /* the end of a string */
-    /* creat the file */
-    FILE* F;
-    current_time_date(time_to_print);
-    if ((F = fopen(fileName, "r")) == NULL) /* does not exist */
-    {
-        printf("No <%s> exists, create one.\n", fileName);
-        F = fopen(fileName, "a");
-        fprintf(F, "/*********************************************************"
-                   "*********************\n");
-        fprintf(F, "File Name     : %s\n", fileName);
-        fprintf(F, "Author        : Dingjiang Zhou\n");
-        fprintf(F, "Email         : zhoudingjiang@gmail.com\n");
-        fprintf(F, "Create Time   : %s\n", time_to_print);
-        fprintf(F, "Last Modified : \n");
-        fprintf(F, "Purpose       : \n");
-        fprintf(F, "----------------------------------------------------------"
-                   "---------------------\n");
-        fprintf(F, "INPUTS\n\nOUTPUTS\n\n");
-        fprintf(F, "**********************************************************"
-                   "********************/\n");
-        fprintf(F, "#ifndef __%s__\n", headerNameCap);
-        fprintf(F, "#define __%s__\n\n", headerNameCap);
-        fprintf(F, "#include <stdio.h>\n");
-        fprintf(F, "#include <stdlib.h>\n");
-        fprintf(F, "#include <unistd.h>\n");
-        fprintf(F, "#include <stdint.h>\n\n");
-        fprintf(F, "/* typedef struct{\n\n}; */\n\n\n");
-        fprintf(F, "/* variables declaration */\n\n\n");
-        fprintf(F, "/* functions declaration */\n\n\n");
-        fprintf(F, "#endif\n");
-        /* the above cannot be generated twice */
-        fclose(F);
-    }
-    else /* files exists */
-    {
-        int run_shell = 0;
-
-        int   i;
-        FILE* F2;
-        char  line_buf[LINE_MAX_LEN];
-        char  last_modified[14];
-
-        char tempFileName[lenName + 5];
-        strcpy(tempFileName, fileName);
-        tempFileName[lenName]     = 't';
-        tempFileName[lenName + 1] = 'e';
-        tempFileName[lenName + 2] = 'm';
-        tempFileName[lenName + 3] = 'p';
-        tempFileName[lenName + 4] = '\0';
-        printf("<%s> exists, modify the \"Last Modified\" item:\n", fileName);
-        F2 = fopen(tempFileName, "w"); /* read from F then write to F2 */
-        /* read out "Last Modified", then modify the time behind */
-        while (fgets(line_buf, LINE_MAX_LEN, F) != NULL) {
-            /* modify */
-            /* locate "Last Modified " */
-            for (i = 0; i < 13; i++)
-                last_modified[i] = line_buf[i + 3];
-            last_modified[13] = '\0';
-            if (strcmp(last_modified, "Last Modified") == 0) {
-                fprintf(F2, "   Last Modified  : %s\n", time_to_print);
-            }
-            else
-                fprintf(F2, "%s", line_buf);
-        }
-        fclose(F);
-        fclose(F2);
-
-        /* to form the mv command */
-        int sysCmdLen;
-        sysCmdLen = 9 + 2 * lenName;
-        char sysCmdVim[sysCmdLen];
-
-        strcpy(sysCmdVim, "mv ");
-
-        for (i = 3; i < 3 + lenName; i++) {
-            sysCmdVim[i] = fileName[i - 3];
-        }
-
-        sysCmdVim[lenName + 3] = 't';
-        sysCmdVim[lenName + 4] = 'e';
-        sysCmdVim[lenName + 5] = 'm';
-        sysCmdVim[lenName + 6] = 'p';
-        sysCmdVim[lenName + 7] = ' ';
-
-        for (i = lenName + 8; i < 2 * lenName + 8; i++)
-            sysCmdVim[i] = fileName[i - lenName - 8];
-        sysCmdVim[sysCmdLen] = '\0';
-
-        /* run the cmd: mv hello.ctemp hello.c */
-        run_shell = system(sysCmdVim);
-    }
 }

@@ -22,12 +22,8 @@
 #ifndef FALSE
 #define FALSE 0
 #endif
-/* -- global variables declarations, used in all files -- */
-int ver_no_1;
-int ver_no_2;
 
 #include "file-create.h"
-#include "funcs.h"
 #include "prompt-msg.h"
 #include "time-fetch.h"
 

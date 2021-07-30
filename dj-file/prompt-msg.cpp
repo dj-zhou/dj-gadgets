@@ -20,8 +20,3 @@ void djfile_err_argv(void) {
     printf("djfile: arguments error.\n");
     djfile_usage();
 }
-
-void djfile_version(void) {
-    printf("djfile tool by Dingjiang Zhou.\nversion: %d.%d.\n", ver_no_1,
-           ver_no_2);
-}

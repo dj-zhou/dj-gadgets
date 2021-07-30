@@ -51,8 +51,8 @@ void current_time_date(char* time2Print) {
     time2Print[7] = wmon[mon][2];
 
     /* day */
-    time2Print[10] = ( int )(day / 10.0) + 48;
-    time2Print[11] = day % 10 + 48;
+    time2Print[10] = ( char )(( int )(day / 10.0) + 48);
+    time2Print[11] = ( char )(day % 10 + 48);
     if ((( int )(day / 10.0)) == 0 || (( int )(day / 10.0)) == 2
         || (( int )(day / 10.0)) == 3) {
         switch (day % 10) {
@@ -76,22 +76,22 @@ void current_time_date(char* time2Print) {
     }
 
     /* year */
-    time2Print[16] = ( int )(year / 1000.0) + 48;
-    time2Print[17] = ( int )(year % 1000 / 100.0) + 48;
-    time2Print[18] = ( int )(year % 100 / 10.0) + 48;
-    time2Print[19] = year % 10 + 48;
+    time2Print[16] = ( char )(( int )(year / 1000.0) + 48);
+    time2Print[17] = ( char )(( int )(year % 1000 / 100.0) + 48);
+    time2Print[18] = ( char )(( int )(year % 100 / 10.0) + 48);
+    time2Print[19] = ( char )(year % 10 + 48);
 
     /* hour */
-    time2Print[22] = ( int )(hour % 12 / 10.0) + 48;
-    time2Print[23] = hour % 12 % 10 + 48;
+    time2Print[22] = ( char )(( int )(hour % 12 / 10.0) + 48);
+    time2Print[23] = ( char )(hour % 12 % 10 + 48);
 
     /* minute */
-    time2Print[25] = ( int )(min / 10.0) + 48;
-    time2Print[26] = min % 10 + 48;
+    time2Print[25] = ( char )(( int )(min / 10.0) + 48);
+    time2Print[26] = ( char )(min % 10 + 48);
 
     /* second */
-    time2Print[28] = ( int )(sec / 10.0) + 48;
-    time2Print[29] = sec % 10 + 48;
+    time2Print[28] = ( char )(( int )(sec / 10.0) + 48);
+    time2Print[29] = ( char )(sec % 10 + 48);
 
     /* AM or PM */
     if (hour >= 12)

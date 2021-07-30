@@ -17,8 +17,6 @@
 
 /* functions declaration */
 void create_main_cpp(void);
-void create_cpp_file(char*);
-void create_header_file(char*);
 void create_Makefile(void);
 void create_CMakeLists_txt(void);
 void create_editor_config(void);
