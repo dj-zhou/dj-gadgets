@@ -16,7 +16,16 @@ add_compile_options(
 
 find_package(CLI11 CONFIG)
 
-# ------------------------------
+# --------------------------------------------------------------------------
+execute_process(COMMAND git describe --abbrev=7 --dirty --always --tags
+    OUTPUT_VARIABLE GIT_TAG
+    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+add_definitions(-D_GIT_TAG=\"${GIT_TAG}\")
+message(STATUS "     Git Repo Tag : " ${GIT_TAG})
+
+# --------------------------------------------------------------------------
 add_executable(
   djfile
   "main.cpp"

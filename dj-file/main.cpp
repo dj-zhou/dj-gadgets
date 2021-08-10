@@ -10,6 +10,12 @@ enum Methods {
 
 enum Methods method;
 
+static void djfile_version(void) {
+#ifdef _GIT_TAG
+    printf("Git tag: %s\n", _GIT_TAG);
+#endif
+}
+
 int main(int argc, char* argv[]) {
 
     if (argc < 2) {
@@ -17,7 +23,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     int opt;
-    while ((opt = getopt(argc, argv, "cmh")) != -1) {
+    while ((opt = getopt(argc, argv, "cmhv")) != -1) {
         switch (opt) {
         case 'c':
             method = Use_CMakeLists;
@@ -27,6 +33,9 @@ int main(int argc, char* argv[]) {
             break;
         case 'h':
             djfile_usage();
+            return 0;
+        case 'v':
+            djfile_version();
             return 0;
         default:
             return 2;
