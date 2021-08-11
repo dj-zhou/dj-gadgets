@@ -79,7 +79,7 @@ static FILE* create_file(const char filename[]) {
     FILE* F;
     if ((F = fopen(filename, "r")) != NULL) {
         printf("\"%s\" exists, no need to create.\n", filename);
-        exit(-1);
+        return NULL;
     }
     else {
         printf("\"%s\" does not exist, create one.\n", filename);
@@ -91,6 +91,9 @@ static FILE* create_file(const char filename[]) {
 void create_Makefile(void) {
 
     FILE* F = create_file("Makefile");
+    if (F == NULL) {
+        return;
+    }
     fprintf(F, "\n# "
                "=============================================================="
                "===============\n");
@@ -181,6 +184,9 @@ void create_Makefile(void) {
 
 void create_CMakeLists_txt(void) {
     FILE* F = create_file("CMakeLists.txt");
+    if (F == NULL) {
+        return;
+    }
     fprintf(F, "cmake_minimum_required(VERSION 3.10)\n");
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
@@ -229,6 +235,9 @@ void create_CMakeLists_txt(void) {
 
 void create_editor_config(void) {
     FILE* F = create_file(".editorconfig");
+    if (F == NULL) {
+        return;
+    }
     fprintf(F, "root = true\n\n");
 
     fprintf(F, "[*]\n");
@@ -266,6 +275,9 @@ void create_editor_config(void) {
 
 void create_clang_format(void) {
     FILE* F = create_file(".clang-format");
+    if (F == NULL) {
+        return;
+    }
     fprintf(F, "Language: Cpp\n");
     fprintf(F, "AccessModifierOffset: -4\n");
     fprintf(F, "AlignAfterOpenBracket: Align\n");
@@ -357,6 +369,9 @@ void create_clang_format(void) {
 
 void create_gitignore(void) {
     FILE* F = create_file(".gitignore");
+    if (F == NULL) {
+        return;
+    }
     fprintf(F, "*.csv\n");
     fprintf(F, "*.diff\n");
     fprintf(F, "*.log\n");
