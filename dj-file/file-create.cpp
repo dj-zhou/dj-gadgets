@@ -181,7 +181,7 @@ void create_Makefile(void) {
 
 void create_CMakeLists_txt(void) {
     FILE* F = create_file("CMakeLists.txt");
-    fprintf(F, "cmake_minimum_required(VERSION 3.5)\n");
+    fprintf(F, "cmake_minimum_required(VERSION 3.10)\n");
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
     fprintf(F, "add_compile_options(\n");
@@ -205,7 +205,25 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "# target_link_libraries(\n");
     fprintf(F, "#   main\n");
     fprintf(F, "# )\n");
-    fprintf(F, "# install(TARGETS main RUNTIME DESTINATION bin)\n");
+    fprintf(F, "# install(TARGETS main RUNTIME DESTINATION bin)\n\n");
+
+    // static library
+    fprintf(F, "# ------------------------------\n");
+    fprintf(F, "# set(SOURCE_FILES\n");
+    fprintf(F, "#     src/xxx.c\n");
+    fprintf(F, "# )\n");
+    fprintf(F, "# set(HEADER_FILES\n");
+    fprintf(F, "#     inc/xxx.h\n");
+    fprintf(F, "# )\n\n");
+
+    fprintf(F, "# add_library(yyy STATIC \"${SOURCE_FILES}\")\n");
+    fprintf(F, "# set_target_properties(yyy PROPERTIES PUBLIC_HEADER "
+               "\"${HEADER_FILES}\")\n");
+    fprintf(F, "# INSTALL(TARGETS yyy\n");
+    fprintf(F, "#     LIBRARY DESTINATION /usr/local/lib\n");
+    fprintf(F, "#     PUBLIC_HEADER DESTINATION /usr/local/include/yyy/\n");
+    fprintf(F, "# )\n");
+
     fclose(F);
 }
 
