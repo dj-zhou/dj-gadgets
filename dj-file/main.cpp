@@ -1,58 +1,33 @@
 
+#include "cli-arguments.h"
 #include "config.h"
 #include <CLI/CLI.hpp>
 #include <unistd.h>
 
-enum Methods {
-    Use_Makefile   = 1,
-    Use_CMakeLists = 2,
-};
-
-enum Methods method;
-
-static void djfile_version(void) {
-#ifdef _GIT_TAG
-    printf("Git tag: %s\n", _GIT_TAG);
-#endif
-}
-
 int main(int argc, char* argv[]) {
-
-    if (argc < 2) {
-        djfile_err_argv();
+    if (argc <= 1) {
+        printf("run \"%s -h\" to see how to use this tool.\n", argv[0]);
         return 1;
     }
-    int opt;
-    while ((opt = getopt(argc, argv, "cmhv")) != -1) {
-        switch (opt) {
-        case 'c':
-            method = Use_CMakeLists;
-            break;
-        case 'm':
-            method = Use_Makefile;
-            break;
-        case 'h':
-            djfile_usage();
-            return 0;
-        case 'v':
-            djfile_version();
-            return 0;
-        default:
-            return 2;
-        }
-    }
-
-    create_main_cpp();
-    switch (method) {
-    case Use_Makefile:
+    CreateType type = cli_arguments(argc, argv);
+    printf("type = %d\n", ( int )type);
+    switch (type) {
+    case CreateType::Nothing:
+        exit(EXIT_SUCCESS);
+        return 0;
+    case CreateType::Makefile:
         create_Makefile();
         break;
-    case Use_CMakeLists:
+    case CreateType::CMake:
         create_CMakeLists_txt();
+        break;
+    case CreateType::Meson:
+        printf("not implemented yet\n");
         break;
     default:
         break;
     }
+    create_main_cpp();
     create_clang_format();
     create_editor_config();
     create_gitignore();

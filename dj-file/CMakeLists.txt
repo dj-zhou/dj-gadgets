@@ -29,8 +29,8 @@ message(STATUS "     Git Repo Tag : " ${GIT_TAG})
 add_executable(
   djfile
   "main.cpp"
+  "cli-arguments.cpp"
   "file-create.cpp"
-  "prompt-msg.cpp"
   "time-fetch.cpp"
 )
 

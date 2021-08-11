@@ -10,21 +10,13 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
+#include "cli-arguments.h"
+#include "file-create.h"
+#include "time-fetch.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-/* ---------- macro defines, used in all files ---------- */
-#ifndef TRUE
-#define TRUE 1
-#endif
-#ifndef FALSE
-#define FALSE 0
-#endif
-
-#include "file-create.h"
-#include "prompt-msg.h"
-#include "time-fetch.h"
 
 #endif
