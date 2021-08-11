@@ -215,14 +215,14 @@ void create_CMakeLists_txt(void) {
 
     // static library
     fprintf(F, "# ------------------------------\n");
-    fprintf(F, "# set(SOURCE_FILES\n");
+    fprintf(F, "# set(SRC_FILES\n");
     fprintf(F, "#     src/xxx.c\n");
     fprintf(F, "# )\n");
     fprintf(F, "# set(HEADER_FILES\n");
     fprintf(F, "#     inc/xxx.h\n");
     fprintf(F, "# )\n\n");
 
-    fprintf(F, "# add_library(yyy STATIC \"${SOURCE_FILES}\")\n");
+    fprintf(F, "# add_library(yyy STATIC \"${SRC_FILES}\")\n");
     fprintf(F, "# set_target_properties(yyy PROPERTIES PUBLIC_HEADER "
                "\"${HEADER_FILES}\")\n");
     fprintf(F, "# INSTALL(TARGETS yyy\n");
@@ -268,7 +268,7 @@ void create_editor_config(void) {
 
     fprintf(F, "[*.proto]\n");
     fprintf(F, "indent_size = 2\n");
-    fprintf(F, "indent_style = space\n\n");
+    fprintf(F, "indent_style = space\n");
 
     fclose(F);
 }
