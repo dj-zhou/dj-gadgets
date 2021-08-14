@@ -226,6 +226,7 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "# set_target_properties(yyy PROPERTIES PUBLIC_HEADER "
                "\"${HEADER_FILES}\")\n");
     fprintf(F, "# INSTALL(TARGETS yyy\n");
+    fprintf(F, "#     ARCHIVE DESTINATION /usr/local/lib\n");
     fprintf(F, "#     LIBRARY DESTINATION /usr/local/lib\n");
     fprintf(F, "#     PUBLIC_HEADER DESTINATION /usr/local/include/yyy/\n");
     fprintf(F, "# )\n");
