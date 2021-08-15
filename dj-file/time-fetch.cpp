@@ -1,13 +1,3 @@
-/***********************************************************
-    >   File Name     : time-fetch.c
-    >   Author        : Dingjiang Zhou
-                        Tieling 110, Shanghai, China.
-    >   Create Time   : Tue 12 Feb 2013 10:58:12 PM CST
-    >   Last Modified :
-    >   Purpose       :
-    >   Note
-    >   char time2Print[]="WWW, MMM. DDth, YYYY. HH:MM:SS AM";
-***********************************************************/
 #include "time-fetch.h"
 
 void current_time_date(char* time2Print) {
@@ -22,7 +12,7 @@ void current_time_date(char* time2Print) {
         { 'J', 'u', 'l' }, { 'A', 'u', 'g' }, { 'S', 'e', 'p' },
         { 'O', 'c', 't' }, { 'N', 'o', 'v' }, { 'D', 'e', 'c' }
     };
-    time_t     timep;
+    time_t timep;
     struct tm* p;
     // char time2Print[]="WWW, MMM. DDth, YYYY. HH:MM:SS AM";
     int year, mon, day, wkday, hour, min, sec;
@@ -32,13 +22,13 @@ void current_time_date(char* time2Print) {
     p = localtime(&timep);
 
     /* store the time */
-    year  = 1900 + p->tm_year;
-    mon   = p->tm_mon;
-    day   = p->tm_mday;
+    year = 1900 + p->tm_year;
+    mon = p->tm_mon;
+    day = p->tm_mday;
     wkday = p->tm_wday;
-    hour  = p->tm_hour;
-    min   = p->tm_min;
-    sec   = p->tm_sec;
+    hour = p->tm_hour;
+    min = p->tm_min;
+    sec = p->tm_sec;
 
     /* weekday or weekend */
     time2Print[0] = wday[wkday][0];

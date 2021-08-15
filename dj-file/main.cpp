@@ -1,4 +1,3 @@
-
 #include "cli-arguments.h"
 #include "config.h"
 #include <CLI/CLI.hpp>
@@ -10,7 +9,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     CreateType type = cli_arguments(argc, argv);
-    printf("type = %d\n", ( int )type);
     switch (type) {
     case CreateType::Nothing:
         exit(EXIT_SUCCESS);

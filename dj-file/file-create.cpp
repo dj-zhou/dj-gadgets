@@ -1,16 +1,8 @@
-/***********************************************************
-    >   File Name     : time-fetch.c
-    >   Author        : Dingjiang Zhou
-                        Tieling 110, Shanghai, China.
-    >   Create Time   : Tue 12 Feb 2013 10:36:24 PM CST
-    >   Last Modified :
-    >   Purpose       :
-***********************************************************/
 #include "file-create.h"
 
 void create_main_cpp(void) {
-    int   i;
-    char  time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
+    int i;
+    char time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
     FILE* F;
 
     current_time_date(time_to_print);
@@ -49,8 +41,8 @@ void create_main_cpp(void) {
     // files exists, only modify src/main.cpp
     else {
         FILE* F2;
-        char  line_buf[LINE_MAX_LEN];
-        char  last_modified[17];
+        char line_buf[LINE_MAX_LEN];
+        char last_modified[17];
         printf("\"src/main.cpp\" exists, modify the \"Last Modified\" item:\n");
         F2 = fopen("src/main.ctemp", "w");  // read from F then write to F2
         // read out "Last Modified", then modify the time behind

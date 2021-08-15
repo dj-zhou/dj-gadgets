@@ -1,4 +1,3 @@
-
 #ifndef __CLI_ARGUMENTS_H_
 #define __CLI_ARGUMENTS_H_
 
@@ -14,4 +13,4 @@ enum class CreateType {
 void djfile_version(void);
 CreateType cli_arguments(int argc, char* argv[]);
 
-#endif
+#endif  // __CLI_ARGUMENTS_H_
