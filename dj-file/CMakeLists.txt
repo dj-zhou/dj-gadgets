@@ -27,11 +27,11 @@ message(STATUS "     Git Repo Tag : " ${GIT_TAG})
 
 # --------------------------------------------------------------------------
 add_executable(
-  djfile
+  dj-file
   "main.cpp"
   "cli-arguments.cpp"
   "file-create.cpp"
   "time-fetch.cpp"
 )
 
-install(TARGETS djfile RUNTIME DESTINATION bin)
+install(TARGETS dj-file RUNTIME DESTINATION bin)
