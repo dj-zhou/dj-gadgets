@@ -1,4 +1,3 @@
-
 #include <dirent.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -8,7 +7,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-// -----------------------------------------------------------------------
 int main(int argc, char* argv[]) {
     if ((argc <= 1) || (argc > 2)) {
         printf(" ascii-code: too few argument, usage (examples): \n");
@@ -18,7 +16,8 @@ int main(int argc, char* argv[]) {
         printf(" $   ascii-code \"&\"\n");
         return -1;
     }
-    char c = *argv[1];  // the argument is taken as a char
+    // the argument is taken as a char
+    char c = *argv[1];
     printf("%c | Dec: %d | Hex: %x\n", c, c, c);
     return 0;
 }

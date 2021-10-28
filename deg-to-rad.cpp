@@ -1,5 +1,5 @@
-#include <ctime>
 #include <iostream>
+#include <math.h>
 #include <stdio.h>
 
 using namespace std;
@@ -9,9 +9,7 @@ int main(int argc, char* argv[]) {
         printf("usage: %s <double>\n", argv[0]);
         return 1;
     }
-    double t = atof(argv[1]);
-    const time_t tt = ( time_t )t;
-
-    std::cout << std::ctime(&tt);
+    double deg = atof(argv[1]);
+    printf("%.6f deg = %.2f rad\n", deg, deg * M_PI / 180.0);
     return 0;
 }

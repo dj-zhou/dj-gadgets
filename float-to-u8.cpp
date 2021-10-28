@@ -1,12 +1,3 @@
-/**************************************************************************
-   File Name      : main.c
-   Author         : Dingjiang Zhou
-                    Boston University, Boston, 02215
-   Email          : zhoudingjiang@gmail.com
-   Create Time    : Fri, Aug. 09th, 2013. 00:45:50 PM
-   Last Modified  : Sat, Oct. 01st, 2016. 09:11:08 AM
-   Purpose        : to clean the ~ folder in Linux computer.
-**************************************************************************/
 #include <dirent.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -16,11 +7,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-// ------------------------------------------------------------------------------------------------------
 int main(int argc, char* argv[]) {
-    float    data_float;
+    float data_float;
     uint8_t* data_ptr = ( uint8_t* )(&data_float);
-    uint8_t  data_u8[4];
+    uint8_t data_u8[4];
     if (argc == 1) {
         printf("usage: \n");
         printf("    float-to-u8 <float number>\n");
@@ -63,5 +53,3 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-
-/* --------------------------- end of file ----------------------------- */
