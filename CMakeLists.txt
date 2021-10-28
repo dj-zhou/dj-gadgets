@@ -18,6 +18,9 @@ add_compile_options(
 add_executable(ascii-code ascii-code.cpp)
 install(TARGETS ascii-code RUNTIME DESTINATION bin)
 
+add_executable(double-to-time double-to-time.cpp)
+install(TARGETS double-to-time RUNTIME DESTINATION bin)
+
 add_executable(double-to-u8 double-to-u8.cpp)
 install(TARGETS double-to-u8 RUNTIME DESTINATION bin)
 
