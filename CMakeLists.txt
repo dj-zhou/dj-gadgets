@@ -27,6 +27,9 @@ install(TARGETS double-to-u8 RUNTIME DESTINATION bin)
 add_executable(float-to-u8 float-to-u8.cpp)
 install(TARGETS float-to-u8 RUNTIME DESTINATION bin)
 
+add_executable(quat-to-euler quat-to-euler.cpp)
+install(TARGETS quat-to-euler RUNTIME DESTINATION bin)
+
 add_executable(u8-to-double u8-to-double.cpp)
 install(TARGETS u8-to-double RUNTIME DESTINATION bin)
 
