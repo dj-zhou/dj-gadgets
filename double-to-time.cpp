@@ -17,8 +17,14 @@ int main(int argc, char* argv[]) {
     }
     double t = atof(argv[1]);
     const time_t tt = ( time_t )t;
+    char utc_str[100];
+    std::strftime(utc_str, sizeof(utc_str), "%a %b %d %Y %T", std::gmtime(&tt));
+    std::string std_utc_str(utc_str);
+    std::cout << "UTC: " << std_utc_str;
 
-    std::cout << std::ctime(&tt) << std::endl;
+    // output ms and us
+    double ms = (t - ( uint32_t )t) * 1000;
+    printf(" %3.3f ms\n", ms);
     return 0;
 }
 
