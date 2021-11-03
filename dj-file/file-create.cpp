@@ -240,14 +240,10 @@ void create_editor_config(void) {
     fprintf(F, "charset = utf-8\n\n");
 
     fprintf(F, "[*.{c,h,cc,hh,cpp,cxx,hpp}]\n");
-    fprintf(F, "indent_style = space\n");
     fprintf(F, "indent_size = 4\n\n");
+    fprintf(F, "indent_style = space\n");
 
-    fprintf(F, "[CMakeLists.txt]\n");
-    fprintf(F, "indent_size = 2\n");
-    fprintf(F, "indent_style = space\n\n");
-
-    fprintf(F, "[meson.build]\n");
+    fprintf(F, "[{CMakeLists.txt,meson.build}]\n");
     fprintf(F, "indent_size = 2\n");
     fprintf(F, "indent_style = space\n\n");
 
@@ -261,7 +257,7 @@ void create_editor_config(void) {
 
     fprintf(F, "[*.proto]\n");
     fprintf(F, "indent_size = 2\n");
-    fprintf(F, "indent_style = space\n");
+    fprintf(F, "indent_style = space\n\n");
 
     fprintf(F, "[Dockerfile*]\n");
     fprintf(F, "indent_size = 4\n");
