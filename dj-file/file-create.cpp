@@ -245,11 +245,11 @@ void create_editor_config(void) {
 
     fprintf(F, "[CMakeLists.txt]\n");
     fprintf(F, "indent_size = 2\n");
-    fprintf(F, "indent_style = space\n");
+    fprintf(F, "indent_style = space\n\n");
 
     fprintf(F, "[meson.build]\n");
     fprintf(F, "indent_size = 2\n");
-    fprintf(F, "indent_style = space\n");
+    fprintf(F, "indent_style = space\n\n");
 
     fprintf(F, "[*.{yml,yaml}]\n");
     fprintf(F, "indent_size = 2\n");
@@ -269,7 +269,7 @@ void create_editor_config(void) {
 
     fprintf(F, "[{BUILD.bazel,*.bzl,WORKSPACE}]\n");
     fprintf(F, "indent_size = 4\n");
-    fprintf(F, "indent_style = space\n\n");
+    fprintf(F, "indent_style = space\n");
     fclose(F);
 }
 
