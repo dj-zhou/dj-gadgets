@@ -21,10 +21,10 @@ int main(int argc, char* argv[]) {
 
     // check if it is a unit quaternion
     if ((std::fabs(w * w + x * x + y * y + z * z) - 1) > 0.001) {
-        printf("not a unit quaternion [%.6f, %.6f, %.6f, %.6f]\n", w, x, y, z);
+        printf("not a unit quaternion [%.6f %.6f %.6f %.6f]\n", w, x, y, z);
         return 2;
     }
-    printf("quaternion [w, x, y, z]: [%.6f, %.6f, %.6f, %.6f]\n", w, x, y, z);
+    printf("quaternion [w, x, y, z]: [%.6f %.6f %.6f %.6f]\n", w, x, y, z);
     // find axis and angle
     if (w > 1) {
         w = 1;
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     double pitch = euler[1] / M_PI * 180.0;
     double yaw = euler[0] / M_PI * 180.0;
     printf(
-        "(method 1) ZYX euler: yaw = %.6f, pitch = %.6f, roll = %.6f (deg)\n",
+        "(method 1) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n",
         yaw, pitch, roll);
 
     // method 2:
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     pitch = asin(2 * (w * y - x * z)) / M_PI * 180.0;
     yaw = atan2(2 * (x * y + w * z), 1 - 2 * (y * y + z * z)) / M_PI * 180.0;
     printf(
-        "(method 2) ZYX euler: yaw = %.6f, pitch = %.6f, roll = %.6f (deg)\n",
+        "(method 2) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f]  (deg)\n",
         yaw, pitch, roll);
     return 0;
 }

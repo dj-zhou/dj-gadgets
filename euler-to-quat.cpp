@@ -29,13 +29,13 @@ int main(int argc, char* argv[]) {
         }
     }
     if (use_radian) {
-        printf("ZYX Euler (Tait-Bryan) angles [yaw, pitch, roll]: [%.6f, "
-               "%.6f, %.6f] (rad)\n",
+        printf("ZYX Euler (Tait-Bryan) angles [yaw, pitch, roll]: [%.6f "
+               "%.6f %.6f] (rad)\n",
                yaw, pitch, roll);
     }
     else {
-        printf("ZYX Euler (Tait-Bryan) angles [yaw, pitch, roll]: [%.6f, "
-               "%.6f, %.6f] (deg)\n",
+        printf("ZYX Euler (Tait-Bryan) angles [yaw, pitch, roll]: [%.6f "
+               "%.6f %.6f] (deg)\n",
                yaw, pitch, roll);
         // convert from degree to radian
         yaw = yaw / 180.0 * M_PI;
@@ -70,6 +70,6 @@ int main(int argc, char* argv[]) {
     double x = sr * cp * cy - cr * sp * sy;
     double y = cr * sp * cy + sr * cp * sy;
     double z = cr * cp * sy - sr * sp * cy;
-    printf("Quaternion: [w, x, y, z] = [%.6f, %.6f, %.6f, %.6f]\n", w, x, y, z);
+    printf("Quaternion: [w, x, y, z] = [%.6f %.6f %.6f %.6f]\n", w, x, y, z);
     return 0;
 }
