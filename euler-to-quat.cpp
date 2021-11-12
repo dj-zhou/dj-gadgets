@@ -8,7 +8,7 @@
 using namespace std;
 using namespace Eigen;
 
-// example: euler-to-quat 0.707074 -0.006445 0.004021 -0.707099
+// example: euler-to-quat -90.000592 -0.196423 -0.848052  -d
 
 int main(int argc, char* argv[]) {
     if ((argc < 4) || (argc > 5)) {
