@@ -95,6 +95,6 @@ int main(int argc, char* argv[]) {
     printf(
         "(method 3) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n",
         y3, p3, r3);
-  
+
     return 0;
 }
