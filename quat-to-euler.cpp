@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     double yaw = euler[0] / M_PI * 180.0;
     double roll = euler[2] / M_PI * 180.0;
     double pitch = euler[1] / M_PI * 180.0;
-    printf("ZYX euler: yaw = %.3f, pitch = %.3f, roll = %.3f (deg)\n", yaw, pitch,
-           roll);
+    printf("ZYX euler: yaw = %.3f, pitch = %.3f, roll = %.3f (deg)\n", yaw,
+           pitch, roll);
     return 0;
 }
