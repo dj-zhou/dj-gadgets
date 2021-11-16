@@ -239,13 +239,25 @@ void create_editor_config(void) {
     fprintf(F, "trim_trailing_whitespace = true\n");
     fprintf(F, "charset = utf-8\n\n");
 
+    fprintf(F, "[*.{c,h,cc,hh,cpp,cxx,hpp}]\n");
+    fprintf(F, "indent_size = 4\n");
+    fprintf(F, "indent_style = space\n\n");
+
+    fprintf(F, "[{CMakeLists.txt,meson.build}]\n");
+    fprintf(F, "indent_size = 2\n");
+    fprintf(F, "indent_style = space\n\n");
+
+    fprintf(F, "[*.{yml,yaml}]\n");
+    fprintf(F, "indent_size = 2\n");
+    fprintf(F, "indent_style = space\n\n");
+
     fprintf(F, "[*.diff]\n");
     fprintf(F, "insert_final_newline = false\n");
     fprintf(F, "trim_trailing_whitespace = false\n\n");
 
-    fprintf(F, "[*.{c,h,cc,hh,cpp,cxx,hpp}]\n");
-    fprintf(F, "indent_style = space\n");
-    fprintf(F, "indent_size = 4\n\n");
+    fprintf(F, "[*.proto]\n");
+    fprintf(F, "indent_size = 2\n");
+    fprintf(F, "indent_style = space\n\n");
 
     fprintf(F, "[Dockerfile*]\n");
     fprintf(F, "indent_size = 4\n");
@@ -253,16 +265,7 @@ void create_editor_config(void) {
 
     fprintf(F, "[{BUILD.bazel,*.bzl,WORKSPACE}]\n");
     fprintf(F, "indent_size = 4\n");
-    fprintf(F, "indent_style = space\n\n");
-
-    fprintf(F, "[*.{yml,yaml}]\n");
-    fprintf(F, "indent_size = 2\n");
-    fprintf(F, "indent_style = space\n\n");
-
-    fprintf(F, "[*.proto]\n");
-    fprintf(F, "indent_size = 2\n");
     fprintf(F, "indent_style = space\n");
-
     fclose(F);
 }
 
