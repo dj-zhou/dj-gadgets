@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
         printf("not a unit quaternion [%.6f %.6f %.6f %.6f]\n", w, x, y, z);
         return 2;
     }
-    printf("quaternion [w, x, y, z]: [%.6f %.6f %.6f %.6f]\n", w, x, y, z);
+    printf("quaternion [w, x, y, z] = [%.6f %.6f %.6f %.6f]\n", w, x, y, z);
 
     double ww = w * w;
     double xx = x * x;
