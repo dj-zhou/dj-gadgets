@@ -261,11 +261,8 @@ void create_editor_config(void) {
 
     fprintf(F, "[Dockerfile*]\n");
     fprintf(F, "indent_size = 4\n");
-    fprintf(F, "indent_style = space\n\n");
-
-    fprintf(F, "[{BUILD.bazel,*.bzl,WORKSPACE}]\n");
-    fprintf(F, "indent_size = 4\n");
     fprintf(F, "indent_style = space\n");
+
     fclose(F);
 }
 
@@ -374,20 +371,14 @@ void create_gitignore(void) {
     fprintf(F, "*.stacks\n");
     fprintf(F, "*.svg\n");
     fprintf(F, ".cache\n");
-    fprintf(F, ".clangd\n");
-    fprintf(F, ".dorkspacerc.cache.yaml\n");
     fprintf(F, ".gdb_history\n");
-    fprintf(F, ".ipynb_checkpoints\n");
     fprintf(F, ".vscode\n");
     fprintf(F, "target\n");
     fprintf(F, "_*\n");
-    fprintf(F, "bazel-*\n");
     fprintf(F, "build\n");
-    fprintf(F, "compile_commands.json\n");
     fprintf(F, "node_modules\n");
     fprintf(F, "perf.*\n");
     fprintf(F, "tags\n");
-    fprintf(F, "user.bazelrc\n");
     fprintf(F, "gmn*\n");
     fclose(F);
 }
