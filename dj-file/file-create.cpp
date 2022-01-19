@@ -351,7 +351,7 @@ void create_clang_format(void) {
     fprintf(F, "SpacesBeforeTrailingComments: 2\n");
     fprintf(F, "SpacesInAngles: false\n");
     fprintf(F, "SpacesInContainerLiterals: true\n");
-    fprintf(F, "SpacesInCStyleCastParentheses: true\n");
+    fprintf(F, "SpacesInCStyleCastParentheses: false\n");
     fprintf(F, "SpacesInParentheses: false\n");
     fprintf(F, "SpacesInSquareBrackets: false\n");
     fprintf(F, "Standard: Cpp11\n");
