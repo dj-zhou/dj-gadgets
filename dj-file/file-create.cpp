@@ -9,7 +9,7 @@ void create_main_cpp(void) {
     if ((F = fopen("src/main.cpp", "r")) == NULL) {
         printf("No \"src/main.cpp\" exists, create one.\n");
         int run_shell = system("mkdir src");
-        ( void )run_shell;
+        (void)run_shell;
         F = fopen("src/main.cpp", "a");
         fprintf(F, "/*********************************************************"
                    "*********************\n");
@@ -63,7 +63,7 @@ void create_main_cpp(void) {
         fclose(F);
         fclose(F2);
         int run_shell = system("mv src/main.ctemp src/main.cpp");
-        ( void )run_shell;
+        (void)run_shell;
     }
 }
 
@@ -351,7 +351,7 @@ void create_clang_format(void) {
     fprintf(F, "SpacesBeforeTrailingComments: 2\n");
     fprintf(F, "SpacesInAngles: false\n");
     fprintf(F, "SpacesInContainerLiterals: true\n");
-    fprintf(F, "SpacesInCStyleCastParentheses: true\n");
+    fprintf(F, "SpacesInCStyleCastParentheses: false\n");
     fprintf(F, "SpacesInParentheses: false\n");
     fprintf(F, "SpacesInSquareBrackets: false\n");
     fprintf(F, "Standard: Cpp11\n");
