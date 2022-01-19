@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[]) {
     double data_double;
-    uint8_t* data_ptr = ( uint8_t* )(&data_double);
+    uint8_t* data_ptr = (uint8_t*)(&data_double);
     uint8_t data_u8[8];
     if (argc == 1) {
         printf("usage: \n");

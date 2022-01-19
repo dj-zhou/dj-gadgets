@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[]) {
     float data_float;
-    uint8_t* data_ptr = ( uint8_t* )(&data_float);
+    uint8_t* data_ptr = (uint8_t*)(&data_float);
     uint8_t data_u8[4];
     if (argc == 1) {
         printf("usage: \n");
@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
         printf("    float-to-u8 <float number> little/big\n");
     }
     else if (argc == 2) {
-        data_float = ( float )atof(argv[1]);
+        data_float = (float)atof(argv[1]);
         for (int i = 0; i < 4; i++) {
             data_u8[i] = *data_ptr;
             data_ptr++;
@@ -30,12 +30,12 @@ int main(int argc, char* argv[]) {
                data_float, data_u8[0], data_u8[1], data_u8[2], data_u8[3]);
     }
     else if (argc == 3) {
-        data_float = ( float )atof(argv[1]);
+        data_float = (float)atof(argv[1]);
         for (int i = 0; i < 4; i++) {
             data_u8[i] = *data_ptr;
             data_ptr++;
         }
-        data_float = ( float )atof(argv[1]);
+        data_float = (float)atof(argv[1]);
         if (argv[2][0] == 'l') {
             printf(" float: %f <=> u8: [%d, %d, %d, %d] (little endian)\n",
                    data_float, data_u8[0], data_u8[1], data_u8[2], data_u8[3]);

@@ -9,7 +9,7 @@ void create_main_cpp(void) {
     if ((F = fopen("src/main.cpp", "r")) == NULL) {
         printf("No \"src/main.cpp\" exists, create one.\n");
         int run_shell = system("mkdir src");
-        ( void )run_shell;
+        (void)run_shell;
         F = fopen("src/main.cpp", "a");
         fprintf(F, "/*********************************************************"
                    "*********************\n");
@@ -63,7 +63,7 @@ void create_main_cpp(void) {
         fclose(F);
         fclose(F2);
         int run_shell = system("mv src/main.ctemp src/main.cpp");
-        ( void )run_shell;
+        (void)run_shell;
     }
 }
 

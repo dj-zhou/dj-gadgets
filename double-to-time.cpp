@@ -12,10 +12,10 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     double t = atof(argv[1]);
-    int us = ( int )((t - ( int )t) * 1000000);
+    int us = (int)((t - (int)t) * 1000000);
     int ms = us / 1000;
     us = us - 1000 * ms;
-    const time_t tt = ( time_t )t;
+    const time_t tt = (time_t)t;
     char utc_str[100];
 
     // gmtime: convert "tt" to utc time
