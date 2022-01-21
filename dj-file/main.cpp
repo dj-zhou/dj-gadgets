@@ -18,6 +18,10 @@ int main(int argc, char* argv[]) {
     if (type == CreateType::STM32Makefile) {
     }
 
+    // Stm32Target target = cli_get_stm32_target(argc, argv);
+    // ( void )target;
+    // printf("target = %d\n", ( int )target);
+
     switch (type) {
     case CreateType::Nothing:
         exit(EXIT_SUCCESS);

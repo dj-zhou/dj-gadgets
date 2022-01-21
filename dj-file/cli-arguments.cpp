@@ -10,9 +10,10 @@ void djfile_version(void) {
 #endif
 }
 
+CLI::App app{ "dj-file: a small tool to initialize projects." };
+
 CreateType cli_get_create_type(int argc, char* argv[]) {
     CreateType type = CreateType::Nothing;
-    CLI::App app{ "djfile: a small tool to initialize projects." };
     //  --------
     auto immediate_flags = app.add_option_group("Immediate");
     auto flag_version = immediate_flags->add_flag(
@@ -45,18 +46,63 @@ CreateType cli_get_create_type(int argc, char* argv[]) {
             exit(EXIT_SUCCESS);
         }
     });
+    //  --------
+    Stm32Target target = Stm32Target::Nothing;
+    std::string target_str;
+    app.add_option("-t,--target", target_str, "target (for --stm32)");
+
     try {
         app.parse(argc, argv);
     }
     catch (const CLI::ParseError& e) {
         return (CreateType)(app.exit(e));
     }
+
+    std::cout << "target_str = " << target_str << std::endl;
+    if (target_str == "f030r8") {
+        target = Stm32Target::f030r8;
+    }
+    else if (target_str == "f103rb") {
+        target = Stm32Target::f103rb;
+    }
+    else if (target_str == "f107xc") {
+        target = Stm32Target::f107xc;
+    }
+    else if (target_str == "f303re") {
+        target = Stm32Target::f303re;
+    }
+    else if (target_str == "f407vg") {
+        target = Stm32Target::f407vg;
+    }
+    else if (target_str == "f407zg") {
+        target = Stm32Target::f407zg;
+    }
+    else if (target_str == "f427vi") {
+        target = Stm32Target::f427vi;
+    }
+    else if (target_str == "f746zg") {
+        target = Stm32Target::f746zg;
+    }
+    else if (target_str == "f767zi") {
+        target = Stm32Target::f767zi;
+    }
+    else if (target_str == "h750vb") {
+        target = Stm32Target::h750vb;
+    }
+    std::cout << "target = " << magic_enum::enum_name(target) << std::endl;
+
     return type;
 }
 
-Stm32Target cli_get_stm32_target(int argc, char* argv[]) {
-    ( void )argc;
-    ( void )argv;
-    Stm32Target target = Stm32Target::Nothing;
-    return target;
-}
+// Stm32Target cli_get_stm32_target(int argc, char* argv[]) {
+//     ( void )argc;
+//     ( void )argv;
+
+//     try {
+//         app.parse(argc, argv);
+//     }
+//     catch (const CLI::ParseError& e) {
+//         return (Stm32Target)(app.exit(e));
+//     }
+//     return target;
+// }

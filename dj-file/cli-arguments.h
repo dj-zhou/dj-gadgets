@@ -28,6 +28,6 @@ enum class Stm32Target {
 
 void djfile_version(void);
 CreateType cli_get_create_type(int argc, char* argv[]);
-Stm32Target cli_get_stm32_target(int argc, char* argv[]);
+// Stm32Target cli_get_stm32_target(int argc, char* argv[]);
 
 #endif  // __CLI_ARGUMENTS_H_
