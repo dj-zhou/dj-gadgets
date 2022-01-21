@@ -9,12 +9,6 @@ int main(int argc, char* argv[]) {
         printf("run \"%s -h\" to see how to use this tool.\n", argv[0]);
         return 1;
     }
-    printf("argc = %d\n", argc);
-    printf("all arguments:\n");
-    for (int i = 0; i < argc; i++) {
-        printf("%d: %s\n", i, argv[i]);
-    }
-
     CreateType type = cli_get_create_type(argc, argv);
     if (( long unsigned int )type
         >= ( long unsigned int )magic_enum::enum_count<CreateType>()) {
@@ -22,10 +16,6 @@ int main(int argc, char* argv[]) {
         return 2;
     }
     if (type == CreateType::STM32Makefile) {
-    }
-    printf("all arguments:\n");
-    for (int i = 0; i < argc; i++) {
-        printf("%d: %s\n", i, argv[i]);
     }
 
     switch (type) {

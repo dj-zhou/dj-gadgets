@@ -16,7 +16,7 @@ CreateType cli_get_create_type(int argc, char* argv[]) {
     //  --------
     auto immediate_flags = app.add_option_group("Immediate");
     auto flag_version = immediate_flags->add_flag(
-        "--version", "Display the version of this tool");
+        "-v,--version", "Display the version of this tool");
     auto flag_create_cmake =
         immediate_flags->add_flag("--cmake", "create a CMake project");
     auto flag_create_makefile =
