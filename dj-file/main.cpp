@@ -1,6 +1,7 @@
 #include "cli-arguments.h"
 #include "config.h"
 #include <CLI/CLI.hpp>
+#include <magic_enum.hpp>
 #include <unistd.h>
 
 int main(int argc, char* argv[]) {
@@ -9,18 +10,26 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     CreateType type = cli_arguments(argc, argv);
+    if (( long unsigned int )type
+        >= ( long unsigned int )magic_enum::enum_count<CreateType>()) {
+        printf("argument error, exit.\n");
+        return 2;
+    }
     switch (type) {
     case CreateType::Nothing:
         exit(EXIT_SUCCESS);
         return 0;
-    case CreateType::Makefile:
-        create_Makefile();
-        break;
     case CreateType::CMake:
         create_CMakeLists_txt();
         break;
+    case CreateType::Makefile:
+        create_Makefile();
+        break;
     case CreateType::Meson:
         printf("not implemented yet\n");
+        break;
+    case CreateType::STM32Makefile:
+        create_Stm32_Makefile(argv[2]);
         break;
     default:
         break;

@@ -5,9 +5,10 @@
 
 enum class CreateType {
     Nothing = 0,
-    CMake = 1,
-    Makefile = 2,
-    Meson = 3,
+    CMake,
+    Makefile,
+    Meson,
+    STM32Makefile,
 };
 
 void djfile_version(void);

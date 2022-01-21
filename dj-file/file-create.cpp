@@ -81,7 +81,6 @@ static FILE* create_file(const char filename[]) {
 }
 
 void create_Makefile(void) {
-
     FILE* F = create_file("Makefile");
     if (F == NULL) {
         return;
@@ -172,6 +171,10 @@ void create_Makefile(void) {
     fprintf(F, "clean:\n");
     fprintf(F, "\trm -f $(OUTPATH)/*\n");
     fclose(F);
+}
+
+void create_Stm32_Makefile(const char* stm32) {
+    ( void )stm32;
 }
 
 void create_CMakeLists_txt(void) {

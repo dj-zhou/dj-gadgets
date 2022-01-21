@@ -3,6 +3,7 @@
 #include "cli-arguments.h"
 #include "file-create.h"
 #include <CLI/CLI.hpp>
+#include <magic_enum.hpp>
 
 void djfile_version(void) {
 #ifdef _GIT_TAG
@@ -23,6 +24,8 @@ CreateType cli_arguments(int argc, char* argv[]) {
         immediate_flags->add_flag("--makefile", "create a Makefile project");
     auto flag_create_meson =
         immediate_flags->add_flag("--meson", "create a Meson project");
+    auto flag_create_stm32 =
+        immediate_flags->add_flag("--stm32", "create a STM32 Makefile project");
     immediate_flags->parse_complete_callback([&] {
         if (*flag_version) {
             djfile_version();
@@ -33,6 +36,9 @@ CreateType cli_arguments(int argc, char* argv[]) {
         }
         if (*flag_create_makefile) {
             type = CreateType::Makefile;
+        }
+        if (*flag_create_stm32) {
+            type = CreateType::STM32Makefile;
         }
         if (*flag_create_meson) {
             type = CreateType::Meson;
