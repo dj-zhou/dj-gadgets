@@ -2,7 +2,6 @@
 
 #include "cli-arguments.h"
 #include "file-create.h"
-#include <CLI/CLI.hpp>
 #include <magic_enum.hpp>
 
 void djfile_version(void) {
@@ -11,7 +10,7 @@ void djfile_version(void) {
 #endif
 }
 
-CreateType cli_arguments(int argc, char* argv[]) {
+CreateType cli_get_create_type(int argc, char* argv[]) {
     CreateType type = CreateType::Nothing;
     CLI::App app{ "djfile: a small tool to initialize projects." };
     //  --------
@@ -53,4 +52,11 @@ CreateType cli_arguments(int argc, char* argv[]) {
         return (CreateType)(app.exit(e));
     }
     return type;
+}
+
+Stm32Target cli_get_stm32_target(int argc, char* argv[]) {
+    ( void )argc;
+    ( void )argv;
+    Stm32Target target = Stm32Target::Nothing;
+    return target;
 }
