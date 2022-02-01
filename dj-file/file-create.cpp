@@ -148,6 +148,51 @@ void create_stm32_main_cpp(Stm32Target target) {
     fprintf(F, "    console.printf(\"main ends.\\r\\n\");\n");
     fprintf(F, "    return 0;\n");
     fprintf(F, "}\n\n");
+    fclose(F);
+}
+
+void create_stm32_config_h(Stm32Target target) {
+    int run_shell = system("mkdir -p inc");
+    run_shell = system("rm -f inc/config.h");
+    (void)run_shell;
+    (void)target;
+    FILE* F = create_file("inc/config.h");
+    fclose(F);
+}
+
+void create_stm32_crystal_h(Stm32Target target) {
+    int run_shell = system("mkdir -p inc");
+    run_shell = system("rm -f inc/crystal.h");
+    (void)run_shell;
+    FILE* F = create_file("inc/crystal.h");
+    fprintf(F, "#pragma once\n");
+
+    fprintf(F, "// "
+               "==============================================================="
+               "==============\n");
+    fprintf(F, "// Value of the External oscillator in Hz\n");
+    switch (target) {
+    case Stm32Target::f030r8:
+    case Stm32Target::f103rb:
+    case Stm32Target::f303re:
+    case Stm32Target::f407vg:
+    case Stm32Target::f427vi:
+    case Stm32Target::f746zg:
+    case Stm32Target::f767zi:
+        fprintf(F, "#define CRYSTAL_FREQ ((uint32_t)8000000)\n");
+        break;
+    case Stm32Target::f407zg:
+        fprintf(F, "#define CRYSTAL_FREQ ((uint32_t)12000000)\n");
+        break;
+    case Stm32Target::f107xc:
+    case Stm32Target::h750vb:
+        fprintf(F, "#define CRYSTAL_FREQ ((uint32_t)25000000)\n");
+        break;
+    default:
+        break;
+    }
+    fprintf(F, "\n");
+    fclose(F);
 }
 
 void create_Makefile(void) {

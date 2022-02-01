@@ -41,6 +41,8 @@ int main(int argc, char* argv[]) {
         break;
     case CreateType::STM32Makefile:
         create_stm32_main_cpp(arguments.stm32_target);
+        create_stm32_config_h(arguments.stm32_target);
+        create_stm32_crystal_h(arguments.stm32_target);
         create_stm32_Makefile(arguments.stm32_target);
         break;
     default:
