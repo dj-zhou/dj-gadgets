@@ -1,5 +1,3 @@
-#include "config.h"
-
 #include "cli-arguments.h"
 #include "file-create.h"
 #include <magic_enum.hpp>
@@ -10,11 +8,11 @@ void djfile_version(void) {
 #endif
 }
 
-CLI::App app{ "dj-file: a small tool to initialize projects." };
-
-CreateType cli_get_create_type(int argc, char* argv[]) {
-    CreateType type = CreateType::Nothing;
+Arguments_t cli_parse_arguments(int argc, char* argv[]) {
+    CLI::App app{ "dj-file: a small tool to initialize projects." };
+    Arguments_t arguments;
     //  --------
+    arguments.create_type = CreateType::Nothing;
     auto immediate_flags = app.add_option_group("Immediate");
     auto flag_version = immediate_flags->add_flag(
         "-v,--version", "Display the version of this tool");
@@ -32,22 +30,21 @@ CreateType cli_get_create_type(int argc, char* argv[]) {
             exit(EXIT_SUCCESS);
         }
         if (*flag_create_cmake) {
-            type = CreateType::CMake;
+            arguments.create_type = CreateType::CMake;
         }
         if (*flag_create_makefile) {
-            type = CreateType::Makefile;
+            arguments.create_type = CreateType::Makefile;
         }
         if (*flag_create_stm32) {
-            type = CreateType::STM32Makefile;
+            arguments.create_type = CreateType::STM32Makefile;
         }
         if (*flag_create_meson) {
-            type = CreateType::Meson;
+            arguments.create_type = CreateType::Meson;
             printf("todo\n");
             exit(EXIT_SUCCESS);
         }
     });
     //  --------
-    Stm32Target target = Stm32Target::Nothing;
     std::string target_str;
     app.add_option("-t,--target", target_str, "target (for --stm32)");
 
@@ -55,54 +52,40 @@ CreateType cli_get_create_type(int argc, char* argv[]) {
         app.parse(argc, argv);
     }
     catch (const CLI::ParseError& e) {
-        return (CreateType)(app.exit(e));
+        return arguments;
     }
-
-    std::cout << "target_str = " << target_str << std::endl;
+    //  --------
+    arguments.stm32_target = Stm32Target::Nothing;
     if (target_str == "f030r8") {
-        target = Stm32Target::f030r8;
+        arguments.stm32_target = Stm32Target::f030r8;
     }
     else if (target_str == "f103rb") {
-        target = Stm32Target::f103rb;
+        arguments.stm32_target = Stm32Target::f103rb;
     }
     else if (target_str == "f107xc") {
-        target = Stm32Target::f107xc;
+        arguments.stm32_target = Stm32Target::f107xc;
     }
     else if (target_str == "f303re") {
-        target = Stm32Target::f303re;
+        arguments.stm32_target = Stm32Target::f303re;
     }
     else if (target_str == "f407vg") {
-        target = Stm32Target::f407vg;
+        arguments.stm32_target = Stm32Target::f407vg;
     }
     else if (target_str == "f407zg") {
-        target = Stm32Target::f407zg;
+        arguments.stm32_target = Stm32Target::f407zg;
     }
     else if (target_str == "f427vi") {
-        target = Stm32Target::f427vi;
+        arguments.stm32_target = Stm32Target::f427vi;
     }
     else if (target_str == "f746zg") {
-        target = Stm32Target::f746zg;
+        arguments.stm32_target = Stm32Target::f746zg;
     }
     else if (target_str == "f767zi") {
-        target = Stm32Target::f767zi;
+        arguments.stm32_target = Stm32Target::f767zi;
     }
     else if (target_str == "h750vb") {
-        target = Stm32Target::h750vb;
+        arguments.stm32_target = Stm32Target::h750vb;
     }
-    std::cout << "target = " << magic_enum::enum_name(target) << std::endl;
 
-    return type;
+    return arguments;
 }
-
-// Stm32Target cli_get_stm32_target(int argc, char* argv[]) {
-//     ( void )argc;
-//     ( void )argv;
-
-//     try {
-//         app.parse(argc, argv);
-//     }
-//     catch (const CLI::ParseError& e) {
-//         return (Stm32Target)(app.exit(e));
-//     }
-//     return target;
-// }

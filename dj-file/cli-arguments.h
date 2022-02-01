@@ -1,7 +1,5 @@
-#ifndef __CLI_ARGUMENTS_H_
-#define __CLI_ARGUMENTS_H_
+#pragma once
 
-#include "config.h"
 #include <CLI/CLI.hpp>
 
 enum class CreateType {
@@ -26,8 +24,10 @@ enum class Stm32Target {
     h750vb,
 };
 
-void djfile_version(void);
-CreateType cli_get_create_type(int argc, char* argv[]);
-// Stm32Target cli_get_stm32_target(int argc, char* argv[]);
+typedef struct {
+    CreateType create_type;
+    Stm32Target stm32_target;
+} Arguments_t;
 
-#endif  // __CLI_ARGUMENTS_H_
+void djfile_version(void);
+Arguments_t cli_parse_arguments(int argc, char* argv[]);

@@ -1,4 +1,5 @@
 #include "time-fetch.h"
+#include <time.h>
 
 void current_time_date(char* time2Print) {
     char wday[][3] = {

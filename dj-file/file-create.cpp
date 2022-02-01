@@ -1,4 +1,6 @@
 #include "file-create.h"
+#include "time-fetch.h"
+#include <string.h>
 
 void create_main_cpp(void) {
     int i;
@@ -7,7 +9,7 @@ void create_main_cpp(void) {
 
     current_time_date(time_to_print);
     if ((F = fopen("src/main.cpp", "r")) == NULL) {
-        printf("No \"src/main.cpp\" exists, create one.\n");
+        printf("\"src/main.cpp\" does not exist, create one.\n");
         int run_shell = system("mkdir src");
         (void)run_shell;
         F = fopen("src/main.cpp", "a");
@@ -78,6 +80,18 @@ static FILE* create_file(const char filename[]) {
         F = fopen(filename, "w");
     }
     return F;
+}
+
+void create_stm32_main_cpp(void) {
+    int run_shell = system("mkdir src");
+    ( void )run_shell;
+    FILE* F = create_file("src/main.c");
+    if (F == NULL) {
+        printf("failed to create \"src/main.c\" file");
+        return;
+    }
+    fprintf(F, "hello world\n");
+    fclose(F);
 }
 
 void create_Makefile(void) {
@@ -173,8 +187,8 @@ void create_Makefile(void) {
     fclose(F);
 }
 
-void create_Stm32_Makefile(const char* stm32) {
-    ( void )stm32;
+void create_stm32_Makefile(Stm32Target stm32_target) {
+    ( void )stm32_target;
 }
 
 void create_CMakeLists_txt(void) {

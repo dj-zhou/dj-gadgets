@@ -1,8 +1,3 @@
-#ifndef __TIME_FETCH_H
-#define __TIME_FETCH_H
-
-#include "config.h"
+#pragma once
 
 void current_time_date(char*);
-
-#endif  // __TIME_FETCH_H
