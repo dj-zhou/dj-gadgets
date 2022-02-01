@@ -10,8 +10,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     Arguments_t arguments = cli_parse_arguments(argc, argv);
-    if (( long unsigned int )arguments.create_type
-        >= ( long unsigned int )magic_enum::enum_count<CreateType>()) {
+    if ((long unsigned int)arguments.create_type
+        >= (long unsigned int)magic_enum::enum_count<CreateType>()) {
         printf("argument error, exit.\n");
         return 2;
     }
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
         printf("not implemented yet\n");
         break;
     case CreateType::STM32Makefile:
-        create_stm32_main_cpp();
+        create_stm32_main_cpp(arguments.stm32_target);
         create_stm32_Makefile(arguments.stm32_target);
         break;
     default:

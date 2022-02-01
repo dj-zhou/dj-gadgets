@@ -82,16 +82,72 @@ static FILE* create_file(const char filename[]) {
     return F;
 }
 
-void create_stm32_main_cpp(void) {
-    int run_shell = system("mkdir src");
-    ( void )run_shell;
+void create_stm32_main_cpp(Stm32Target target) {
+    int run_shell = system("mkdir -p src");
+    run_shell = system("rm -f src/main.c");
+    (void)run_shell;
     FILE* F = create_file("src/main.c");
     if (F == NULL) {
         printf("failed to create \"src/main.c\" file");
         return;
     }
-    fprintf(F, "hello world\n");
-    fclose(F);
+
+    fprintf(F, "#include \"config.h\"\n\n");
+    fprintf(F, "// "
+               "==============================================================="
+               "==============\n");
+    fprintf(F, "static void taskPrint(void) {\n");
+    fprintf(F, "    console.printf(\"hello world\\r\\n\");\n");
+    fprintf(F, "}\n\n");
+
+    fprintf(F, "// "
+               "==============================================================="
+               "==============\n");
+    fprintf(F, "int main(void) {\n");
+    switch (target) {
+    case Stm32Target::f030r8:
+        fprintf(F, "    utils.system.initClock(48, 48);\n");
+        break;
+    case Stm32Target::f107xc:
+    case Stm32Target::f103rb:
+    case Stm32Target::f303re:
+        fprintf(F, "    utils.system.initClock(72, 36, 72);\n");
+        break;
+    case Stm32Target::f407vg:
+    case Stm32Target::f407zg:
+        fprintf(F, "    utils.system.initClock(168, 42, 84);\n");
+        break;
+    case Stm32Target::f427vi:
+        fprintf(F, "    utils.system.initClock(176, 44, 88);\n");
+        break;
+    case Stm32Target::f746zg:
+    case Stm32Target::f767zi:
+        fprintf(F, "    utils.system.initClock(216, 54, 108);\n");
+        break;
+    case Stm32Target::h750vb:
+        fprintf(F, "    utils.system.initClock(480, 120, 120);\n");
+        break;
+    default:
+        break;
+    }
+
+    fprintf(F, "    utils.system.initNvic(4);\n");
+    fprintf(F, "    stime.config();\n");
+    fprintf(F, "    stime.scheduler.config();\n");
+    fprintf(F, "    console.config(2000000);\n");
+    fprintf(F, "    console.printf(\"\\r\\n\\r\\n\");\n");
+    fprintf(F, "    led.config(LED_DOUBLE_BLINK);\n\n");
+    fprintf(F, "    // tasks -----------\n");
+    fprintf(F,
+            "    stime.scheduler.attach(500, 2, taskPrint, \"taskPrint\");\n");
+    fprintf(F, "    stime.scheduler.show();\n\n");
+
+    fprintf(F, "    // system starts to run -----------\n");
+    fprintf(F, "    stime.scheduler.run();\n");
+
+    fprintf(F, "    console.printf(\"main ends.\\r\\n\");\n");
+    fprintf(F, "    return 0;\n");
+    fprintf(F, "}\n\n");
 }
 
 void create_Makefile(void) {
@@ -188,7 +244,7 @@ void create_Makefile(void) {
 }
 
 void create_stm32_Makefile(Stm32Target stm32_target) {
-    ( void )stm32_target;
+    (void)stm32_target;
 }
 
 void create_CMakeLists_txt(void) {
