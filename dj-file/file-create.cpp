@@ -154,14 +154,37 @@ void create_stm32_config_h(Stm32Target target) {
     int run_shell = system("mkdir -p inc");
     run_shell = system("rm -f inc/config.h");
     (void)run_shell;
-    (void)target;
     FILE* F = create_file("inc/config.h");
     fprintf(F, "#pragma once\n\n");
     fprintf(F, "#ifdef __cplusplus\n");
     fprintf(F, "extern \"C\" {\n");
     fprintf(F, "#endif\n\n");
-
-    fprintf(F, "#include \"stm32f0xx_hal.h\"\n");
+    switch (target) {
+    case Stm32Target::f030r8:
+        fprintf(F, "#include \"stm32f0xx_hal.h\"\n\n");
+        break;
+    case Stm32Target::f103rb:
+    case Stm32Target::f107xc:
+        fprintf(F, "#include \"stm32f1xx_hal.h\"\n\n");
+        break;
+    case Stm32Target::f303re:
+        fprintf(F, "#include \"stm32f3xx_hal.h\"\n\n");
+        break;
+    case Stm32Target::f407vg:
+    case Stm32Target::f407zg:
+    case Stm32Target::f427vi:
+        fprintf(F, "#include \"stm32f4xx_hal.h\"\n\n");
+        break;
+    case Stm32Target::f746zg:
+    case Stm32Target::f767zi:
+        fprintf(F, "#include \"stm32f7xx_hal.h\"\n\n");
+        break;
+    case Stm32Target::h750vb:
+        fprintf(F, "#include \"stm32h7xx_hal.h\"\n\n");
+        break;
+    default:
+        break;
+    }
 
     fprintf(F, "// ============================================================================\n");
     fprintf(F, "// one-third-core includes\n");
