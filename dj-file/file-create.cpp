@@ -138,8 +138,7 @@ void create_stm32_main_cpp(Stm32Target target) {
     fprintf(F, "    console.printf(\"\\r\\n\\r\\n\");\n");
     fprintf(F, "    led.config(LED_DOUBLE_BLINK);\n\n");
     fprintf(F, "    // tasks -----------\n");
-    fprintf(F,
-            "    stime.scheduler.attach(500, 2, taskPrint, \"taskPrint\");\n");
+    fprintf(F, "    stime.scheduler.attach(500, 2, taskPrint, \"taskPrint\");\n");
     fprintf(F, "    stime.scheduler.show();\n\n");
 
     fprintf(F, "    // system starts to run -----------\n");
@@ -157,6 +156,42 @@ void create_stm32_config_h(Stm32Target target) {
     (void)run_shell;
     (void)target;
     FILE* F = create_file("inc/config.h");
+    fprintf(F, "#pragma once\n\n");
+    fprintf(F, "#ifdef __cplusplus\n");
+    fprintf(F, "extern \"C\" {\n");
+    fprintf(F, "#endif\n\n");
+
+    fprintf(F, "#include \"stm32f0xx_hal.h\"\n");
+
+    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "// one-third-core includes\n");
+    fprintf(F, "// ----------------------------------------------------------------------------\n");
+    fprintf(F, "#include \"general-utils.h\"\n\n");
+
+    fprintf(F, "// ----------------------------------------------------------------------------\n");
+    fprintf(F, "#define _STIME_USE_SYSTICK\n");
+    fprintf(F, "#define _STIME_1K_TICK\n");
+    fprintf(F, "#define _STIME_USE_SCHEDULER\n");
+    fprintf(F, "#include \"stime-scheduler.h\"\n\n");
+
+    fprintf(F, "// ----------------------------------------------------------------------------\n");
+    fprintf(F, "#define _CONSOLE_USE_USART2_PA2PA3\n");
+    fprintf(F, "// #define _CONSOLE_USE_USART3_PC10PC11\n");
+    fprintf(F, "// #define _CONSOLE_USE_USART1_PB6PB7\n");
+    fprintf(F, "// #define _CONSOLE_USE_UART5_PC12PD2\n");
+    fprintf(F, "#include \"uart-console.h\"\n\n");
+
+    fprintf(F, "// ----------------------------------------------------------------------------\n");
+    fprintf(F, "#define _LED_HEARTBEAT_PORT GPIOA\n");
+    fprintf(F, "#define _LED_HEARTBEAT_PIN 5\n");
+    fprintf(F, "#define _LED_HEARTBEAT_TASK_MS 5\n");
+    fprintf(F, "#include \"led-status.h\"\n\n");
+
+    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "#ifdef __cplusplus\n");
+    fprintf(F, "}\n");
+    fprintf(F, "#endif\n\n");
+
     fclose(F);
 }
 
@@ -167,9 +202,7 @@ void create_stm32_crystal_h(Stm32Target target) {
     FILE* F = create_file("inc/crystal.h");
     fprintf(F, "#pragma once\n");
 
-    fprintf(F, "// "
-               "==============================================================="
-               "==============\n");
+    fprintf(F, "// =============================================================================\n");
     fprintf(F, "// Value of the External oscillator in Hz\n");
     switch (target) {
     case Stm32Target::f030r8:
@@ -200,9 +233,8 @@ void create_Makefile(void) {
     if (F == NULL) {
         return;
     }
-    fprintf(F, "\n# "
-               "=============================================================="
-               "===============\n");
+
+    fprintf(F, "// ============================================================================\n");
     fprintf(F, "EXEC      = main\n");
     fprintf(F, "CODE_PATH = .\n");
     fprintf(F, "LIBS      = -lm\n");
@@ -215,27 +247,23 @@ void create_Makefile(void) {
     fprintf(F, "$(info )\n");
     fprintf(F, "$(info ------------------------------------)\n");
     fprintf(F, "$(info LIBS:)\n");
-    fprintf(F, "$(info  $(LIBS))\n");
-    fprintf(F, "\n# "
-               "=============================================================="
-               "===============\n");
+    fprintf(F, "$(info  $(LIBS))\n\n");
+
+    fprintf(F, "// ============================================================================\n");
     fprintf(F, "AS = $(CC) -x assembler-with-cpp\n");
     fprintf(F, "CP = objcopy\n");
-    fprintf(F, "SZ = size\n");
-    fprintf(F, "\n# "
-               "=============================================================="
-               "===============\n");
+    fprintf(F, "SZ = size\n\n");
+
+    fprintf(F, "// ============================================================================\n");
     fprintf(F, "# C_DEFS += -D BIN_NAME=\\\"$(EXEC)\\\"\n");
     fprintf(F, "# C_DEFS += -D PRJ_GIT_CMT=\\\"$(shell git rev-parse --short "
                "HEAD)\\\"\n");
-    fprintf(F,
-            "# C_DEFS += -D PRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref "
-            "HEAD)\\\"\n");
+    fprintf(F, "# C_DEFS += -D PRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref "
+               "HEAD)\\\"\n");
     fprintf(F, "# C_DEFS += -D PRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 "
-               "--dirty --always --tags)\\\"\n");
-    fprintf(F, "\n# "
-               "=============================================================="
-               "===============\n");
+               "--dirty --always --tags)\\\"\n\n");
+
+    fprintf(F, "// ============================================================================\n");
     fprintf(F, "# collect '.cpp' file to SRCS\n");
     fprintf(F, "DIRS := $(shell find $(CODE_PATH) -maxdepth 10 -type d)\n");
     fprintf(F, "SRCS  = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.cpp))\n");
@@ -260,18 +288,15 @@ void create_Makefile(void) {
     fprintf(F, "$(info  $(INC:%%=-I%%))\n");
     fprintf(F, "\n$(info )\n");
     fprintf(F, "$(info ====================================)\n");
-    fprintf(F, "$(info )\n");
+    fprintf(F, "$(info )\n\n");
 
-    fprintf(F, "\n# "
-               "=============================================================="
-               "===============\n");
+    fprintf(F, "// ============================================================================\n");
     fprintf(F, "CFLAGS    = $(C_DEFS) $(INC:%%=-I%%) $(OPT)\n");
     fprintf(F, "# treat all warnings as errors\n");
     fprintf(F, "CFLAGS  += -Werror=unused-parameter -Werror=unused-variable\n");
-    fprintf(F, "HOSTFLAGS = $(CPPSTD) $(LIBS)\n");
-    fprintf(F, "\n# "
-               "=============================================================="
-               "===============\n");
+    fprintf(F, "HOSTFLAGS = $(CPPSTD) $(LIBS)\n\n");
+
+    fprintf(F, "// ============================================================================\n");
     fprintf(F, ".PHONY: all\n");
     fprintf(F, "all: CFLAGS+= -D MAKE_TYPE=\\\"$(MTYPE_ALL)\\\"\n");
     fprintf(F, "all: CFLAGS+= $(HOSTFLAGS)\n");
