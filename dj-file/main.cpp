@@ -10,17 +10,12 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     Arguments_t arguments = cli_parse_arguments(argc, argv);
-    if ((long unsigned int)arguments.create_type
-        >= (long unsigned int)magic_enum::enum_count<CreateType>()) {
+    if ((long unsigned int)arguments.create_type >= (long unsigned int)magic_enum::enum_count<CreateType>()) {
         printf("argument error, exit.\n");
         return 2;
     }
     if (arguments.create_type == CreateType::STM32Makefile) {
     }
-
-    // Stm32Target target = cli_get_stm32_target(argc, argv);
-    // ( void )target;
-    // printf("target = %d\n", ( int )target);
 
     switch (arguments.create_type) {
     case CreateType::Nothing:
@@ -44,6 +39,8 @@ int main(int argc, char* argv[]) {
         create_stm32_config_h(arguments.stm32_target);
         create_stm32_crystal_h(arguments.stm32_target);
         create_stm32_Makefile(arguments.stm32_target);
+        printf("Makefile is generated, but you need to revise the library path\n");
+        printf("You also need to initialize the git repository\n");
         break;
     default:
         break;

@@ -337,7 +337,174 @@ void create_Makefile(void) {
 }
 
 void create_stm32_Makefile(Stm32Target stm32_target) {
-    (void)stm32_target;
+    FILE* F = create_file("Makefile");
+    if (F == NULL) {
+        return;
+    }
+    fprintf(F, "# =============================================================================\n");
+    fprintf(F, "# custom settings\n");
+    switch (stm32_target) {
+    case Stm32Target::f030r8:
+        fprintf(F, "STM32Fx   = STM32F030x8\n");
+        break;
+    case Stm32Target::f103rb:
+        fprintf(F, "STM32Fx   = xx\n");
+        break;
+    default:
+        break;
+    }
+    fprintf(F, "LIB_PATH  = ../../one-third-hal\n");
+    fprintf(F, "PRJ_PATH  = . $(LIB_PATH)/core\n");
+    fprintf(F, "LIBS      = -lc -lm -lnosys\n");
+    fprintf(F, "OPT       = -Og\n");
+    switch (stm32_target) {
+    case Stm32Target::f030r8:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f030x8.s\n");
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F030R8Tx_FLASH.ld\n");
+        break;
+    case Stm32Target::f103rb:
+        break;
+    default:
+        break;
+    }
+    fprintf(F, "PRJ_OUT   = bin\n");
+    fprintf(F, "PRJ_NAME  = $(STM32Fx)-binary\n\n");
+
+    fprintf(F, "PRJ_INCH =  \\\n");
+    fprintf(F, "    $(LIB_PATH)/core \\\n");
+    fprintf(F, "    ./inc\n\n");
+
+    fprintf(F, "# ------------------------------------------\n");
+    fprintf(F, "ifneq (,$(findstring STM32F0,$(STM32Fx)))\n");
+    fprintf(F, "    CPU        = -mcpu=cortex-m0\n");
+    fprintf(F, "    FPU        =\n");
+    fprintf(F, "    FLOAT-ABI  = -mfloat-abi=soft\n");
+    fprintf(F, "    LIB_SHARE  = f0-share\n");
+    fprintf(F, "    LIB_HAL    = f0-v1.11.3\n");
+    fprintf(F, "    STM32Family= STM32F0xx\n");
+    fprintf(F, "else\n");
+    fprintf(F, "    $(info not a STM32F0xx family device, you need to revise the Makefile)\n");
+    fprintf(F, "endif\n\n");
+
+    fprintf(F, "# =============================================================================\n");
+    fprintf(F, "CROSS_COMPILE = arm-none-eabi-\n");
+    fprintf(F, "CC = $(CROSS_COMPILE)gcc\n");
+    fprintf(F, "AS = $(CC) -x assembler-with-cpp\n");
+    fprintf(F, "CP = $(CROSS_COMPILE)objcopy\n");
+    fprintf(F, "SZ = $(CROSS_COMPILE)size\n");
+    fprintf(F, "AR = $(CROSS_COMPILE)ar\n\n");
+
+    fprintf(F, "# =============================================================================\n");
+    fprintf(F, "MCU     = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)\n");
+    fprintf(F, "C_DEFS  = -D$(STM32Fx) -DUSE_HAL_DRIVER\n");
+    fprintf(F, "C_DEFS += -DFIRMWARE=\\\"$(shell basename ${PWD})\\\"\n");
+    fprintf(F, "C_DEFS += -DPRJ_GIT_CMT=\\\"$(shell git rev-parse --short HEAD)\\\"\n");
+    fprintf(F, "C_DEFS += -DPRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref HEAD)\\\"\n");
+    fprintf(F, "C_DEFS += -DPRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 --dirty --always --tags)\\\"\n");
+    fprintf(F, "C_DEFS += -DLIB_GIT_CMT=\\\"$(shell git rev-parse --short HEAD)\\\"\n");
+    fprintf(F, "C_DEFS += -DLIB_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref HEAD)\\\"\n");
+    fprintf(F, "C_DEFS += -DLIB_GIT_VER=\\\"$(shell git describe --abbrev=7 --dirty --always --tags)\\\"\n\n");
+
+    fprintf(F, "# =============================================================================\n");
+    fprintf(F, "HAL_PATH += $(LIB_PATH)/${LIB_HAL}\n");
+    fprintf(F, "HAL_OUT  = $(LIB_PATH)/$(STM32Fx)-hal\n");
+    fprintf(F, "HAL_DIRS:= $(shell find $(HAL_PATH) -maxdepth 10 -type d)\n");
+    fprintf(F, "HAL_SRCS = $(foreach dir,$(HAL_DIRS),$(wildcard $(dir)/*.c))\n");
+    fprintf(F, "HAL_OBJS = $(addprefix $(HAL_OUT)/,$(notdir $(HAL_SRCS:.c=.o)))\n");
+    fprintf(F, "vpath %%.c $(sort $(dir $(HAL_SRCS)))\n\n");
+
+    fprintf(F, "# =============================================================================\n");
+    fprintf(F, "PRJ_PATH += $(LIB_PATH)/${LIB_SHARE}\n");
+    fprintf(F, "PRJ_DIRS:= $(shell find $(PRJ_PATH) -maxdepth 10 -type d)\n");
+    fprintf(F, "PRJ_SRCS = $(foreach dir,$(PRJ_DIRS),$(wildcard $(dir)/*.c))\n");
+    fprintf(F, "PRJ_OBJS = $(addprefix $(PRJ_OUT)/,$(notdir $(PRJ_SRCS:.c=.o)))\n");
+    fprintf(F, "vpath %%.c $(sort $(dir $(PRJ_SRCS)))\n");
+    fprintf(F, "PRJ_OBJS+= $(addprefix $(PRJ_OUT)/,$(notdir $(ASM_SRC:.s=.o)))\n");
+    fprintf(F, "vpath %%.s $(sort $(dir $(ASM_SRC)))\n\n");
+
+    fprintf(F, "HAL_INCH = \\\n");
+    fprintf(F, "    $(LIB_PATH)/CMSIS/Include \\\n");
+    fprintf(F, "    $(LIB_PATH)/CMSIS/Device/ST/${STM32Family}/Include \\\n");
+    fprintf(F, "    $(LIB_PATH)/${LIB_HAL}/inc \\\n");
+    fprintf(F, "    $(LIB_PATH)/${LIB_SHARE} \\\n");
+    fprintf(F, "    ./inc\n");
+    fprintf(F, "HAL_INC  = $(HAL_INCH:%%=-I%%)\n\n");
+
+    fprintf(F, "PRJ_INCs = $(shell find -L $(PRJ_INCH) -name '*.h' -exec dirname {} \\; | uniq)\n");
+    fprintf(F, "PRJ_INC  = $(PRJ_INCs:%%=-I%%)\n");
+    fprintf(F, "PRJ_INC += ${HAL_INC}\n\n");
+
+    fprintf(F, "# =============================================================================\n");
+    fprintf(F, "CFLAGS   = $(MCU) $(C_DEFS) $(OPT)\n");
+    fprintf(F, "CFLAGS  += -Werror=unused-variable\n");
+    fprintf(F, "CFLAGS  += -Werror=unused-function\n");
+    fprintf(F, "CFLAGS  += -Wall -fdata-sections -ffunction-sections\n");
+    fprintf(F, "CFLAGS  += -MMD -MP -MF\"$(@:%%.o=%%.d)\" -g -gdwarf-2\n");
+    fprintf(F, "LDFLAGS  = $(MCU) -specs=nano.specs -T$(LD_SCRIPT) $(LIBS)\n");
+    fprintf(F, "LDFLAGS += -Wl,-Map=$(PRJ_OUT)/$(PRJ_NAME).map,--cref -Wl,--gc-sections\n");
+    fprintf(F, "LDFLAGS += -l$(STM32Fx) -L$(HAL_OUT)/\n\n");
+
+    fprintf(F, "CFLAGS_PROJ  = -Werror=conversion\n");
+    fprintf(F, "CFLAGS_PROJ += -Werror=unused-parameter\n\n");
+
+    fprintf(F, "# =============================================================================\n");
+    fprintf(F, ".PHONY:\n");
+    fprintf(F, "# -----------------\n");
+    fprintf(F, "all: release\n");
+    fprintf(F, "\t$(SZ) $(PRJ_OUT)/$(PRJ_NAME).elf\n");
+    fprintf(F, "release: CFLAGS+= $(CFLAGS_PROJ) -D MAKE_TYPE=\\\"release\\\" $(PRJ_INC)\n");
+    fprintf(F, "release: $(PRJ_OUT)/$(PRJ_NAME).elf\n");
+    fprintf(F, "$(PRJ_OUT)/%%.o: %%.c Makefile | $(PRJ_OUT)\n");
+    fprintf(F, "\t$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(PRJ_OUT)/$(notdir $(<:.c=.lst)) $< -o $@\n\n");
+
+    fprintf(F, "$(PRJ_OUT)/%%.o: %%.s Makefile | $(PRJ_OUT)\n");
+    fprintf(F, "\t$(AS) -c $(CFLAGS) $< -o $@\n\n");
+
+    fprintf(F, "$(PRJ_OUT)/$(PRJ_NAME).elf: $(PRJ_OBJS)\n");
+    fprintf(F, "\t$(CC) $(PRJ_OBJS) $(LDFLAGS) -o $(PRJ_OUT)/$(PRJ_NAME).elf\n");
+    fprintf(F, "\t$(CP) -O ihex $(PRJ_OUT)/$(PRJ_NAME).elf $(PRJ_OUT)/$(PRJ_NAME).hex\n");
+    fprintf(F, "\t$(CP) -O binary -S $(PRJ_OUT)/$(PRJ_NAME).elf $(PRJ_OUT)/$(PRJ_NAME).bin\n\n");
+
+    fprintf(F, "$(PRJ_OUT):\n");
+    fprintf(F, "\tmkdir -p $@\n\n");
+
+    fprintf(F, "# -----------------\n");
+    fprintf(F, "hal: CFLAGS+=$(HAL_INC)\n");
+    fprintf(F, "hal: $(HAL_OUT)/lib$(STM32Fx).a\n");
+    fprintf(F, "$(HAL_OUT)/%%.o: %%.c Makefile | $(HAL_OUT)\n");
+    fprintf(F, "\t$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(HAL_OUT)/$(notdir $(<:.c=.lst)) $< -o $@\n\n");
+
+    fprintf(F, "$(HAL_OUT)/lib$(STM32Fx).a: $(HAL_OBJS)\n");
+    fprintf(F, "\t$(AR) -r $@ $(HAL_OBJS)\n\n");
+
+    fprintf(F, "$(HAL_OUT):\n");
+    fprintf(F, "\tmkdir -p $@\n\n");
+
+    fprintf(F, "hal-clean:\n");
+    fprintf(F, "\trm -rf $(PRJ_OUT)\n");
+    fprintf(F, "\trm -rf $(HAL_OUT)\n\n");
+
+    fprintf(F, "# -----------------\n");
+    fprintf(F, "download:\n");
+    fprintf(F, "\tst-flash write $(PRJ_OUT)/$(PRJ_NAME).bin 0x8000000\n");
+    fprintf(F, "\tst-flash reset\n\n");
+
+    fprintf(F, "clean:\n");
+    fprintf(F, "\trm -rf $(PRJ_OUT)\n\n");
+
+    fprintf(F, "erase:\n");
+    fprintf(F, "\tst-flash erase\n\n");
+
+    fprintf(F, "# -----------------\n");
+    fprintf(F, "debug: CFLAGS+= $(CFLAGS_PROJ) -D __DEBUG $(PRJ_INC)\n");
+    fprintf(F, "debug: CFLAGS+= -D MAKE_TYPE=\\\"debug\\\"\n");
+    fprintf(F, "debug: $(PRJ_OUT)/$(PRJ_NAME).elf\n");
+    fprintf(F, "\t$(SZ) $(PRJ_OUT)/$(PRJ_NAME).elf\n\n");
+
+    fprintf(F, "-include $(wildcard $(PRJ_OUT)/*.d)\n");
+    fprintf(F, "-include $(wildcard $(HAL_OUT)/*.d)\n");
+
+    fclose(F);
 }
 
 void create_CMakeLists_txt(void) {
