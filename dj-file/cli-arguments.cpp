@@ -14,16 +14,11 @@ Arguments_t cli_parse_arguments(int argc, char* argv[]) {
     //  --------
     arguments.create_type = CreateType::Nothing;
     auto immediate_flags = app.add_option_group("Immediate");
-    auto flag_version = immediate_flags->add_flag(
-        "-v,--version", "Display the version of this tool");
-    auto flag_create_cmake =
-        immediate_flags->add_flag("--cmake", "create a CMake project");
-    auto flag_create_makefile =
-        immediate_flags->add_flag("--makefile", "create a Makefile project");
-    auto flag_create_meson =
-        immediate_flags->add_flag("--meson", "create a Meson project");
-    auto flag_create_stm32 =
-        immediate_flags->add_flag("--stm32", "create a STM32 Makefile project");
+    auto flag_version = immediate_flags->add_flag("-v,--version", "Display the version of this tool");
+    auto flag_create_cmake = immediate_flags->add_flag("--cmake", "create a CMake project");
+    auto flag_create_makefile = immediate_flags->add_flag("--makefile", "create a Makefile project");
+    auto flag_create_meson = immediate_flags->add_flag("--meson", "create a Meson project");
+    auto flag_create_stm32 = immediate_flags->add_flag("--stm32", "create a STM32 Makefile project");
     immediate_flags->parse_complete_callback([&] {
         if (*flag_version) {
             djfile_version();

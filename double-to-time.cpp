@@ -19,8 +19,7 @@ int main(int argc, char* argv[]) {
     char utc_str[100];
 
     // gmtime: convert "tt" to utc time
-    std::strftime(utc_str, sizeof(utc_str), "%a %b %d %T UTC %Y",
-                  std::gmtime(&tt));
+    std::strftime(utc_str, sizeof(utc_str), "%a %b %d %T UTC %Y", std::gmtime(&tt));
     sprintf(utc_str + 28, " %03d:%03d", ms, us);
     std::string std_utc_str(utc_str);
     std::cout << std_utc_str << std::endl;

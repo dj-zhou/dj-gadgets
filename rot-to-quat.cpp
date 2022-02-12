@@ -20,9 +20,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     Eigen::Matrix3d R;
-    R << atof(argv[1]), atof(argv[2]), atof(argv[3]), atof(argv[4]),
-        atof(argv[5]), atof(argv[6]), atof(argv[7]), atof(argv[8]),
-        atof(argv[9]);
+    R << atof(argv[1]), atof(argv[2]), atof(argv[3]), atof(argv[4]), atof(argv[5]), atof(argv[6]), atof(argv[7]),
+        atof(argv[8]), atof(argv[9]);
     // check if it is a rotation matrix
     Eigen::Matrix3d I;
     I.setIdentity();

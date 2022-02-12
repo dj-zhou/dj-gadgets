@@ -54,9 +54,7 @@ int main(int argc, char* argv[]) {
     double y1 = rad2deg(euler[0]);
     double p1 = rad2deg(euler[1]);
     double r1 = rad2deg(euler[2]);
-    printf(
-        "(method 1) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n",
-        y1, p1, r1);
+    printf("(method 1) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n", y1, p1, r1);
 
     // method 2:
     // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
@@ -64,9 +62,7 @@ int main(int argc, char* argv[]) {
     double r2 = rad2deg(atan2(2 * (w * x + y * z), 1 - 2 * (x * x + y * y)));
     double p2 = rad2deg(asin(2 * (w * y - x * z)));
     double y2 = rad2deg(atan2(2 * (x * y + w * z), 1 - 2 * (y * y + z * z)));
-    printf(
-        "(method 2) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n",
-        y2, p2, r2);
+    printf("(method 2) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n", y2, p2, r2);
 
     // method 3 : quaternion to rotation matrix and rotation amtrix to euler
     // angles
@@ -92,9 +88,7 @@ int main(int argc, char* argv[]) {
     double y3 = rad2deg(euler3[0]);
     double p3 = rad2deg(euler3[1]);
     double r3 = rad2deg(euler3[2]);
-    printf(
-        "(method 3) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n",
-        y3, p3, r3);
+    printf("(method 3) ZYX euler: [yaw, pitch, roll] = [%.6f %.6f %.6f] (deg)\n", y3, p3, r3);
 
     return 0;
 }

@@ -21,8 +21,8 @@ int main(int argc, char* argv[]) {
         data_ptr[1] = (uint8_t)atoi(argv[2]);
         data_ptr[2] = (uint8_t)atoi(argv[3]);
         data_ptr[3] = (uint8_t)atoi(argv[4]);
-        printf(" u8: [%d, %d, %d, %d] <=> float: %f (little endian)\n",
-               data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3], data_float);
+        printf(" u8: [%d, %d, %d, %d] <=> float: %f (little endian)\n", data_ptr[0], data_ptr[1], data_ptr[2],
+               data_ptr[3], data_float);
     }
     else if (argc == 6) {
         if (argv[5][0] == 'l') {
@@ -30,18 +30,16 @@ int main(int argc, char* argv[]) {
             data_ptr[1] = (uint8_t)atoi(argv[2]);
             data_ptr[2] = (uint8_t)atoi(argv[3]);
             data_ptr[3] = (uint8_t)atoi(argv[4]);
-            printf(" u8: [%d, %d, %d, %d] <=> float: %f (little endian)\n",
-                   data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3],
-                   data_float);
+            printf(" u8: [%d, %d, %d, %d] <=> float: %f (little endian)\n", data_ptr[0], data_ptr[1], data_ptr[2],
+                   data_ptr[3], data_float);
         }
         else if (argv[5][0] == 'b') {
             data_ptr[3] = (uint8_t)atoi(argv[1]);
             data_ptr[2] = (uint8_t)atoi(argv[2]);
             data_ptr[1] = (uint8_t)atoi(argv[3]);
             data_ptr[0] = (uint8_t)atoi(argv[4]);
-            printf(" u8: [%d, %d, %d, %d] <=> float: %f (big endian)\n",
-                   data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3],
-                   data_float);
+            printf(" u8: [%d, %d, %d, %d] <=> float: %f (big endian)\n", data_ptr[0], data_ptr[1], data_ptr[2],
+                   data_ptr[3], data_float);
         }
     }
     // todo: check if the arguments are in the right range, or contains illegal
