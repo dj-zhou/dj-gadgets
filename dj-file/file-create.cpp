@@ -186,6 +186,7 @@ void create_stm32_config_h(Stm32Target target) {
         break;
     }
 
+    // todo
     fprintf(F, "// ============================================================================\n");
     fprintf(F, "// one-third-core includes\n");
     fprintf(F, "// ----------------------------------------------------------------------------\n");
@@ -345,11 +346,34 @@ void create_stm32_Makefile(Stm32Target stm32_target) {
     fprintf(F, "# custom settings\n");
     switch (stm32_target) {
     case Stm32Target::f030r8:
-        fprintf(F, "STM32Fx   = STM32F030x8\n");
+        fprintf(F, "STM32x   = STM32F030x8\n");
         break;
     case Stm32Target::f103rb:
-        fprintf(F, "STM32Fx   = xx\n");
+        fprintf(F, "STM32x   = STM32F103xB\n");
         break;
+    case Stm32Target::f107xc:
+        fprintf(F, "STM32x   = STM32F107xC\n");
+        break;
+    case Stm32Target::f303re:
+        fprintf(F, "STM32x   = STM32F303xE\n");
+        break;
+    case Stm32Target::f407vg:
+    case Stm32Target::f407zg:
+        fprintf(F, "STM32x   = STM32F407xx\n");
+        break;
+    case Stm32Target::f427vi:
+        fprintf(F, "STM32x   = STM32F427xx\n");
+        break;
+    case Stm32Target::f746zg:
+        fprintf(F, "STM32x   = STM32F746xx\n");
+        break;
+    case Stm32Target::f767zi:
+        fprintf(F, "STM32x   = STM32F767xx\n");
+        break;
+    case Stm32Target::h750vb:
+        fprintf(F, "STM32x   = STM32H750xx\n");
+        break;
+    case Stm32Target::Nothing:
     default:
         break;
     }
@@ -363,28 +387,133 @@ void create_stm32_Makefile(Stm32Target stm32_target) {
         fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F030R8Tx_FLASH.ld\n");
         break;
     case Stm32Target::f103rb:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f103xb.s\n");
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F103RBTx_FLASH.ld\n");
         break;
+    case Stm32Target::f107xc:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f107xc.s\n");
+        // is the following a bug for f107xc?
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F107VCTx_FLASH.ld\n");
+        break;
+    case Stm32Target::f303re:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f303xe.s\n");
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F303RETx_FLASH.ld\n");
+        break;
+    case Stm32Target::f407vg:
+    case Stm32Target::f407zg:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f407xx.s\n");
+        // is the following a bug for f407vg?
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F407ZGTx_FLASH.ld\n");
+        break;
+    case Stm32Target::f427vi:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f427xx.s\n");
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F427VITx_FLASH.ld\n");
+        break;
+    case Stm32Target::f746zg:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f746xx.s\n");
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F746ZGTx_FLASH.ld\n");
+        break;
+    case Stm32Target::f767zi:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32f767xx.s\n");
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32F767ZITx_FLASH.ld\n");
+        break;
+    case Stm32Target::h750vb:
+        fprintf(F, "ASM_SRC   = $(LIB_PATH)/startups/startup_stm32h750xx.s\n");
+        fprintf(F, "LD_SCRIPT = $(LIB_PATH)/lds/STM32H750VBTx_FLASH.ld\n");
+        break;
+    case Stm32Target::Nothing:
     default:
         break;
     }
     fprintf(F, "PRJ_OUT   = bin\n");
-    fprintf(F, "PRJ_NAME  = $(STM32Fx)-binary\n\n");
+    fprintf(F, "PRJ_NAME  = $(STM32x)-binary\n\n");
 
     fprintf(F, "PRJ_INCH =  \\\n");
     fprintf(F, "    $(LIB_PATH)/core \\\n");
     fprintf(F, "    ./inc\n\n");
 
     fprintf(F, "# ------------------------------------------\n");
-    fprintf(F, "ifneq (,$(findstring STM32F0,$(STM32Fx)))\n");
-    fprintf(F, "    CPU        = -mcpu=cortex-m0\n");
-    fprintf(F, "    FPU        =\n");
-    fprintf(F, "    FLOAT-ABI  = -mfloat-abi=soft\n");
-    fprintf(F, "    LIB_SHARE  = f0-share\n");
-    fprintf(F, "    LIB_HAL    = f0-v1.11.3\n");
-    fprintf(F, "    STM32Family= STM32F0xx\n");
-    fprintf(F, "else\n");
-    fprintf(F, "    $(info not a STM32F0xx family device, you need to revise the Makefile)\n");
-    fprintf(F, "endif\n\n");
+    switch (stm32_target) {
+    case Stm32Target::f030r8:
+        fprintf(F, "ifneq (,$(findstring STM32F0,$(STM32x)))\n");
+        fprintf(F, "    CPU        = -mcpu=cortex-m0\n");
+        fprintf(F, "    FPU        =\n");
+        fprintf(F, "    FLOAT-ABI  = -mfloat-abi=soft\n");
+        fprintf(F, "    LIB_SHARE  = f0-share\n");
+        fprintf(F, "    LIB_HAL    = f0-v1.11.3\n");
+        fprintf(F, "    STM32Family= STM32F0xx\n");
+        fprintf(F, "else\n");
+        fprintf(F, "    $(info not a STM32F0xx family device, you need to revise the Makefile)\n");
+        fprintf(F, "endif\n\n");
+        break;
+    case Stm32Target::f103rb:
+    case Stm32Target::f107xc:
+        fprintf(F, "ifneq (,$(findstring STM32F1,$(STM32x)))\n");
+        fprintf(F, "    CPU        = -mcpu=cortex-m3\n");
+        fprintf(F, "    FPU        =\n");
+        fprintf(F, "    FLOAT-ABI  = -mfloat-abi=soft\n");
+        fprintf(F, "    LIB_SHARE  = f1-share\n");
+        fprintf(F, "    LIB_HAL    = f1-v1.8.4\n");
+        fprintf(F, "    STM32Family= STM32F1xx\n");
+        fprintf(F, "else\n");
+        fprintf(F, "    $(info not a STM32F1xx family device, you need to revise the Makefile)\n");
+        fprintf(F, "endif\n\n");
+        break;
+    case Stm32Target::f303re:
+        fprintf(F, "ifneq (,$(findstring STM32F3,$(STM32x)))\n");
+        fprintf(F, "    CPU        = -mcpu=cortex-m4\n");
+        fprintf(F, "    FPU        = -mfpu=fpv4-sp-d16\n");
+        fprintf(F, "    FLOAT-ABI  = -mfloat-abi=hard\n");
+        fprintf(F, "    LIB_SHARE  = f3-share\n");
+        fprintf(F, "    LIB_HAL    = f3-v1.11.3\n");
+        fprintf(F, "    STM32Family= STM32F3xx\n");
+        fprintf(F, "else\n");
+        fprintf(F, "    $(info not a STM32F3xx family device, you need to revise the Makefile)\n");
+        fprintf(F, "endif\n\n");
+        break;
+    case Stm32Target::f407vg:
+    case Stm32Target::f407zg:
+    case Stm32Target::f427vi:
+        fprintf(F, "ifneq (,$(findstring STM32F4,$(STM32x)))\n");
+        fprintf(F, "    CPU        = -mcpu=cortex-m4\n");
+        fprintf(F, "    FPU        = -mfpu=fpv4-sp-d16\n");
+        fprintf(F, "    FLOAT-ABI  = -mfloat-abi=hard\n");
+        fprintf(F, "    LIB_SHARE  = f4-share\n");
+        fprintf(F, "    LIB_HAL    = f4-v1.25.2\n");
+        fprintf(F, "    STM32Family= STM32F4xx\n");
+        fprintf(F, "else\n");
+        fprintf(F, "    $(info not a STM32F4xx family device, you need to revise the Makefile)\n");
+        fprintf(F, "endif\n\n");
+        break;
+    case Stm32Target::f746zg:
+    case Stm32Target::f767zi:
+        fprintf(F, "ifneq (,$(findstring STM32F7,$(STM32x)))\n");
+        fprintf(F, "    CPU        = -mcpu=cortex-m7\n");
+        fprintf(F, "    FPU        = -mfpu=fpv5-sp-d16\n");
+        fprintf(F, "    FLOAT-ABI  = -mfloat-abi=hard\n");
+        fprintf(F, "    LIB_SHARE  = f7-share\n");
+        fprintf(F, "    LIB_HAL    = f7-v1.16.2\n");
+        fprintf(F, "    STM32Family= STM32F7xx\n");
+        fprintf(F, "else\n");
+        fprintf(F, "    $(info not a STM32F7xx family device, you need to revise the Makefile)\n");
+        fprintf(F, "endif\n\n");
+        break;
+    case Stm32Target::h750vb:
+        fprintf(F, "ifneq (,$(findstring STM32H7,$(STM32x)))\n");
+        fprintf(F, "    CPU        = -mcpu=cortex-m7\n");
+        fprintf(F, "    FPU        = -mfpu=fpv5-d16\n");
+        fprintf(F, "    FLOAT-ABI  = -mfloat-abi=hard\n");
+        fprintf(F, "    LIB_SHARE  = h7-share\n");
+        fprintf(F, "    LIB_HAL    = h7-v1.8.0\n");
+        fprintf(F, "    STM32Family= STM32H7xx\n");
+        fprintf(F, "else\n");
+        fprintf(F, "    $(info not a STM32H7xx family device, you need to revise the Makefile)\n");
+        fprintf(F, "endif\n\n");
+        break;
+    case Stm32Target::Nothing:
+    default:
+        break;
+    }
 
     fprintf(F, "# =============================================================================\n");
     fprintf(F, "CROSS_COMPILE = arm-none-eabi-\n");
@@ -396,7 +525,7 @@ void create_stm32_Makefile(Stm32Target stm32_target) {
 
     fprintf(F, "# =============================================================================\n");
     fprintf(F, "MCU     = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)\n");
-    fprintf(F, "C_DEFS  = -D$(STM32Fx) -DUSE_HAL_DRIVER\n");
+    fprintf(F, "C_DEFS  = -D$(STM32x) -DUSE_HAL_DRIVER\n");
     fprintf(F, "C_DEFS += -DFIRMWARE=\\\"$(shell basename ${PWD})\\\"\n");
     fprintf(F, "C_DEFS += -DPRJ_GIT_CMT=\\\"$(shell git rev-parse --short HEAD)\\\"\n");
     fprintf(F, "C_DEFS += -DPRJ_GIT_BRH=\\\"$(shell git rev-parse --abbrev-ref HEAD)\\\"\n");
@@ -407,7 +536,7 @@ void create_stm32_Makefile(Stm32Target stm32_target) {
 
     fprintf(F, "# =============================================================================\n");
     fprintf(F, "HAL_PATH += $(LIB_PATH)/${LIB_HAL}\n");
-    fprintf(F, "HAL_OUT  = $(LIB_PATH)/$(STM32Fx)-hal\n");
+    fprintf(F, "HAL_OUT  = $(LIB_PATH)/$(STM32x)-hal\n");
     fprintf(F, "HAL_DIRS:= $(shell find $(HAL_PATH) -maxdepth 10 -type d)\n");
     fprintf(F, "HAL_SRCS = $(foreach dir,$(HAL_DIRS),$(wildcard $(dir)/*.c))\n");
     fprintf(F, "HAL_OBJS = $(addprefix $(HAL_OUT)/,$(notdir $(HAL_SRCS:.c=.o)))\n");
@@ -442,7 +571,7 @@ void create_stm32_Makefile(Stm32Target stm32_target) {
     fprintf(F, "CFLAGS  += -MMD -MP -MF\"$(@:%%.o=%%.d)\" -g -gdwarf-2\n");
     fprintf(F, "LDFLAGS  = $(MCU) -specs=nano.specs -T$(LD_SCRIPT) $(LIBS)\n");
     fprintf(F, "LDFLAGS += -Wl,-Map=$(PRJ_OUT)/$(PRJ_NAME).map,--cref -Wl,--gc-sections\n");
-    fprintf(F, "LDFLAGS += -l$(STM32Fx) -L$(HAL_OUT)/\n\n");
+    fprintf(F, "LDFLAGS += -l$(STM32x) -L$(HAL_OUT)/\n\n");
 
     fprintf(F, "CFLAGS_PROJ  = -Werror=conversion\n");
     fprintf(F, "CFLAGS_PROJ += -Werror=unused-parameter\n\n");
@@ -470,11 +599,11 @@ void create_stm32_Makefile(Stm32Target stm32_target) {
 
     fprintf(F, "# -----------------\n");
     fprintf(F, "hal: CFLAGS+=$(HAL_INC)\n");
-    fprintf(F, "hal: $(HAL_OUT)/lib$(STM32Fx).a\n");
+    fprintf(F, "hal: $(HAL_OUT)/lib$(STM32x).a\n");
     fprintf(F, "$(HAL_OUT)/%%.o: %%.c Makefile | $(HAL_OUT)\n");
     fprintf(F, "\t$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(HAL_OUT)/$(notdir $(<:.c=.lst)) $< -o $@\n\n");
 
-    fprintf(F, "$(HAL_OUT)/lib$(STM32Fx).a: $(HAL_OBJS)\n");
+    fprintf(F, "$(HAL_OUT)/lib$(STM32x).a: $(HAL_OBJS)\n");
     fprintf(F, "\t$(AR) -r $@ $(HAL_OBJS)\n\n");
 
     fprintf(F, "$(HAL_OUT):\n");
