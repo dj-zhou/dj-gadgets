@@ -13,8 +13,7 @@ int main(int argc, char* argv[]) {
     uint8_t* data_ptr = (uint8_t*)&data_double;
     if ((argc < 9) || (argc > 10)) {
         printf("usage: \n");
-        printf(
-            "    u8-to-double <u8> <u8> <u8> <u8> <u8> <u8> <u8> <u8> l/b\n");
+        printf("    u8-to-double <u8> <u8> <u8> <u8> <u8> <u8> <u8> <u8> l/b\n");
         printf("    u8-to-double <u8> <u8> <u8> <u8> <u8> <u8> <u8> <u8> "
                "little/big\n");
     }
@@ -29,8 +28,8 @@ int main(int argc, char* argv[]) {
         data_ptr[7] = (uint8_t)atoi(argv[8]);
         printf(" u8: [%d, %d, %d, %d, %d, %d, %d, %d] <=> double: %f (little "
                "endian)\n",
-               data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3], data_ptr[4],
-               data_ptr[5], data_ptr[6], data_ptr[7], data_double);
+               data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3], data_ptr[4], data_ptr[5], data_ptr[6], data_ptr[7],
+               data_double);
     }
     else if (argc == 10) {
         if (argv[9][0] == 'l') {
@@ -44,9 +43,8 @@ int main(int argc, char* argv[]) {
             data_ptr[7] = (uint8_t)atoi(argv[8]);
             printf(" u8: [%d, %d, %d, %d, %d, %d, %d, %d] <=> double: %f "
                    "(little endian)\n",
-                   data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3],
-                   data_ptr[4], data_ptr[5], data_ptr[6], data_ptr[7],
-                   data_double);
+                   data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3], data_ptr[4], data_ptr[5], data_ptr[6],
+                   data_ptr[7], data_double);
         }
         else if (argv[9][0] == 'b') {
             data_ptr[7] = (uint8_t)atoi(argv[1]);
@@ -60,9 +58,8 @@ int main(int argc, char* argv[]) {
             printf(" not tested\r\n");
             printf(" u8: [%d, %d, %d, %d, %d, %d, %d, %d] <=> double: %f (big "
                    "endian)\n",
-                   data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3],
-                   data_ptr[4], data_ptr[5], data_ptr[6], data_ptr[7],
-                   data_double);
+                   data_ptr[0], data_ptr[1], data_ptr[2], data_ptr[3], data_ptr[4], data_ptr[5], data_ptr[6],
+                   data_ptr[7], data_double);
         }
     }
 

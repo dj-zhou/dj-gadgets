@@ -1,17 +1,14 @@
 #include "time-fetch.h"
+#include <time.h>
 
 void current_time_date(char* time2Print) {
     char wday[][3] = {
-        { 'S', 'u', 'n' }, { 'M', 'o', 'n' }, { 'T', 'u', 'e' },
-        { 'W', 'e', 'd' }, { 'T', 'h', 'u' }, { 'F', 'r', 'i' },
-        { 'S', 'a', 't' },
+        { 'S', 'u', 'n' }, { 'M', 'o', 'n' }, { 'T', 'u', 'e' }, { 'W', 'e', 'd' },
+        { 'T', 'h', 'u' }, { 'F', 'r', 'i' }, { 'S', 'a', 't' },
     };
-    char wmon[][3] = {
-        { 'J', 'a', 'n' }, { 'F', 'e', 'b' }, { 'M', 'a', 'r' },
-        { 'A', 'p', 'r' }, { 'M', 'a', 'y' }, { 'J', 'u', 'n' },
-        { 'J', 'u', 'l' }, { 'A', 'u', 'g' }, { 'S', 'e', 'p' },
-        { 'O', 'c', 't' }, { 'N', 'o', 'v' }, { 'D', 'e', 'c' }
-    };
+    char wmon[][3] = { { 'J', 'a', 'n' }, { 'F', 'e', 'b' }, { 'M', 'a', 'r' }, { 'A', 'p', 'r' },
+                       { 'M', 'a', 'y' }, { 'J', 'u', 'n' }, { 'J', 'u', 'l' }, { 'A', 'u', 'g' },
+                       { 'S', 'e', 'p' }, { 'O', 'c', 't' }, { 'N', 'o', 'v' }, { 'D', 'e', 'c' } };
     time_t timep;
     struct tm* p;
     // char time2Print[]="WWW, MMM. DDth, YYYY. HH:MM:SS AM";
@@ -43,8 +40,7 @@ void current_time_date(char* time2Print) {
     /* day */
     time2Print[10] = (char)((int)(day / 10.0) + 48);
     time2Print[11] = (char)(day % 10 + 48);
-    if (((int)(day / 10.0)) == 0 || ((int)(day / 10.0)) == 2
-        || ((int)(day / 10.0)) == 3) {
+    if (((int)(day / 10.0)) == 0 || ((int)(day / 10.0)) == 2 || ((int)(day / 10.0)) == 3) {
         switch (day % 10) {
         case 1:
             time2Print[12] = 's';

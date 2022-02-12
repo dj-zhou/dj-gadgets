@@ -25,12 +25,12 @@ int main(int argc, char* argv[]) {
         }
         printf(" double: %f <=> u8: [%d, %d, %d, %d, %d, %d, %d, %d] (little "
                "endian)\n",
-               data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3],
-               data_u8[4], data_u8[5], data_u8[6], data_u8[7]);
+               data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3], data_u8[4], data_u8[5], data_u8[6],
+               data_u8[7]);
         printf(" double: %f <=> u8: [0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, "
                "0x%02X, 0x%02X, 0x%02X] (little endian)\n",
-               data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3],
-               data_u8[4], data_u8[5], data_u8[6], data_u8[7]);
+               data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3], data_u8[4], data_u8[5], data_u8[6],
+               data_u8[7]);
     }
     else if (argc == 3) {
         data_double = atof(argv[1]);
@@ -42,22 +42,22 @@ int main(int argc, char* argv[]) {
         if (argv[2][0] == 'l') {
             printf(" double: %f <=> u8: [%d, %d, %d, %d, %d, %d, %d, %d] "
                    "(little endian)\n",
-                   data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3],
-                   data_u8[4], data_u8[5], data_u8[6], data_u8[7]);
+                   data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3], data_u8[4], data_u8[5], data_u8[6],
+                   data_u8[7]);
             printf(" double: %f <=> u8: [0x%02X, 0x%02X, 0x%02X, 0x%02X, "
                    "0x%02X, 0x%02X, 0x%02X, 0x%02X] (little endian)\n",
-                   data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3],
-                   data_u8[4], data_u8[5], data_u8[6], data_u8[7]);
+                   data_double, data_u8[0], data_u8[1], data_u8[2], data_u8[3], data_u8[4], data_u8[5], data_u8[6],
+                   data_u8[7]);
         }
         else if (argv[2][0] == 'b') {
             printf(" double: %f <=> u8: [%d, %d, %d, %d, %d, %d, %d, %d] (big "
                    "endian)\n",
-                   data_double, data_u8[7], data_u8[6], data_u8[5], data_u8[4],
-                   data_u8[3], data_u8[2], data_u8[1], data_u8[0]);
+                   data_double, data_u8[7], data_u8[6], data_u8[5], data_u8[4], data_u8[3], data_u8[2], data_u8[1],
+                   data_u8[0]);
             printf(" double: %f <=> u8: [0x%02X, 0x%02X, 0x%02X, 0x%02X, "
                    "0x%02X, 0x%02X, 0x%02X, 0x%02X] (big endian)\n",
-                   data_double, data_u8[7], data_u8[6], data_u8[5], data_u8[4],
-                   data_u8[3], data_u8[2], data_u8[1], data_u8[0]);
+                   data_double, data_u8[7], data_u8[6], data_u8[5], data_u8[4], data_u8[3], data_u8[2], data_u8[1],
+                   data_u8[0]);
         }
     }
     return 0;

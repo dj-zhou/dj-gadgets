@@ -23,8 +23,8 @@ int main(int argc, char* argv[]) {
             data_u8[i] = *data_ptr;
             data_ptr++;
         }
-        printf(" float: %f <=> u8: [%d, %d, %d, %d] (little endian)\n",
-               data_float, data_u8[0], data_u8[1], data_u8[2], data_u8[3]);
+        printf(" float: %f <=> u8: [%d, %d, %d, %d] (little endian)\n", data_float, data_u8[0], data_u8[1], data_u8[2],
+               data_u8[3]);
         printf(" float: %f <=> u8: [0x%02X, 0x%02X, 0x%02X, 0x%02X] (little "
                "endian)\n",
                data_float, data_u8[0], data_u8[1], data_u8[2], data_u8[3]);
@@ -37,15 +37,15 @@ int main(int argc, char* argv[]) {
         }
         data_float = (float)atof(argv[1]);
         if (argv[2][0] == 'l') {
-            printf(" float: %f <=> u8: [%d, %d, %d, %d] (little endian)\n",
-                   data_float, data_u8[0], data_u8[1], data_u8[2], data_u8[3]);
+            printf(" float: %f <=> u8: [%d, %d, %d, %d] (little endian)\n", data_float, data_u8[0], data_u8[1],
+                   data_u8[2], data_u8[3]);
             printf(" float: %f <=> u8: [0x%02X, 0x%02X, 0x%02X, 0x%02X] "
                    "(little endian)\n",
                    data_float, data_u8[0], data_u8[1], data_u8[2], data_u8[3]);
         }
         else if (argv[2][0] == 'b') {
-            printf(" float: %f <=> u8: [%d, %d, %d, %d] (big endian)\n",
-                   data_float, data_u8[3], data_u8[2], data_u8[1], data_u8[0]);
+            printf(" float: %f <=> u8: [%d, %d, %d, %d] (big endian)\n", data_float, data_u8[3], data_u8[2], data_u8[1],
+                   data_u8[0]);
             printf(" float: %f <=> u8: [0x%02X, 0x%02X, 0x%02X, 0x%02X] (big "
                    "endian)\n",
                    data_float, data_u8[3], data_u8[2], data_u8[1], data_u8[0]);
