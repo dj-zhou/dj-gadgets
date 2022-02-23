@@ -15,9 +15,13 @@
 // 2: 2022-02-19T18:45:09.898273+0000
 
 int char2num(char c) {
-    int i;
-    i = (int)c - 48;
-    return i;
+    if (((int)c >= 48) && ((int)c <= 57)) {
+        return (int)c - 48;
+    }
+    else {
+        printf("wrong character, abort!\n");
+        abort();
+    }
 }
 
 bool isleapyear(int year) {
