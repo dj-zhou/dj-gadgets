@@ -25,16 +25,16 @@ int char2num(char c) {
 }
 
 bool isleapyear(int year) {
-    bool i;
+    bool is_leap_year;
     if (year % 400 == 0)
-        i = true;
+        is_leap_year = true;
     else if (year % 100 == 0)
-        i = false;
+        is_leap_year = false;
     else if (year % 4 == 0)
-        i = true;
+        is_leap_year = true;
     else
-        i = false;
-    return i;
+        is_leap_year = false;
+    return is_leap_year;
 }
 
 int month(int a, int yy) {
@@ -54,8 +54,8 @@ int month(int a, int yy) {
 }
 
 int days(int y1, int y2, int m1, int m2, int d1, int d2) {
-    int count = 0, i;
-    for (i = y1; i < y2; i++) {
+    int count = 0;
+    for (int i = y1; i < y2; i++) {
         if (isleapyear(i))
             count += 366;
         else
