@@ -67,7 +67,7 @@ int days(int y1, int y2, int m1, int m2, int d1, int d2) {
 }
 
 enum class DateTimeType {
-    yyyymmddThhmmss = 1,  // 2022-02-19T18:45:09.898273+0000 (1645296309)
+    yyyymmddThhmmss = 1,  // 2022-02-19T18:45:09.898273+0000
     ddmmyyyyhhmmss = 2,   // 19/02/2022-18:45:09.898273
 };
 
@@ -105,7 +105,7 @@ static double convertTimeToEpoch(char* str) {
         min = char2num(str[14]) * 10 + char2num(str[15]);
         sec = char2num(str[17]) * 10 + char2num(str[18]);
         us = 0;
-        if ((str[19] == '.') && (strlen(str) >= 27)) {
+        if ((str[19] == '.') && (strlen(str) >= 26)) {
             for (int i = 0; i < 6; i++) {
                 us = us * 10 + char2num(str[20 + i]);
             }
@@ -124,7 +124,8 @@ int main(int argc, char* argv[]) {
     if (argc == 1) {
         printf("Convert human readable time to epoch time\n\nusage examples:\n");
         printf("    %s 2022-02-19T18:45:09.898273+0000\n", argv[0]);
-        printf("    %s 19/02/2022-18:45:09.898273\n", argv[0]);
+        printf("    %s 2022-02-19T18:45:09.898273\n", argv[0]);
+        printf("    %s 19/02/2022-18:45:09\n", argv[0]);
         printf("    %s 19/02/2022-18:45:09\n", argv[0]);
         return 1;
     }
