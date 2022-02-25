@@ -11,8 +11,10 @@
 // usage: date-time-to-epoch 2022-02-19T18:45:09.898273+0000
 
 // supported forms:
-// 1: dd/mm/yyyy-hh:mm:ss (no space!)
-// 2: 2022-02-19T18:45:09.898273+0000
+// 1: 2022-02-19T18:45:09.898273+0000
+// 2: 2022-02-25 15:59:29.886 (must accept space!)
+// 3: dd/mm/yyyy-hh:mm:ss (no space!)
+// 4: dd/mm/yyyy hh:mm:ss (must accept space!)
 
 int char2num(char c) {
     if (((int)c >= 48) && ((int)c <= 57)) {
