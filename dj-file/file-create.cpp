@@ -2,6 +2,8 @@
 #include "time-fetch.h"
 #include <string.h>
 
+#define LINE_MAX_LEN 1000
+
 void create_main_cpp(void) {
     int i;
     char time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";

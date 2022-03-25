@@ -2,8 +2,6 @@
 
 #include "cli-arguments.h"
 
-#define LINE_MAX_LEN 1000
-
 void create_main_cpp(void);
 void create_Makefile(void);
 void create_stm32_main_cpp(Stm32Target);
