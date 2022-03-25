@@ -645,16 +645,16 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
     fprintf(F, "add_compile_options(\n");
-    fprintf(F, "  -Wall\n");
-    fprintf(F, "  -Wextra\n");
-    fprintf(F, "  -pedantic\n");
-    fprintf(F, "  -Werror\n");
-    fprintf(F, "  -Wformat=2\n");
-    fprintf(F, "  -Wduplicated-cond\n");
-    fprintf(F, "  -Wfloat-equal\n");
-    fprintf(F, "  -Wshadow\n");
-    fprintf(F, "  -Wconversion\n");
-    fprintf(F, "  -Wlogical-not-parentheses\n");
+    fprintf(F, "  \"-Wall\"\n");
+    fprintf(F, "  \"-Wextra\"\n");
+    fprintf(F, "  \"-pedantic\"\n");
+    fprintf(F, "  \"-Werror\"\n");
+    fprintf(F, "  \"-Wformat=2\"\n");
+    fprintf(F, "  \"-Wduplicated-cond\"\n");
+    fprintf(F, "  \"-Wfloat-equal\"\n");
+    fprintf(F, "  \"-Wshadow\"\n");
+    fprintf(F, "  \"-Wconversion\"\n");
+    fprintf(F, "  \"-Wlogical-not-parentheses\"\n");
     fprintf(F, ")\n\n");
 
     fprintf(F, "# ------------------------------\n");
@@ -670,10 +670,10 @@ void create_CMakeLists_txt(void) {
     // static library
     fprintf(F, "# ------------------------------\n");
     fprintf(F, "# set(SRC_FILES\n");
-    fprintf(F, "#     src/xxx.c\n");
+    fprintf(F, "#     \"src/xxx.cpp\"\n");
     fprintf(F, "# )\n");
     fprintf(F, "# set(HEADER_FILES\n");
-    fprintf(F, "#     inc/xxx.h\n");
+    fprintf(F, "#     \"inc/xxx.h\"\n");
     fprintf(F, "# )\n\n");
 
     fprintf(F, "# add_library(yyy STATIC \"${SRC_FILES}\")\n");
