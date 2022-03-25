@@ -34,8 +34,8 @@ void create_main_cpp(void) {
         fprintf(F, "#include <unistd.h>\n\n");
         fprintf(F, "using namespace std;\n\n");
         fprintf(F, "int main(int argc, char* argv[]) {\n");
-        fprintf(F, "    ( void )argc;\n");
-        fprintf(F, "    ( void )argv;\n");
+        fprintf(F, "    (void)argc;\n");
+        fprintf(F, "    (void)argv;\n");
         fprintf(F, "    return 0;\n");
         fprintf(F, "}\n");
         fclose(F);
