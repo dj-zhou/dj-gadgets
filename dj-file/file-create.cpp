@@ -659,11 +659,11 @@ void create_CMakeLists_txt(void) {
 
     fprintf(F, "# ------------------------------\n");
     fprintf(F, "add_executable(\n");
-    fprintf(F, "  main\n");
-    fprintf(F, "  src/main.cpp\n");
+    fprintf(F, "  \"main\"\n");
+    fprintf(F, "  \"src/main.cpp\"\n");
     fprintf(F, ")\n");
     fprintf(F, "# target_link_libraries(\n");
-    fprintf(F, "#   main\n");
+    fprintf(F, "#   \"main\"\n");
     fprintf(F, "# )\n");
     fprintf(F, "# install(TARGETS main RUNTIME DESTINATION bin)\n\n");
 
