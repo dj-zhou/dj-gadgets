@@ -650,7 +650,7 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "message(STATUS \"CMake System : \" ${CMAKE_SYSTEM})\n");
     fprintf(
         F,
-        "message(STATUS \"Compiler     : \" ${CMAKE_CXX_COMPILER} \" \" ${CMAKE_CXX_COMPILER_VERSION}) \"${Esc}[m\"\n");
+        "message(STATUS \"Compiler     : \" ${CMAKE_CXX_COMPILER} \" \" ${CMAKE_CXX_COMPILER_VERSION} \"${Esc}[m\")\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 20)\n");
     fprintf(F, "add_compile_options(\n");
     fprintf(F, "  \"-Wall\"\n");
