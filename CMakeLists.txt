@@ -18,6 +18,9 @@ add_compile_options(
 add_executable(ascii-code ascii-code.cpp)
 install(TARGETS ascii-code RUNTIME DESTINATION bin)
 
+add_executable(date-time-to-epoch date-time-to-epoch.cpp)
+install(TARGETS date-time-to-epoch RUNTIME DESTINATION bin)
+
 add_executable(deg-to-rad deg-to-rad.cpp)
 install(TARGETS deg-to-rad RUNTIME DESTINATION bin)
 
