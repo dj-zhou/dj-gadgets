@@ -2,6 +2,8 @@
 #include "time-fetch.h"
 #include <string.h>
 
+#define LINE_MAX_LEN 1000
+
 void create_main_cpp(void) {
     int i;
     char time_to_print[] = "WWW, MMM. DDth, YYYY. HH:MM:SS AM";
@@ -34,8 +36,8 @@ void create_main_cpp(void) {
         fprintf(F, "#include <unistd.h>\n\n");
         fprintf(F, "using namespace std;\n\n");
         fprintf(F, "int main(int argc, char* argv[]) {\n");
-        fprintf(F, "    ( void )argc;\n");
-        fprintf(F, "    ( void )argv;\n");
+        fprintf(F, "    (void)argc;\n");
+        fprintf(F, "    (void)argv;\n");
         fprintf(F, "    return 0;\n");
         fprintf(F, "}\n");
         fclose(F);
@@ -645,35 +647,35 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
     fprintf(F, "add_compile_options(\n");
-    fprintf(F, "  -Wall\n");
-    fprintf(F, "  -Wextra\n");
-    fprintf(F, "  -pedantic\n");
-    fprintf(F, "  -Werror\n");
-    fprintf(F, "  -Wformat=2\n");
-    fprintf(F, "  -Wduplicated-cond\n");
-    fprintf(F, "  -Wfloat-equal\n");
-    fprintf(F, "  -Wshadow\n");
-    fprintf(F, "  -Wconversion\n");
-    fprintf(F, "  -Wlogical-not-parentheses\n");
+    fprintf(F, "  \"-Wall\"\n");
+    fprintf(F, "  \"-Wextra\"\n");
+    fprintf(F, "  \"-pedantic\"\n");
+    fprintf(F, "  \"-Werror\"\n");
+    fprintf(F, "  \"-Wformat=2\"\n");
+    fprintf(F, "  \"-Wduplicated-cond\"\n");
+    fprintf(F, "  \"-Wfloat-equal\"\n");
+    fprintf(F, "  \"-Wshadow\"\n");
+    fprintf(F, "  \"-Wconversion\"\n");
+    fprintf(F, "  \"-Wlogical-not-parentheses\"\n");
     fprintf(F, ")\n\n");
 
     fprintf(F, "# ------------------------------\n");
     fprintf(F, "add_executable(\n");
-    fprintf(F, "  main\n");
-    fprintf(F, "  src/main.cpp\n");
+    fprintf(F, "  \"main\"\n");
+    fprintf(F, "  \"src/main.cpp\"\n");
     fprintf(F, ")\n");
     fprintf(F, "# target_link_libraries(\n");
-    fprintf(F, "#   main\n");
+    fprintf(F, "#   \"main\"\n");
     fprintf(F, "# )\n");
     fprintf(F, "# install(TARGETS main RUNTIME DESTINATION bin)\n\n");
 
     // static library
     fprintf(F, "# ------------------------------\n");
     fprintf(F, "# set(SRC_FILES\n");
-    fprintf(F, "#     src/xxx.c\n");
+    fprintf(F, "#     \"src/xxx.cpp\"\n");
     fprintf(F, "# )\n");
     fprintf(F, "# set(HEADER_FILES\n");
-    fprintf(F, "#     inc/xxx.h\n");
+    fprintf(F, "#     \"inc/xxx.h\"\n");
     fprintf(F, "# )\n\n");
 
     fprintf(F, "# add_library(yyy STATIC \"${SRC_FILES}\")\n");
