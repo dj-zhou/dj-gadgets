@@ -645,7 +645,10 @@ void create_CMakeLists_txt(void) {
     }
     fprintf(F, "cmake_minimum_required(VERSION 3.10)\n");
     fprintf(F, "project(cmake-project)\n");
-    fprintf(F, "set(CMAKE_CXX_STANDARD 17)\n");
+    fprintf(F, "message(STATUS \"CMake version    : \" ${CMAKE_SYSTEM_VERSION})\n");
+    fprintf(F, "message(STATUS \"Compiler         : \" ${CMAKE_CXX_COMPILER})\n");
+    fprintf(F, "message(STATUS \"Operating System : \" ${CMAKE_SYSTEM})\n");
+    fprintf(F, "set(CMAKE_CXX_STANDARD 20)\n");
     fprintf(F, "add_compile_options(\n");
     fprintf(F, "  \"-Wall\"\n");
     fprintf(F, "  \"-Wextra\"\n");
