@@ -16,7 +16,7 @@
 // 3: dd/mm/yyyy-hh:mm:ss (no space!)
 // 4: dd/mm/yyyy hh:mm:ss (must accept space!)
 
-int char2num(char c) {
+int ch_to_num(char c) {
     if (((int)c >= 48) && ((int)c <= 57)) {
         return (int)c - 48;
     }
@@ -26,7 +26,7 @@ int char2num(char c) {
     }
 }
 
-bool isleapyear(int year) {
+bool is_leap_year(int year) {
     bool is_leap_year;
     if (year % 400 == 0)
         is_leap_year = true;
@@ -44,7 +44,7 @@ int month(int a, int yy) {
     int mon[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
     for (c = 0; c < a - 1; c++) {
         if (c == 1) {
-            if (isleapyear(yy))
+            if (is_leap_year(yy))
                 x += 29;
             else
                 x += 28;
@@ -58,7 +58,7 @@ int month(int a, int yy) {
 int days(int y1, int y2, int m1, int m2, int d1, int d2) {
     int count = 0;
     for (int i = y1; i < y2; i++) {
-        if (isleapyear(i))
+        if (is_leap_year(i))
             count += 366;
         else
             count += 365;
@@ -77,7 +77,7 @@ enum class DateTimeType {
     ddmmyyyyhhmmss = 2,   // 19/02/2022-18:45:09.898273
 };
 
-static double convertTimeToEpoch(char* str) {
+static double convert_time_to_epoch(char* str) {
     int y = 0, m = 0, d, h, min, sec, day, us;
     // determine type
     DateTimeType type;
@@ -90,30 +90,30 @@ static double convertTimeToEpoch(char* str) {
     // find each component from string
     switch (type) {
     case DateTimeType::ddmmyyyyhhmmss:
-        d = char2num(str[0]) * 10 + char2num(str[1]);
-        m = char2num(str[3]) * 10 + char2num(str[4]);
-        y = char2num(str[6]) * 1000 + char2num(str[7]) * 100 + char2num(str[8]) * 10 + char2num(str[9]);
-        h = char2num(str[11]) * 10 + char2num(str[12]);
-        min = char2num(str[14]) * 10 + char2num(str[15]);
-        sec = char2num(str[17]) * 10 + char2num(str[18]);
+        d = ch_to_num(str[0]) * 10 + ch_to_num(str[1]);
+        m = ch_to_num(str[3]) * 10 + ch_to_num(str[4]);
+        y = ch_to_num(str[6]) * 1000 + ch_to_num(str[7]) * 100 + ch_to_num(str[8]) * 10 + ch_to_num(str[9]);
+        h = ch_to_num(str[11]) * 10 + ch_to_num(str[12]);
+        min = ch_to_num(str[14]) * 10 + ch_to_num(str[15]);
+        sec = ch_to_num(str[17]) * 10 + ch_to_num(str[18]);
         us = 0;
         if ((str[19] == '.') && (strlen(str) >= 26)) {
             for (int i = 0; i < 6; i++) {
-                us = us * 10 + char2num(str[20 + i]);
+                us = us * 10 + ch_to_num(str[20 + i]);
             }
         }
         break;
     case DateTimeType::yyyymmddThhmmss:
-        y = char2num(str[0]) * 1000 + char2num(str[1]) * 100 + char2num(str[2]) * 10 + char2num(str[3]);
-        m = char2num(str[5]) * 10 + char2num(str[6]);
-        d = char2num(str[8]) * 10 + char2num(str[9]);
-        h = char2num(str[11]) * 10 + char2num(str[12]);
-        min = char2num(str[14]) * 10 + char2num(str[15]);
-        sec = char2num(str[17]) * 10 + char2num(str[18]);
+        y = ch_to_num(str[0]) * 1000 + ch_to_num(str[1]) * 100 + ch_to_num(str[2]) * 10 + ch_to_num(str[3]);
+        m = ch_to_num(str[5]) * 10 + ch_to_num(str[6]);
+        d = ch_to_num(str[8]) * 10 + ch_to_num(str[9]);
+        h = ch_to_num(str[11]) * 10 + ch_to_num(str[12]);
+        min = ch_to_num(str[14]) * 10 + ch_to_num(str[15]);
+        sec = ch_to_num(str[17]) * 10 + ch_to_num(str[18]);
         us = 0;
         if ((str[19] == '.') && (strlen(str) >= 26)) {
             for (int i = 0; i < 6; i++) {
-                us = us * 10 + char2num(str[20 + i]);
+                us = us * 10 + ch_to_num(str[20 + i]);
             }
         }
         break;
@@ -132,9 +132,9 @@ int main(int argc, char* argv[]) {
         printf("    %s 2022-02-19T18:45:09.898273+0000\n", argv[0]);
         printf("    %s 2022-02-19T18:45:09.898273\n", argv[0]);
         printf("    %s 19/02/2022-18:45:09\n", argv[0]);
-        printf("    %s 19/02/2022-18:45:09\n", argv[0]);
+        printf("    %s 19/02/2022 18:45:09\n", argv[0]);
         return 1;
     }
-    printf("epoc time: %f\n", convertTimeToEpoch(argv[1]));
+    printf("Epoch time: %f\n", convert_time_to_epoch(argv[1]));
     return 0;
 }
