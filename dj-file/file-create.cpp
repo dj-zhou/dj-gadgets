@@ -260,7 +260,7 @@ void create_Makefile(void) {
         return;
     }
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "EXEC      = main\n");
     fprintf(F, "CODE_PATH = .\n");
     fprintf(F, "LIBS      = -lm\n");
@@ -275,12 +275,12 @@ void create_Makefile(void) {
     fprintf(F, "$(info LIBS:)\n");
     fprintf(F, "$(info  $(LIBS))\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "AS = $(CC) -x assembler-with-cpp\n");
     fprintf(F, "CP = objcopy\n");
     fprintf(F, "SZ = size\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "# C_DEFS += -D BIN_NAME=\\\"$(EXEC)\\\"\n");
     fprintf(F, "# C_DEFS += -D PRJ_GIT_CMT=\\\"$(shell git rev-parse --short "
                "HEAD)\\\"\n");
@@ -289,7 +289,7 @@ void create_Makefile(void) {
     fprintf(F, "# C_DEFS += -D PRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 "
                "--dirty --always --tags)\\\"\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "# collect '.cpp' file to SRCS\n");
     fprintf(F, "DIRS := $(shell find $(CODE_PATH) -maxdepth 10 -type d)\n");
     fprintf(F, "SRCS  = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.cpp))\n");
@@ -316,13 +316,13 @@ void create_Makefile(void) {
     fprintf(F, "$(info ====================================)\n");
     fprintf(F, "$(info )\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "CFLAGS    = $(C_DEFS) $(INC:%%=-I%%) $(OPT)\n");
     fprintf(F, "# treat all warnings as errors\n");
     fprintf(F, "CFLAGS  += -Werror=unused-parameter -Werror=unused-variable\n");
     fprintf(F, "HOSTFLAGS = $(CPPSTD) $(LIBS)\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, ".PHONY: all\n");
     fprintf(F, "all: CFLAGS+= -D MAKE_TYPE=\\\"$(MTYPE_ALL)\\\"\n");
     fprintf(F, "all: CFLAGS+= $(HOSTFLAGS)\n");
