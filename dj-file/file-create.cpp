@@ -652,7 +652,7 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "message(\"-- ${CYN}Compiler: \" ${CMAKE_CXX_COMPILER} \"@\" ${CMAKE_CXX_COMPILER_VERSION} ${NOC})\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 20)\n");
     fprintf(F, "add_compile_options(\n");
-    fprintf(F, "  \"-g\" # debug information\n");
+    fprintf(F, "  \"-g\" # debug symbols\n");
     fprintf(F, "  \"-pedantic\" # compliant to ANSI standard\n");
     fprintf(F, "  \"-Wall\"\n");
     fprintf(F, "  \"-Wconversion\"\n");
