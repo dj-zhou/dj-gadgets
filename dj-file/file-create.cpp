@@ -646,10 +646,10 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "cmake_minimum_required(VERSION 3.10)\n");
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "string(ASCII 27 Esc)\n\n");
-    fprintf(F, "set(BCYN \"${Esc}[1;36m\")\n");
+    fprintf(F, "set(CYN \"${Esc}[0;36m\")\n");
     fprintf(F, "set(NOC  \"${Esc}[m\")\n");
-    fprintf(F, "message(\"-- ${BCYN}CMake   : \" ${CMAKE_VERSION} \"@\" ${CMAKE_SYSTEM}${NOC})\n");
-    fprintf(F, "message(\"-- ${BCYN}Compiler: \" ${CMAKE_CXX_COMPILER} \"@\" ${CMAKE_CXX_COMPILER_VERSION} ${NOC})\n");
+    fprintf(F, "message(\"-- ${CYN}CMake   : \" ${CMAKE_VERSION} \"@\" ${CMAKE_SYSTEM}${NOC})\n");
+    fprintf(F, "message(\"-- ${CYN}Compiler: \" ${CMAKE_CXX_COMPILER} \"@\" ${CMAKE_CXX_COMPILER_VERSION} ${NOC})\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 20)\n");
     fprintf(F, "add_compile_options(\n");
     fprintf(F, "  \"-g\" # debug information\n");
