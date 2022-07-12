@@ -653,16 +653,16 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "set(CMAKE_CXX_STANDARD 20)\n");
     fprintf(F, "add_compile_options(\n");
     fprintf(F, "  \"-g\" # debug information\n");
+    fprintf(F, "  \"-pedantic\" # compliant to ANSI standard\n");
     fprintf(F, "  \"-Wall\"\n");
+    fprintf(F, "  \"-Wconversion\"\n");
+    fprintf(F, "  \"-Wduplicated-cond\"\n");
     fprintf(F, "  \"-Wextra\"\n");
-    fprintf(F, "  \"-pedantic\"\n");
     fprintf(F, "  \"-Werror\"\n");
     fprintf(F, "  \"-Wformat=2\"\n");
-    fprintf(F, "  \"-Wduplicated-cond\"\n");
     fprintf(F, "  \"-Wfloat-equal\"\n");
-    fprintf(F, "  \"-Wshadow\"\n");
-    fprintf(F, "  \"-Wconversion\"\n");
     fprintf(F, "  \"-Wlogical-not-parentheses\"\n");
+    fprintf(F, "  \"-Wshadow\"\n");
     fprintf(F, ")\n\n");
 
     fprintf(F, "# ------------------------------\n");
