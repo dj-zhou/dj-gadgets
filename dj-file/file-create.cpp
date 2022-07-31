@@ -260,7 +260,7 @@ void create_Makefile(void) {
         return;
     }
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "EXEC      = main\n");
     fprintf(F, "CODE_PATH = .\n");
     fprintf(F, "LIBS      = -lm\n");
@@ -275,12 +275,12 @@ void create_Makefile(void) {
     fprintf(F, "$(info LIBS:)\n");
     fprintf(F, "$(info  $(LIBS))\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "AS = $(CC) -x assembler-with-cpp\n");
     fprintf(F, "CP = objcopy\n");
     fprintf(F, "SZ = size\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "# C_DEFS += -D BIN_NAME=\\\"$(EXEC)\\\"\n");
     fprintf(F, "# C_DEFS += -D PRJ_GIT_CMT=\\\"$(shell git rev-parse --short "
                "HEAD)\\\"\n");
@@ -289,7 +289,7 @@ void create_Makefile(void) {
     fprintf(F, "# C_DEFS += -D PRJ_GIT_VER=\\\"$(shell git describe --abbrev=7 "
                "--dirty --always --tags)\\\"\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "# collect '.cpp' file to SRCS\n");
     fprintf(F, "DIRS := $(shell find $(CODE_PATH) -maxdepth 10 -type d)\n");
     fprintf(F, "SRCS  = $(foreach dir,$(DIRS),$(wildcard $(dir)/*.cpp))\n");
@@ -316,13 +316,13 @@ void create_Makefile(void) {
     fprintf(F, "$(info ====================================)\n");
     fprintf(F, "$(info )\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, "CFLAGS    = $(C_DEFS) $(INC:%%=-I%%) $(OPT)\n");
     fprintf(F, "# treat all warnings as errors\n");
     fprintf(F, "CFLAGS  += -Werror=unused-parameter -Werror=unused-variable\n");
     fprintf(F, "HOSTFLAGS = $(CPPSTD) $(LIBS)\n\n");
 
-    fprintf(F, "// ============================================================================\n");
+    fprintf(F, "# ============================================================================\n");
     fprintf(F, ".PHONY: all\n");
     fprintf(F, "all: CFLAGS+= -D MAKE_TYPE=\\\"$(MTYPE_ALL)\\\"\n");
     fprintf(F, "all: CFLAGS+= $(HOSTFLAGS)\n");
@@ -646,22 +646,23 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "cmake_minimum_required(VERSION 3.10)\n");
     fprintf(F, "project(cmake-project)\n");
     fprintf(F, "string(ASCII 27 Esc)\n\n");
-    fprintf(F, "set(BCYN \"${Esc}[1;36m\")\n");
+    fprintf(F, "set(CYN \"${Esc}[0;36m\")\n");
     fprintf(F, "set(NOC  \"${Esc}[m\")\n");
-    fprintf(F, "message(\"${BCYN}CMake   : \" ${CMAKE_VERSION} \"@\" ${CMAKE_SYSTEM}${NOC})\n");
-    fprintf(F, "message(\"${BCYN}Compiler: \" ${CMAKE_CXX_COMPILER} \"@\" ${CMAKE_CXX_COMPILER_VERSION} ${NOC})\n");
+    fprintf(F, "message(\"-- ${CYN}CMake   : \" ${CMAKE_VERSION} \"@\" ${CMAKE_SYSTEM}${NOC})\n");
+    fprintf(F, "message(\"-- ${CYN}Compiler: \" ${CMAKE_CXX_COMPILER} \"@\" ${CMAKE_CXX_COMPILER_VERSION} ${NOC})\n");
     fprintf(F, "set(CMAKE_CXX_STANDARD 20)\n");
     fprintf(F, "add_compile_options(\n");
+    fprintf(F, "  \"-g\" # debug symbols\n");
+    fprintf(F, "  \"-pedantic\" # compliant to ANSI standard\n");
     fprintf(F, "  \"-Wall\"\n");
+    fprintf(F, "  \"-Wconversion\"\n");
+    fprintf(F, "  \"-Wduplicated-cond\"\n");
     fprintf(F, "  \"-Wextra\"\n");
-    fprintf(F, "  \"-pedantic\"\n");
     fprintf(F, "  \"-Werror\"\n");
     fprintf(F, "  \"-Wformat=2\"\n");
-    fprintf(F, "  \"-Wduplicated-cond\"\n");
     fprintf(F, "  \"-Wfloat-equal\"\n");
-    fprintf(F, "  \"-Wshadow\"\n");
-    fprintf(F, "  \"-Wconversion\"\n");
     fprintf(F, "  \"-Wlogical-not-parentheses\"\n");
+    fprintf(F, "  \"-Wshadow\"\n");
     fprintf(F, ")\n\n");
 
     fprintf(F, "# ------------------------------\n");
