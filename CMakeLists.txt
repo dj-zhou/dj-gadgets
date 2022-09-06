@@ -30,6 +30,9 @@ install(TARGETS double-to-time RUNTIME DESTINATION bin)
 add_executable(double-to-u8 double-to-u8.cpp)
 install(TARGETS double-to-u8 RUNTIME DESTINATION bin)
 
+add_executable(epoch-to-date-time epoch-to-date-time.cpp)
+install(TARGETS epoch-to-date-time RUNTIME DESTINATION bin)
+
 add_executable(euler-to-quat euler-to-quat.cpp)
 install(TARGETS euler-to-quat RUNTIME DESTINATION bin)
 
