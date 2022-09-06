@@ -73,18 +73,20 @@ int days(int y1, int y2, int m1, int m2, int d1, int d2) {
 }
 
 enum class DateTimeType {
+    NotAType = 0,
     yyyymmddThhmmss = 1,  // 2022-02-19T18:45:09.898273+0000
+                          // 2022-02-19 18:45:09.898273+0000
     ddmmyyyyhhmmss = 2,   // 19/02/2022-18:45:09.898273
 };
 
-static double convert_time_to_epoch(char* str) {
+static int convert_time_to_epoch(char* str, double* ret) {
     int y = 0, m = 0, d, h, min, sec, day, us;
     // determine type
-    DateTimeType type;
+    DateTimeType type = DateTimeType::NotAType;
     if ((str[2] == '/') && (str[5] == '/') && (str[10] == '-') && (str[13] == ':')) {
         type = DateTimeType::ddmmyyyyhhmmss;
     }
-    else if ((str[4] == '-') && (str[7] == '-') && (str[10] == 'T') && (str[13] == ':')) {
+    else if ((str[4] == '-') && (str[7] == '-') && ((str[10] == 'T') || (str[10] == ' ')) && (str[13] == ':')) {
         type = DateTimeType::yyyymmddThhmmss;
     }
     // find each component from string
@@ -104,6 +106,10 @@ static double convert_time_to_epoch(char* str) {
         }
         break;
     case DateTimeType::yyyymmddThhmmss:
+        // 2022-02-19T18:45:09.898273+0000
+        // "2022-02-19 18:45:09.898273+0000"
+        // 2022-02-19 18:45:09.898273+0000
+        // the "+0000" part is not processed
         y = ch_to_num(str[0]) * 1000 + ch_to_num(str[1]) * 100 + ch_to_num(str[2]) * 10 + ch_to_num(str[3]);
         m = ch_to_num(str[5]) * 10 + ch_to_num(str[6]);
         d = ch_to_num(str[8]) * 10 + ch_to_num(str[9]);
@@ -118,23 +124,52 @@ static double convert_time_to_epoch(char* str) {
         }
         break;
     default:
-        break;
+        return -1;
     }
 
     day = days(1970, y, 1, m, 1, d);
     unsigned int time_s = ((day * 24 + h) * 60 + min) * 60 + sec;
-    return time_s + us / 1000000.;
+    *ret = time_s + us / 1000000.;
+    return 0;
 }
 
 int main(int argc, char* argv[]) {
     if (argc == 1) {
         printf("Convert human readable time to epoch time\n\nusage examples:\n");
         printf("    %s 2022-02-19T18:45:09.898273+0000\n", argv[0]);
+        printf("    %s \"2022-02-19 18:45:09.898273+0000\"\n", argv[0]);
+        printf("    %s 2022-02-19 18:45:09.898273+0000\n", argv[0]);
         printf("    %s 2022-02-19T18:45:09.898273\n", argv[0]);
         printf("    %s 19/02/2022-18:45:09\n", argv[0]);
-        printf("    %s 19/02/2022 18:45:09\n", argv[0]);
+        printf("    %s 19/02/2022 18:45:09\n", argv[0]);  // this does not work!
         return 1;
     }
-    printf("Epoch time: %f\n", convert_time_to_epoch(argv[1]));
+    double epoch_time;
+    char* date_time_str;
+    if (argc == 2) {
+        date_time_str = argv[1];
+    }
+    else if (argc == 3) {
+        printf("strlen(argv[1]  = %ld\n", strlen(argv[1]));
+        printf("strlen(argv[2]  = %ld\n", strlen(argv[2]));
+        date_time_str = (char*)malloc(strlen(argv[1] + strlen(argv[2]) + 2));
+        char* ptr = date_time_str;
+        for (size_t i = 0; i < strlen(argv[1]); i++)
+            *ptr++ = argv[1][i];
+        *ptr++ = ' ';
+        for (size_t i = 0; i < strlen(argv[2]); i++)
+            *ptr++ = argv[2][i];
+        *ptr = '0';
+    }
+    if (convert_time_to_epoch(date_time_str, &epoch_time) == -1) {
+        printf("not a recognized date/time string, exit.\n");
+        return -1;
+    }
+    printf("Epoch time: %f\n", epoch_time);
+
+    // OK, this is not a good practise
+    if (argc == 3) {
+        free(date_time_str);
+    }
     return 0;
 }
