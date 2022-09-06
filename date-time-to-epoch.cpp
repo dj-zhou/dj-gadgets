@@ -8,13 +8,8 @@
 // original code is from: https://stackoverflow.com/a/26099512
 
 // convert "2022-02-19T18:45:09.898273+0000" to epoch time as double
-// usage: date-time-to-epoch 2022-02-19T18:45:09.898273+0000
-
-// supported forms:
-// 1: 2022-02-19T18:45:09.898273+0000
-// 2: 2022-02-25 15:59:29.886 (must accept space!)
-// 3: dd/mm/yyyy-hh:mm:ss (no space!)
-// 4: dd/mm/yyyy hh:mm:ss (must accept space!)
+//  usage: date-time-to-epoch 2022-02-19T18:45:09.898273+0000
+// result: 1645296309.898273
 
 int ch_to_num(char c) {
     if (((int)c >= 48) && ((int)c <= 57)) {
@@ -27,16 +22,14 @@ int ch_to_num(char c) {
 }
 
 bool is_leap_year(int year) {
-    bool is_leap_year;
     if (year % 400 == 0)
-        is_leap_year = true;
+        return true;
     else if (year % 100 == 0)
-        is_leap_year = false;
+        return false;
     else if (year % 4 == 0)
-        is_leap_year = true;
+        return true;
     else
-        is_leap_year = false;
-    return is_leap_year;
+        return false;
 }
 
 int month(int a, int yy) {
@@ -153,9 +146,19 @@ int main(int argc, char* argv[]) {
         printf("    %s 2022-02-19 18:45:09.898273+0000\n", argv[0]);
         printf("    %s 2022-02-19T18:45:09.898273\n", argv[0]);
         printf("    %s 19/02/2022-18:45:09\n", argv[0]);
-        printf("    %s 19/02/2022 18:45:09\n", argv[0]);  // this does not work!
+        printf("    %s 19/02/2022 18:45:09\n", argv[0]);
         return 1;
     }
+
+    if ((argc == 2) || (argc == 3)) {
+        for (int i = 0; i < argc - 1; i++) {
+            if (strspn(argv[1 + i], "0123456789.T-:+/ \n") != strlen(argv[1 + i])) {
+                fprintf(stderr, "found non-numeric value, exit.\n");
+                return -1;
+            }
+        }
+    }
+
     double epoch_time;
     char* date_time_str;
     if (argc == 2) {
