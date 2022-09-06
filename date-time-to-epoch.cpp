@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
         printf("    %s 2022-02-19T18:45:09.898273\n", argv[0]);
         printf("    %s 19/02/2022-18:45:09\n", argv[0]);
         printf("    %s 19/02/2022 18:45:09\n", argv[0]);
-        return 1;
+        return 0;
     }
 
     if ((argc == 2) || (argc == 3)) {
@@ -176,7 +176,7 @@ int main(int argc, char* argv[]) {
     }
     if (convert_time_to_epoch(date_time_str, &epoch_time) == -1) {
         printf("not a recognized date/time string, exit.\n");
-        return -1;
+        return 2;
     }
     printf("Epoch time: %f\n", epoch_time);
 
