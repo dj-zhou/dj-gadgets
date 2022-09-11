@@ -39,6 +39,9 @@ install(TARGETS euler-to-quat RUNTIME DESTINATION bin)
 add_executable(float-to-u8 float-to-u8.cpp)
 install(TARGETS float-to-u8 RUNTIME DESTINATION bin)
 
+add_executable(get-time-us get-time-us.cpp)
+install(TARGETS get-time-us RUNTIME DESTINATION bin)
+
 add_executable(quat-to-euler quat-to-euler.cpp)
 install(TARGETS quat-to-euler RUNTIME DESTINATION bin)
 
