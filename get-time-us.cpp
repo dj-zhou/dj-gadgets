@@ -5,7 +5,7 @@ int main(void) {
     struct timeval tv;
     gettimeofday(&tv, NULL);
 
-    long int us = (long int)tv.tv_sec * 1000000 + (long int)tv.tv_usec;
-    printf("%ld\n", us);
+    unsigned long long us = (unsigned long long)tv.tv_sec * 1000000 + (unsigned long long)tv.tv_usec;
+    printf("%llu\n", us);
     return 0;
 }
