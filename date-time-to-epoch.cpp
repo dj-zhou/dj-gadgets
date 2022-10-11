@@ -182,7 +182,7 @@ int main(int argc, char* argv[]) {
         }
         free(date_time_str);
     }
-    
+
     printf("Epoch time: %f\n", epoch_time);
 
     return 0;
