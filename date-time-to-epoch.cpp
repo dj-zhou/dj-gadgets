@@ -160,11 +160,14 @@ int main(int argc, char* argv[]) {
     }
 
     double epoch_time;
-    char* date_time_str;
     if (argc == 2) {
-        date_time_str = argv[1];
+        if (convert_time_to_epoch(argv[1], &epoch_time) == -1) {
+            printf("not a recognized date/time string, exit.\n");
+            return 2;
+        }
     }
     else if (argc == 3) {
+        char* date_time_str;
         date_time_str = (char*)malloc(strlen(argv[1]) + strlen(argv[2]) + 2);
         char* ptr = date_time_str;
         for (size_t i = 0; i < strlen(argv[1]); i++)
@@ -173,16 +176,14 @@ int main(int argc, char* argv[]) {
         for (size_t i = 0; i < strlen(argv[2]); i++)
             *ptr++ = argv[2][i];
         *ptr = '0';
-    }
-    if (convert_time_to_epoch(date_time_str, &epoch_time) == -1) {
-        printf("not a recognized date/time string, exit.\n");
-        return 2;
-    }
-    printf("Epoch time: %f\n", epoch_time);
-
-    // OK, this is not a good practise
-    if (argc == 3) {
+        if (convert_time_to_epoch(date_time_str, &epoch_time) == -1) {
+            printf("not a recognized date/time string, exit.\n");
+            return 2;
+        }
         free(date_time_str);
     }
+    
+    printf("Epoch time: %f\n", epoch_time);
+
     return 0;
 }
