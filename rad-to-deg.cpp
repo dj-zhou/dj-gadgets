@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        printf("usage: %s <double>\n", argv[0]);
+        printf("usage: %s [double number]\n", argv[0]);
         return 1;
     }
     double rad = atof(argv[1]);

@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(cmake-project)
 set(CMAKE_CXX_STANDARD 17)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 add_compile_options(
   -Wall
   -Wextra
@@ -13,46 +14,40 @@ add_compile_options(
   -Wconversion
   -Wlogical-not-parentheses
 )
+elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+add_compile_options(
+  -Wall
+  -Wextra
+  -pedantic
+  -Wformat=2
+  -Wfloat-equal
+  -Wshadow
+  -Wconversion
+  -Wlogical-not-parentheses
+)
+else()
+    # Code for other operating systems here
+    message("This is a different operating system")
+endif()
 
-# ------------------------------
-add_executable(ascii-code ascii-code.cpp)
-install(TARGETS ascii-code RUNTIME DESTINATION bin)
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
 
-add_executable(date-time-to-epoch date-time-to-epoch.cpp)
-install(TARGETS date-time-to-epoch RUNTIME DESTINATION bin)
+macro(add_exec_and_install example_name)
+    add_executable("dj-${example_name}" "${example_name}.cpp")
+    install(TARGETS "dj-${example_name}" RUNTIME DESTINATION bin)
+endmacro()
 
-add_executable(deg-to-rad deg-to-rad.cpp)
-install(TARGETS deg-to-rad RUNTIME DESTINATION bin)
-
-add_executable(double-to-time double-to-time.cpp)
-install(TARGETS double-to-time RUNTIME DESTINATION bin)
-
-add_executable(double-to-u8 double-to-u8.cpp)
-install(TARGETS double-to-u8 RUNTIME DESTINATION bin)
-
-add_executable(epoch-to-date-time epoch-to-date-time.cpp)
-install(TARGETS epoch-to-date-time RUNTIME DESTINATION bin)
-
-add_executable(euler-to-quat euler-to-quat.cpp)
-install(TARGETS euler-to-quat RUNTIME DESTINATION bin)
-
-add_executable(float-to-u8 float-to-u8.cpp)
-install(TARGETS float-to-u8 RUNTIME DESTINATION bin)
-
-add_executable(quat-to-euler quat-to-euler.cpp)
-install(TARGETS quat-to-euler RUNTIME DESTINATION bin)
-
-add_executable(quat-to-rot quat-to-rot.cpp)
-install(TARGETS quat-to-rot RUNTIME DESTINATION bin)
-
-add_executable(rad-to-deg rad-to-deg.cpp)
-install(TARGETS rad-to-deg RUNTIME DESTINATION bin)
-
-add_executable(rot-to-quat rot-to-quat.cpp)
-install(TARGETS rot-to-quat RUNTIME DESTINATION bin)
-
-add_executable(u8-to-double u8-to-double.cpp)
-install(TARGETS u8-to-double RUNTIME DESTINATION bin)
-
-add_executable(u8-to-float u8-to-float.cpp)
-install(TARGETS u8-to-float RUNTIME DESTINATION bin)
+add_exec_and_install(ascii-code)
+add_exec_and_install(date-time-to-epoch)
+add_exec_and_install(deg-to-rad)
+add_exec_and_install(double-to-u8)
+add_exec_and_install(epoch-to-date-time)
+add_exec_and_install(euler-to-quat)
+add_exec_and_install(float-to-u8)
+add_exec_and_install(quat-to-euler)
+add_exec_and_install(quat-to-rot)
+add_exec_and_install(rad-to-deg)
+add_exec_and_install(rot-to-quat)
+add_exec_and_install(u8-to-double)
+add_exec_and_install(u8-to-float)

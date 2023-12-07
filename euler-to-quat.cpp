@@ -1,6 +1,6 @@
 #include <cmath>
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/Geometry>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -12,7 +12,7 @@ using namespace Eigen;
 
 int main(int argc, char* argv[]) {
     if ((argc < 4) || (argc > 5)) {
-        printf("usage:\n    %s yaw(psi) pitch(theta) roll(phi) -r/-d\n", argv[0]);
+        printf("usage:\n    %s yaw(psi) pitch(theta) roll(phi) [-r or -d]\n", argv[0]);
         printf("    -r: use radian (default)\n");
         printf("    -d: use degree\n");
         return 1;

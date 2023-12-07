@@ -1,6 +1,6 @@
 #include <cmath>
-#include <eigen3/Eigen/Core>
-#include <eigen3/Eigen/Geometry>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <iostream>
 #include <stdio.h>
 

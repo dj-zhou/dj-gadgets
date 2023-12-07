@@ -13,8 +13,8 @@ int main(int argc, char* argv[]) {
     uint8_t* data_ptr = (uint8_t*)&data_float;
     if ((argc < 5) || (argc > 6)) {
         printf("usage: \n");
-        printf("    u8-to-float <u8> <u8> <u8> <u8> l/b\n");
-        printf("    u8-to-float <u8> <u8> <u8> <u8> little/big\n");
+        printf("$ %s [u8 #] [u8 #] [u8 #] [u8 #] [l or b]\n", argv[0]);
+        printf("$ %s [u8 #] [u8 #] [u8 #] [u8 #] [little or big]\n", argv[0]);
     }
     else if (argc == 5) {
         data_ptr[0] = (uint8_t)atoi(argv[1]);

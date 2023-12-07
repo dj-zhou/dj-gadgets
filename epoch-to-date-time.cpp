@@ -61,8 +61,8 @@ int get_month(int& days, int year) {
 int main(int argc, char* argv[]) {
     if (argc == 1) {
         printf("Convert epoch time to human readable date & time\nusage examples:\n");
-        printf("    %s 1645296309.898273\n", argv[0]);
-        printf("    %s 1645296309\n", argv[0]);
+        printf("$ %s 1645296309.898273\n", argv[0]);
+        printf("$ %s 1645296309\n", argv[0]);
         return 0;
     }
 

@@ -133,7 +133,7 @@ static int convert_time_to_epoch(char* str, double* ret) {
     }
 
     day = days(1970, y, 1, m, 1, d);
-    unsigned int time_s = ((day * 24 + h) * 60 + min) * 60 + sec;
+    unsigned int time_s = (unsigned int)((day * 24 + h) * 60 + min) * 60 + (unsigned int)sec;
     *ret = time_s + us / 1000000.;
     return 0;
 }
@@ -141,12 +141,12 @@ static int convert_time_to_epoch(char* str, double* ret) {
 int main(int argc, char* argv[]) {
     if (argc == 1) {
         printf("Convert human readable time to epoch time\nusage examples:\n");
-        printf("    %s 2022-02-19T18:45:09.898273+0000\n", argv[0]);
-        printf("    %s \"2022-02-19 18:45:09.898273+0000\"\n", argv[0]);
-        printf("    %s 2022-02-19 18:45:09.898273+0000\n", argv[0]);
-        printf("    %s 2022-02-19T18:45:09.898273\n", argv[0]);
-        printf("    %s 19/02/2022-18:45:09\n", argv[0]);
-        printf("    %s 19/02/2022 18:45:09\n", argv[0]);
+        printf("$ %s 2022-02-19T18:45:09.898273+0000\n", argv[0]);
+        printf("$ %s \"2022-02-19 18:45:09.898273+0000\"\n", argv[0]);
+        printf("$ %s 2022-02-19 18:45:09.898273+0000\n", argv[0]);
+        printf("$ %s 2022-02-19T18:45:09.898273\n", argv[0]);
+        printf("$ %s 19/02/2022-18:45:09\n", argv[0]);
+        printf("$ %s 19/02/2022 18:45:09\n", argv[0]);
         return 0;
     }
 
@@ -160,7 +160,7 @@ int main(int argc, char* argv[]) {
     }
 
     double epoch_time;
-    char* date_time_str;
+    char* date_time_str = NULL;
     if (argc == 2) {
         date_time_str = argv[1];
     }

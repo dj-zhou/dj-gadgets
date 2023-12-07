@@ -656,7 +656,9 @@ void create_CMakeLists_txt(void) {
     fprintf(F, "  \"-pedantic\" # compliant to ANSI standard\n");
     fprintf(F, "  \"-Wall\"\n");
     fprintf(F, "  \"-Wconversion\"\n");
+#if defined(__linux__)
     fprintf(F, "  \"-Wduplicated-cond\"\n");
+#endif
     fprintf(F, "  \"-Wextra\"\n");
     fprintf(F, "  \"-Werror\"\n");
     fprintf(F, "  \"-Wformat=2\"\n");

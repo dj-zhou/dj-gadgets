@@ -9,11 +9,11 @@
 
 int main(int argc, char* argv[]) {
     if ((argc <= 1) || (argc > 2)) {
-        printf(" ascii-code: too few argument, usage (examples): \n");
-        printf(" $   ascii-code  c\n");
-        printf(" $   ascii-code \"c\"\n");
-        printf(" $   ascii-code \"5\"\n");
-        printf(" $   ascii-code \"&\"\n");
+        printf("usage examples:\n");
+        printf(" $ %s c\n", argv[0]);
+        printf(" $ %s \"c\"\n", argv[0]);
+        printf(" $ %s \"5\"\n", argv[0]);
+        printf(" $ %s \"&\"\n", argv[0]);
         return -1;
     }
     // the argument is taken as a char

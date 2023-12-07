@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(cmake-project)
 set(CMAKE_CXX_STANDARD 17)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 add_compile_options(
   -Wall
   -Wextra
@@ -13,8 +14,24 @@ add_compile_options(
   -Wconversion
   -Wlogical-not-parentheses
 )
-
-find_package(CLI11 CONFIG)
+elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+add_compile_options(
+  -Wall
+  -Wextra
+  -pedantic
+  -Wformat=2
+  -Wfloat-equal
+  -Wshadow
+  -Wconversion
+  -Wlogical-not-parentheses
+)
+else()
+    # Code for other operating systems here
+    message("This is a different operating system")
+endif()
+find_package(CLI11 REQUIRED)
+include_directories(${CLI11_INCLUDE_DIRS})
+include_directories(/usr/local/include)
 
 # --------------------------------------------------------------------------
 execute_process(COMMAND git describe --abbrev=7 --dirty --always --tags
@@ -33,5 +50,6 @@ add_executable(
   "file-create.cpp"
   "time-fetch.cpp"
 )
+target_include_directories(dj-file PRIVATE ${CLI11_INCLUDE_DIRS})
 
 install(TARGETS dj-file RUNTIME DESTINATION bin)
